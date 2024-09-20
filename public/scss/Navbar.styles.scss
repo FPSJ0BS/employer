@@ -1,0 +1,14 @@
+#nav-new:hover #nav-bottom {
+  height: 150%;
+  bottom: -150%;
+  background-color: #111;
+
+}
+
+#nav-bottom{
+  transition: all ease 0.65s;
+  border-bottom: 1px solid #dadada;
+
+
+}
+

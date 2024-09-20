@@ -1,0 +1,518 @@
+// navigation ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// .menu-overlay-new {
+//   width: 100%;
+//   padding: 2em;
+//   background-color: #ff5f38;
+//   pointer-events: none;
+//   // clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+// }
+
+// .menu-nav-new {
+//   display: flex;
+//   justify-content: space-between;
+//   margin-bottom: 1em;
+// }
+
+// .menu-cols-new > div {
+//   flex: 1;
+//   padding: 1em 0;
+// }
+
+// .video-new {
+//   width: 50%;
+// }
+
+// .menu-link-new {
+//   position: relative;
+//   width: max-content;
+// }
+
+// .menu-link-new:after {
+//   content: "";
+//   position: absolute;
+//   top: 100%;
+//   left: 0;
+//   width: 0;
+//   height: 2px;
+//   background-color: green;
+//   transition: 0.3s all;
+// }
+
+// .menu-link-new:hover .menu-link-new:after{
+//     width: 100%;
+// }
+
+// .btn-new{
+//     position: relative;
+//     margin: 2em 0;
+//     border: 1px solid black;
+//     width: max-content;
+//     padding: 1.25em 2.5em;
+//     border-radius: 4px;
+//     overflow: hidden;
+//     cursor: pointer;
+// }
+
+// .btn-new:before{
+//     content: '';
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 0;
+//     height: 100%;
+//     background-color: green;
+//     transition: 0.3s all;
+//     z-index: -1;
+// }
+
+// .btn-new:hover.btn-new:before{
+//     width: 100% ;
+// }
+
+// .menu-divider-new{
+//     width: 0%;
+//     height: 1px;
+//     background: gray;
+//     margin: 1em 0;
+// }
+
+
+// Nav
+
+.homeMobNav{
+  
+}
+
+
+// Section one media query
+
+.heading1class{
+  
+}
+
+.bulletDropDown{
+  transition: all 1s ease-in-out
+
+}
+
+
+
+#SectionOneTest{
+  background-image: url('../../../../public/assets/Home-new/chat\ pattern.png');
+  background-repeat: no-repeat, repeat;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+}
+
+#SectionOneTest h1 svg {
+  height: 6vw;
+  border-radius: 50%;
+  width: 6vw;
+
+  background-color: #0ba34e;
+}
+
+#SectionOneTest p {
+  text-align: center;
+  font-weight: 400;
+  margin-top: 3vh;
+  font-size: 1vw;
+}
+
+#page1-something {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#page1-something h4 {
+  font-weight: 400;
+  font-size: 1vw;
+  text-transform: lowercase;
+  margin-top: 0.5vw;
+  padding: 9px 18px;
+  border: 1px solid hsl(0, 0%, 65%);
+  border-radius: 50px;
+}
+
+#page1-something h4:nth-last-child(2) {
+  /* background-color: red; */
+  border: none;
+  padding: 2px;
+}
+
+#moving-div {
+  // /* background-color: red; */
+  margin-top: 10vh;
+  position: absolute;
+  bottom: 3%;
+  white-space: nowrap;
+  padding: 1.2vw;
+  overflow: hidden;
+  width: 44%;
+}
+
+#moving-div .move {
+  display: inline-block;
+  animation-name: mobe;
+  animation-duration: 9s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+#moving-div .move img {
+  height: 1vw;
+  margin: 0 1.2vw;
+}
+
+@keyframes mobe {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+#blur-left {
+  height: 100%;
+  width: 20%;
+  background: linear-gradient(to right, #111, transparent);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+#blur-right {
+  height: 100%;
+  width: 20%;
+  background: linear-gradient(to right, transparent, #111);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+}
+
+// navigation ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#page1h1Main,
+#page1h2Main, #page1gethetop {
+  z-index: 12 !important;
+}
+
+#cursorTest {
+  z-index: 11 !important;
+}
+
+// Section 3
+
+.rotate-row-div {
+  width: calc(200vw / 5);
+  background-color: aqua;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+}
+
+.rowdiv-imagediv {
+  width: 100%;
+  height: calc(100% / 4);
+  background-color: black;
+}
+
+#SectionThreeTestPart1-rotate-div {
+}
+
+.textAnimationSection3Heading {
+  background: linear-gradient(
+    to right,
+    #cc5475 20%,
+    #fff 30%,
+    #fff 70%,
+    #cc5475 80%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  background-size: 500% auto;
+  animation: textShine 5s ease-in-out infinite alternate;
+}
+
+@keyframes textShine {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+// Section 3 animation blob --->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
+
+#SectionThreeTest {
+  z-index: 3 !important;
+}
+
+#video-section-3 {
+  z-index: 5 !important;
+}
+
+#hero-shape {
+  position: absolute;
+  width: 46vw;
+  height: 36vw;
+  right: -1vw;
+  top: -10vh;
+  z-index: 4 !important;
+}
+
+#hero-1 {
+  background-color: #fe320a;
+  height: 100%;
+  width: 100%;
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+  filter: blur(10px);
+  position: absolute;
+}
+
+#hero-2 {
+  background: linear-gradient(#fe320a, #fe3f0a);
+
+  height: 30vw;
+  width: 30vw;
+  border-radius: 50%;
+  position: absolute;
+  animation-name: anime2;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  filter: blur(25px);
+}
+
+#hero-3 {
+  background: linear-gradient(#fe320a, #fe3f0a);
+  height: 30vw;
+  position: absolute;
+  width: 30vw;
+  border-radius: 50%;
+  filter: blur(25px);
+  animation-name: anime1;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes anime1 {
+  from {
+    transform: translate(55%, -3%);
+  }
+
+  to {
+    transform: translate(0%, 10%);
+  }
+}
+
+@keyframes anime2 {
+  from {
+    transform: translate(5%, -5%);
+  }
+
+  to {
+    transform: translate(-20%, 30%);
+  }
+}
+
+// Section 4 ---->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// .sectionfour-rounded-div-wrapper{
+//     margin-top: -100px !important;
+// }
+
+.sectionfour-rounded-div {
+  transform: translate(-50%);
+}
+
+.SectionFour-content-2 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  // background-color: green;
+  overflow: hidden;
+}
+
+.SectionFour-text-area {
+  position: absolute;
+  opacity: 0.2;
+  left: 5%;
+  width: 100%;
+  font-weight: 800 !important;
+}
+
+.SectionFour-text-area-hover {
+  position: absolute;
+  left: 5%;
+  opacity: 1;
+  font-weight: 800;
+}
+
+.SectionFour-text-area h1,
+.SectionFour-text-area-hover h1 {
+  font-size: 7vw;
+  color: #111;
+}
+
+.SectionFour-text-area h2,
+.SectionFour-text-area-hover h2 {
+  margin-left: 5vw;
+  font-size: 7vw;
+  color: #111;
+}
+
+.SectionFour-text-area-hover h1 {
+  width: 0%;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
+
+.SectionFour-text-area-hover h2 {
+  width: 0%;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
+
+// Section 5
+
+.sectionFive-rounded-div {
+  transform: translate(-50%);
+}
+
+// Section -7
+
+.sectionSeven-rounded-div {
+  transform: translate(-50%);
+}
+
+// page 8 ------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// #main-new {
+//   gap: 10vh;
+//   align-items: center;
+//   justify-content: center;
+//   width: 100%;
+//   min-height: 150vh;
+//   background-color: cyan !important;
+// }
+
+// .cards-new {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   width: 80%;
+//   height: 80vh;
+//   background-position: center;
+//   background-size: cover;
+// }
+
+// #card-one-new {
+//   top: 130%;
+//   // background-image: url(../../../../public/assets/Home-new/ONE.png);
+  
+// }
+
+// #card-two-new {
+//   top: 230%;
+//   // background-image: url(../../../../public/assets/Home-new/two.png);
+  
+// }
+
+// #card-three-new {
+//   top: 250%;
+//   // background-image: url(../../../../public/assets/Home-new/three.png);
+  
+// }
+
+// .text-new {
+//   position: absolute;
+//   width: 100%;
+//   top: 25%;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+// }
+// .text-img-new {
+//   width: 5vw;
+//   height: 5vw;
+//   /* background-color: #fff; */
+//   background-image: url(../../../../public/assets/Home-new/fold1.svg);
+//   background-size: cover;
+//   background-position: center;
+// }
+
+// .text-new h1 {
+//   font-size: 3vw;
+//   color: #000;
+//   text-align: center;
+// }
+
+// .text-new p {
+//   font-size: 1vw;
+//   color: #000;
+//   text-align: center;
+// }
+
+
+// Section 9
+
+.bglinergrad{
+  background-image: linear-gradient(90deg, #3777f3, #d150ff);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+
+// Footer ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#footer {
+  // position: fixed;
+  height: 105vh;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  // z-index: 1;
+  bottom: 0;
+  display: flex;
+  /* align-items: flex-end; */
+  justify-content: flex-end;
+  flex-direction: column;
+  padding: 1vw 3vw;
+}
+
+#footer h1 {
+  font-size: 23vw;
+}
+
+#footer-div {
+  height: 20vh;
+  width: 100%;
+  background-color: red;
+}
+
+#footer-bottom {
+  border-top: 1px solid #dadada;
+  height: 10vh;
+  width: 100%;
+}

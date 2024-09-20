@@ -1,0 +1,345 @@
+/*** 
+
+====================================================================
+Fonts
+====================================================================
+
+***/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./icons.scss";
+@import "./flaticon.scss";
+@import "./fontawesome-all.scss";
+@import "./line-awesome.scss";
+@import "./custom-slick.scss";
+@import "node_modules/react-modal-video/scss/modal-video.scss";
+
+/*** 
+
+====================================================================
+Reset
+====================================================================
+
+***/
+
+/*** 
+
+====================================================================
+Global Settings
+====================================================================
+
+***/
+
+@import "./base/base.scss";
+@import "./base/forms.scss";
+@import "./base/typography.scss";
+@import "./base/utilities.scss";
+
+@import "./components/about.scss";
+@import "./components/accordion.scss";
+@import "./components/ads.scss";
+@import "./components/banner-box.scss";
+@import "./components/button.scss";
+@import "./components/Callout.scss";
+@import "./components/clients.scss";
+@import "./components/companies.scss";
+@import "./components/contact.scss";
+@import "./components/dashboard.scss";
+@import "./components/feature.scss";
+@import "./components/footer.scss";
+@import "./components/fun-fact.scss";
+@import "./components/header.scss";
+@import "./components/job.scss";
+@import "./components/list.scss";
+@import "./components/login.scss";
+@import "./components/map.scss";
+@import "./components/menu.scss";
+
+@import "./components/message-box.scss";
+@import "./components/page-title.scss";
+@import "./components/pie-graph.scss";
+@import "./components/portfolio.scss";
+@import "./components/preloader.scss";
+@import "./components/progress-bar.scss";
+@import "./components/registr-banner.scss";
+@import "./components/resume.scss";
+@import "./components/section-title.scss";
+@import "./components/select.scss";
+@import "./components/sidebar.scss";
+@import "./components/social.scss";
+@import "./components/socialIcons.scss";
+@import "./components/table.scss";
+@import "./components/tabs.scss";
+@import "./components/testimonials.scss";
+@import "./components/tooltip.scss";
+@import "./components/uploadings.scss";
+
+@import "./components/sections/app.scss";
+@import "./components/sections/browse.scss";
+@import "./components/sections/candidates.scss";
+@import "./components/sections/cta.scss";
+@import "./components/sections/faq.scss";
+@import "./components/sections/invoice.scss";
+@import "./components/sections/jobseeker.scss";
+@import "./components/sections/ls-section.scss";
+@import "./components/sections/news.scss";
+@import "./components/sections/pricing.scss";
+@import "./components/sections/process.scss";
+@import "./components/sections/recruiter.scss";
+@import "./components/sections/steps.scss";
+@import "./components/sections/subscribe.scss";
+@import "./components/sections/tnc.scss";
+@import "./components/job-search.scss";
+
+@import "./layout/blog-sidebar.scss";
+@import "./layout/blog-single.scss";
+@import "./layout/shop/cart.scss";
+@import "./layout/shop/order.scss";
+@import "./layout/shop/products.scss";
+@import "./layout/shop/single.scss";
+@import "./layout/shop/tabs.scss";
+
+@import "./components/new/index-11.scss";
+@import "./components/new/index-12.scss";
+@import "./components/new/index-13.scss";
+@import "./components/new/index-14.scss";
+@import "./components/new/index-15.scss";
+@import "./components/new/index-16.scss";
+@import "./components/new/index-17.scss";
+
+@import "./components/shame.scss";
+
+/*** 
+====================================================================
+59. Responsive
+====================================================================
+***/
+@import "./base/responsive.scss";
+@import "./input-range-slider";
+@import "./custom-nextjs.scss";
+
+@import "./Navbar.styles.scss";
+@import "./locomotive.scss";
+@import "../../src/Admin/AdminStyles.scss";
+@import "./employerStyles.scss";
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+// Cuberto Button
+
+.cubertoButton {
+  background: transparent;
+  border: 1px solid #fff;
+  outline: none;
+  padding: 0px 5px;
+  height: 30px;
+  width: 100px;
+  border-radius: 20px;
+  overflow: hidden;
+  transform: scaleX(1);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0, 1);
+}
+
+.cubertoButton:hover {
+  animation: animate-scaleX 0.6s cubic-bezier(0.4, 0, 0, 1);
+}
+
+.cubertoButton::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: #cc5475;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0, 1),
+    border-radius 0.5s cubic-bezier(0.4, 0, 0, 1);
+  width: 100%;
+  height: 100%;
+  border-radius: 50% 50% 0 0;
+  transform: translateY(100%);
+}
+
+.cubertoButton:hover::after {
+  transform: translateY(0%);
+  border-radius: 0;
+}
+
+.cubertoButton span {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 400;
+  overflow: hidden;
+  position: relative;
+  color: white;
+}
+
+.cubertoButton span:after {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0, 1);
+  content: attr(data-text);
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 1;
+  transform: translate(-50%, 100%);
+  color: white;
+}
+.cubertoButton:hover span:after {
+  transform: translate(-50%, 0);
+}
+
+.cubertoButton:focus {
+  outline: none;
+}
+
+@keyframes animate-scaleX {
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(1.05);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.hover-div-test {
+  transition: all cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
+}
+
+// #SectionOneTest{
+//   z-index: 9 !important;
+// }
+
+// #cursorTest {
+//   z-index: 10 !important;
+// }
+
+// #page1h1Main,
+// #page1h2Main {
+//   z-index: 11 !important;
+// }
+
+
+
+// Employer -> manage profile- button
+
+
+.submitPersonalDetailButton {
+  position: relative;
+  display: inline-block;
+  padding: 16px 32px;
+  border-radius: 14px;
+  overflow: hidden;
+  z-index: 1;
+  border: 1px solid rgb(221, 218, 218);
+  background: white;
+  font-weight: bold;
+  font-size: 16px;
+  color: #cc5475;
+  transition: all 1.2s linear;
+  cursor: pointer;
+}
+
+.submitPersonalDetailButton::after {
+  content: "";
+  position: absolute;
+  background: linear-gradient(to right, #000, #111);
+  border-radius: 30%;
+  height: 96px;
+  width: 96px;
+  animation: spin infinite linear 1.8s;
+  animation-delay: 0;
+  bottom: -38px;
+  right: -112px;
+  transition: all 1.2s linear;
+  z-index: 0;
+}
+
+.submitPersonalDetailButton:hover {
+  color: #fff;
+  transition-duration: 1.2s;
+}
+
+.submitPersonalDetailButton:hover::after {
+  right: -60px;
+  bottom: -92px;
+  width: 256px;
+  height: 256px;
+}
+
+.submitPersonalDetailButton > .submitPersonalDetailButton-content {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Payment page
+
+/* Custom styles for radio button with green border */
+.radio-box {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  cursor: pointer;
+}
+
+.radio-box input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.radio-box input[type="radio"] + label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid #cc5475; /* Default border color */
+  border-radius: 50%;
+  background: #fff;
+}
+
+.radio-box input[type="radio"]:checked + label::before {
+  border-color: #cc5475; /* Green border when checked */
+}
+.css-78trlr-MuiButtonBase-root-MuiIconButton-root{
+  position: relative !important;
+}
+.radio-box input[type="radio"]:checked + label::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: #cc5475; /* Green dot when checked */
+  border-radius: 50%;
+}

@@ -1,0 +1,110 @@
+.makingMargin0 {
+  margin-bottom: 0px !important;
+  margin-top: 2px;
+}
+
+.dashboard-applicants-new1 {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 30px !important;
+}
+
+// .recentApplication-Dashboard {
+//   background-color: #fff;
+//   height: 12rem;
+//   width: auto;
+//   border-radius: 12px;
+//   border: 2px solid #f5f7fc;
+//   display: flex;
+  
+// }
+
+.recentApplication-Dashboard-left {
+  height: 12rem;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.recentApplication-Dashboard-right {
+  height: 12rem;
+  width: 65%;
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.3rem;
+}
+
+.recentApplication-Dashboard-far-right{
+  height: 12rem;
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 0.5rem;
+
+  .recentApplication-far-right-buttons {
+    background-color: #eff4fc;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+  
+    &:hover {
+      background-color: #1967d2;
+  
+      .recentApplication-far-right-icon {
+        color: #fff; /* Apply the hover color to the icon on parent hover */
+      }
+    }
+  
+    .recentApplication-far-right-icon {
+      color: #1967d2;
+      transition: color 0.3s ease; /* Add a smooth transition effect for the color */
+    }
+  }
+  
+  
+  
+
+
+}
+
+.recentApplication-Dashboard-image {
+  height: 6rem;
+  width: 8rem;
+  border-radius: 50%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.recentApplication-Dashboard-right-title {
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+  margin-bottom: 0px !important;
+}
+
+.recentApplication-Dashboard-right-setarea-1 {
+  display: flex;
+  column-gap: 10px;
+
+  .recentApplication-Dashboard-right-set-1 {
+    display: flex;
+    column-gap: 10px;
+    justify-content: start;
+    align-items: center;
+
+    .recentApplication-Dashboard-right-set-1-salary {
+      margin-bottom: 0px !important;
+      padding-top: 2px;
+    }
+  }
+}
+
+.recentApplication-break{
+  color: #e7e7f1;
+}
