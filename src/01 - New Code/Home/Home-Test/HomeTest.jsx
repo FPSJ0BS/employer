@@ -13,6 +13,15 @@ import { SectionNineHomeTest } from "./Section-Nine/SectionNineHomeNew";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MobileMenu from "../../Headers/MobileMenu";
 import FooterNew from "../Home-New/components/Navbar/Footer";
+import FormSection from "../Home-Three/Form-Section/FormSection.tsx"
+import FindOutSection from "../Home-Three/FindOutSection/FindOutSection.tsx"
+import WorriedAbout from "../Home-Three/WorriedAbout/WorriedAbout.tsx"
+import AIPowered from "../Home-Three/AIPowered/AIPowered.tsx"
+import FindGreatTalent from "../Home-Three/FindGreatTalent/FindGreatTalent.tsx"
+import TopTalent from "../Home-Three/TopTalent/TopTalent.tsx"
+import VideoSection from "../Home-Three/VideoSection/VideoSection.tsx"
+import FuelBottomLine from "../Home-Three/FuelBottomLine/FuelBottomLine.tsx"
+import WantToSearchForTheJob from "../Home-Three/WantToSearchForTheJob/WantToSearchForTheJob.tsx"
 
 export const HomeTest = () => {
   const containerTest = useRef();
@@ -50,10 +59,10 @@ export const HomeTest = () => {
         duration: 2,
         ease: "expo.out",
       })
-      .from("nav", {
-        opacity: 0,
-        delay: -0.2,
-      })
+      // .from("nav", {
+      //   opacity: 0,
+      //   delay: -0.2,
+      // })
       .from("#SectionOneTest h1", {
         opacity: 0,
         duration: 0.5,
@@ -233,33 +242,33 @@ export const HomeTest = () => {
 
   // All Page 2 Animations ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-  useGSAP(() => {
-    gsap.to("#SectionTwoTest", {
-      scrollTrigger: {
-        trigger: "#SectionOneTest",
-        // markers: true,
-        start: "-40 center",
-        scrub: 2,
-      },
-      y: -400,
-    });
-  });
+  // useGSAP(() => {
+  //   gsap.to("#SectionTwoTest", {
+  //     scrollTrigger: {
+  //       trigger: "#SectionOneTest",
+  //       // markers: true,
+  //       start: "-40 center",
+  //       scrub: 2,
+  //     },
+  //     y: -400,
+  //   });
+  // });
 
   // Our Services
 
-  useGSAP(() => {
-    gsap.from("#SectionTwoOurServices", {
-      scrollTrigger: {
-        trigger: "#SectionOneTest",
-        // markers: true,
-        start: "-10 center",
-        end: "120 center",
-        ease: "power1.out",
-        scrub: 2,
-      },
-      x: -400,
-    });
-  });
+  // useGSAP(() => {
+  //   gsap.from("#SectionTwoOurServices", {
+  //     scrollTrigger: {
+  //       trigger: "#SectionOneTest",
+  //       // markers: true,
+  //       start: "-10 center",
+  //       end: "120 center",
+  //       ease: "power1.out",
+  //       scrub: 2,
+  //     },
+  //     x: -400,
+  //   });
+  // });
 
   // Find OUt More
 
@@ -745,7 +754,7 @@ export const HomeTest = () => {
   return (
     <div
       id="fullnewhomenew"
-      className=""
+      className=" "
       ref={containerTest}
       onMouseMove={onMouseMove}
     >
@@ -758,11 +767,20 @@ export const HomeTest = () => {
         <MobileMenu />
       </div>
 
-      <SectionOne
+      {/* <SectionOne
         setonMouseEnterPageOne={onMouseEnterPageOne}
         setonMouseEnterPageOneSearchBox={onMouseEnterPageOneSearchBox}
-      />
-      <SectionTwo
+      /> */}
+      <FormSection />
+      <FindOutSection />
+      <WorriedAbout />
+      <AIPowered />
+      <FindGreatTalent />
+      <TopTalent />
+      <VideoSection />
+      <FuelBottomLine />
+      <WantToSearchForTheJob />
+      {/* <SectionTwo
         setonMouseEnterPageTwo={onMouseEnterPageTwo}
         setonMouseEnterBulletPoints={onMouseEnterBulletPoints}
         setonMouseLeaveBulletPoints={onMouseLeaveBulletPoints}
@@ -771,19 +789,19 @@ export const HomeTest = () => {
         setonMouseClickFPsJobs={onMouseClickFPsJobs}
         setOnMouseEnterBullPointOne={onMouseEnterBullPointOne}
         setOnMouseLeaveBullPointOne={onMouseLeaveBullPointOne}
-      />
-      <SectionThreeHomeNew
+      /> */}
+      {/* <SectionThreeHomeNew
         setonMouseEnterVideoPageThree={onMouseEnterVideoPageThree}
         setonMouseLeaveVideoPageThree={onMouseLeaveVideoPageThree}
-      />
+      /> */}
 
-      <SectionNineHomeTest setnMouseEnterPages={onMouseEnterPageOneSearchBox} />
+      {/* <SectionNineHomeTest setnMouseEnterPages={onMouseEnterPageOneSearchBox} />
 
       <SectionFourHomeNew setnMouseEnterPages={onMouseEnterPageOneSearchBox} />
 
-      <SectionFiveHomeNew setnMouseEnterPages={onMouseEnterPageOneSearchBox} />
+      <SectionFiveHomeNew setnMouseEnterPages={onMouseEnterPageOneSearchBox} /> */}
 
-      <SectionSixHomeNew />
+      {/* <SectionSixHomeNew /> */}
       <FooterNew />
 
       {/* <SectionSevenHomeNew setonMouseEnterPageSeven={onMouseEnterPageSeven} onMouseLeavePageSeven={onMouseLeavePageSeven} /> */}

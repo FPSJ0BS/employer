@@ -43,9 +43,6 @@ import { LoaderEmployer } from "../../../public/assets/LoaderEmployer";
 import { WalletDataInterface, setWalletData } from "../Employer/Redux/Wallet";
 
 export const RegisterNew = () => {
-  const { employerManageProfileFields } = useSelector(
-    (state) => state.employerManageProfile
-  );
   // Snackbar start ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // Snackbar Success
@@ -134,13 +131,6 @@ export const RegisterNew = () => {
         password: authRegister.password,
       });
       if (response?.data?.status) {
-        console.log('response?.data',response?.data?.data[0]);
-        const header = response?.data?.data[0]
-        await localStorage.setItem("header", JSON.stringify(header));
-        await dispatch(setLogin(true));
-      
-       const message = "Registration Successful!"
-
         setLoaderState(false);
         const hash = response?.data?.data[0];
         dispatch(
@@ -159,16 +149,14 @@ export const RegisterNew = () => {
         };
         localStorage.setItem("wallet", JSON.stringify(data));
          localStorage.setItem("walletData", JSON.stringify([data]));
-
         dispatch(setWalletData(data));
         const onSuccessMessage = await response?.data?.message;
-        await setSnackbarSuccessMessage(message);
+        await setSnackbarSuccessMessage(onSuccessMessage);
         setSnackbarSuccessOpen(true);
         setTimeout(() => {
           dispatch(openAdminModal("true"));
           setTimer(30);
         }, 500);
-        navigate("/manage-profile");
       } else {
         const errMessage = await response?.data?.message;
         await setSnackbarErrorMessage(errMessage);
@@ -303,7 +291,7 @@ export const RegisterNew = () => {
   return (
     <div className="w-[100%] ">
       <div className="w-[100%] h-[100vh] flex items-end justify-center relative">
-        {(modal.state && employerManageProfileFields?.emailVerified === 0) && (
+        {modal.state && (
           <EmailModal
             timerNew={timer}
             resendOtpfunc={resendOtp}

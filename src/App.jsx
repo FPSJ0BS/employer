@@ -138,8 +138,10 @@ import { editEmployerManageProfileFields } from "./01 - New Code/Employer/Redux/
 import { SingleProfile } from "./01 - New Code/Employer/Company Profile/SingleProfile/SingleProfile.tsx";
 import { EMailModalTwo } from "./01 - New Code/UI/Modal/EMailModal2.tsx";
 import SuggestedCandidateEmploeeDBPage from "./pages/employers-dashboard/suggested-candidate/index.jsx";
+import { CustomizedSnackbarTwo } from "./01 - New Code/Reusable Components/Snackbar/snackbarNew.tsx";
 
 function App() {
+  
   const { login } = useSelector((state) => state.login);
   const { employerManageProfileFields } = useSelector(
     (state) => state.employerManageProfile
@@ -224,8 +226,14 @@ function App() {
     }
   }, [employerManageProfileFields.emailVerified, authRegister]);
 
+ 
+
   return (
     <>
+
+      
+
+
       <div className="page-wrapper data-scroll-container">
         {employerManageProfileFields.emailVerified === 0 &&
           JSON.parse(localStorage.getItem("isModal")) && <EMailModalTwo />}

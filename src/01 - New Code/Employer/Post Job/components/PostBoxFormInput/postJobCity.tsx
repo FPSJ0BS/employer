@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { postEmployerPostJob } from "../../../Redux/EmployerSlice";
 import { CityInterface } from "../../../Redux/EmployerSlice";
 
-export const PostJobCity = () => {
+export const PostJobCity = ({setProcessLoc}) => {
   const { employerPostJob, PostJobPreFillDataCity } = useSelector(
     (state: any) => state.employerSliceNew
   );
@@ -26,7 +26,6 @@ export const PostJobCity = () => {
   };
 
   const handleOptionSelect = (option: string) => {
-    console.log("we are here");
     setInputValue(option);
     setShowDropdown(false);
     setIsSelect(true);
@@ -58,13 +57,14 @@ export const PostJobCity = () => {
 
   const clearInput = () => {
     setInputValue("");
-     setIsSelect(false);
+    setIsSelect(false);
     setShowDropdown(true);
     dispatch(
       postEmployerPostJob({
         city: "",
       })
     );
+    setProcessLoc(false);
   };
 
   useEffect(() => {
@@ -75,10 +75,14 @@ export const PostJobCity = () => {
     <div className=" relative  sm:w-[100%] w-[250px]">
       <label
         htmlFor="EmployerPostJobCity"
-        className="postJobInputTitle pb-1 block  font-medium text-gray-700"
+        className="postJobInputTitle pb-1 block font-medium text-gray-700"
       >
         City *
+        {employerPostJob.state.trim() === "" ? (
+          <span className=" text-[14px] font-medium"> (Select State First)</span>
+        ) : null}
       </label>
+
       <div className="relative">
         <input
           placeholder="Choose City..."

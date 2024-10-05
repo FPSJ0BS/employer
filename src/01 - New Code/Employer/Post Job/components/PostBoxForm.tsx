@@ -33,6 +33,7 @@ import { CircularProgressBar } from "./CircularProgress/CircularProgress";
 import { setWalletData } from "../../Redux/Wallet";
 import { PostJobCategory } from "./PostBoxFormInput/postJobCategory";
 import { Tooltip } from "@mui/material";
+import { PostJobProcessLocationOther } from "./PostBoxFormInput/postJobProcessLocationOther";
 
 const PostBoxForm = () => {
   const dispatch = useDispatch();
@@ -179,6 +180,9 @@ const PostBoxForm = () => {
     );
   };
 
+  const [processLoc, setProcessLoc] = useState(false);
+ 
+
   return (
     <div className="pb-[20px] w-[100%] sm:px-[5px]">
       <CustomizedSnackbarTwo
@@ -229,8 +233,10 @@ const PostBoxForm = () => {
             <div className="bg-gray-300 w-full h-[1px] mt-2 mb-4" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <PostJobJobTitle />
-              <PostJobState />
-              <PostJobCity />
+              <PostJobState  setProcessLoc = {setProcessLoc}/>
+              <PostJobCity setProcessLoc = {setProcessLoc}/>
+              <PostJobProcessLocation setProcessLoc = {setProcessLoc} />
+             {processLoc && <PostJobProcessLocationOther />}
               <PostJobExperience />
               <PostJobQualification />
             </div>
@@ -248,7 +254,6 @@ const PostBoxForm = () => {
               <PostJobSubject />
               <PostJobSalaryRange />
               <PostJobSelectionProcess />
-              <PostJobProcessLocation />
               <PostJobProcessState />
               <PostJobProcessCity />
             </div>

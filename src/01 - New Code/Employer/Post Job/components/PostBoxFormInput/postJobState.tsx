@@ -8,7 +8,7 @@ import {
 import { getCityListAxios } from "../../../../../api/apiAxios";
 import { RootState } from "../../../Redux/store"; // Adjust the import according to your store configuration
 
-export const PostJobState: React.FC = () => {
+export const PostJobState: React.FC = ({setProcessLoc}) => {
   const { PostJobPreFillDataState } = useSelector(
     (state: RootState) => state.employerSliceNew
   );
@@ -95,8 +95,10 @@ export const PostJobState: React.FC = () => {
       postEmployerPostJob({
         state: "",
         city: "",
+        process_location: "",
       })
     );
+    setProcessLoc(false)
   };
 
   const handleScroll = () => {
