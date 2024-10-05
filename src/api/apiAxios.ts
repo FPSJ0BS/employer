@@ -301,6 +301,31 @@ export const getProfile = async () => {
   }
 };
 
+// Getting Area data ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+export const getArea = async (city : string) => {
+  try {
+    const authorizationToken: any = localStorage.getItem("header");
+    const storedDataObject = JSON.parse(authorizationToken);
+
+    if (!authorizationToken) {
+      console.error("Authorization token not available");
+      return;
+    }
+
+    const response = await axios.get(`https://empapi.fpsjob.com/user/areaByCity?city=${city}`, {
+      headers: {
+        Authorization: `Bearer ${storedDataObject}`,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
+
 // Get job detail
 
 export const getjobDetail = async (id: any) => {

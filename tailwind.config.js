@@ -4,7 +4,7 @@ import { background } from '@chakra-ui/react';
 export default {
   content: ["./index.html",
 
-  "./src/**/*.{js,ts,jsx,tsx}",],
+    "./src/**/*.{js,ts,jsx,tsx}",],
   important: "#root",
   theme: {
     extend: {
@@ -18,17 +18,20 @@ export default {
           },
         },
       },
-      colors:{
+      colors: {
         mainBgColor: '#dd4975',
-        errorBgColor:'#344e41',
-        successBgColor:'#c1121f',
+        errorBgColor: '#344e41',
+        successBgColor: '#c1121f',
         backgroundOne: '#292929',
         backgroundTwo: '#111',
         backgroundThree: '#1e1e1e',
-        inputBorder:'#b9bcbe',
+        inputBorder: '#b9bcbe',
         inputBg: '#f1f5f7',
-        inputActiveBorderColor:'#dd4975',
-        
+        inputActiveBorderColor: '#dd4975',
+        'white-1f': '#FFFFFF1F',
+        'white-0a': '#FFFFFF0A',
+        'white-12': '#FFFFFF12',
+
       }
     },
   },

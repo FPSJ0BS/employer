@@ -4,14 +4,13 @@ import talentoLogo from '../../../../../../public/assets/icons/Tallento LOGO.png
 import { useSelector } from "react-redux";
 import LogoutButton from "../../../../Reusable Components/Logout Button/LogoutButton";
 
+
 function NavbarNew() {
 
   const { login } = useSelector((state) => state.login);
 
-
-
   return (
-    <nav id="nav-new" className=" bg-black z-40 fixed w-[100%] flex flex-col items-center justify-between 
+    <nav  className=" bg-black z-40 fixed w-[100%] flex flex-col items-center justify-between 
     
 
     ">

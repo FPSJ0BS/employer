@@ -44,7 +44,7 @@ export const LoginEmail = () => {
   // Snackbar end ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   const navigate = useNavigate();
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const fcm_token = localStorage.getItem("Fcm");
   const dispatch = useDispatch();
@@ -80,7 +80,7 @@ export const LoginEmail = () => {
           };
           localStorage.setItem("wallet", JSON.stringify(data));
           localStorage.setItem("walletData", JSON.stringify([data]));
-          dispatch(setWalletData(data));
+          // dispatch(setWalletData(data));
       } else {
         const onErrorMessage = await response?.data?.message;
         await setSnackbarErrorMessage(onErrorMessage);

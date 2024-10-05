@@ -15,6 +15,9 @@ import { CustomizedSnackbarTwo } from "../../../Reusable Components/Snackbar/sna
 
 import NODATAPIC from "../../../../../public/assets/storyset/Innovation-pana.png";
 import { showFirstAndLastLetter } from "../../../../utils/showFirstAndLastLetter";
+import { Download, Phone } from "lucide-react";
+import OpenToWork from "../../../../../public/assets/profile/opentowork.png";
+import "./suggestedProfile.scss";
 const SuggestedCandidate = () => {
   const [snackbarSuccessOpen, setSnackbarSuccessOpen] = useState(false);
   const [snackbarSuccessMessage, setSnackbarSuccessMessage] = useState("");
@@ -33,13 +36,15 @@ const SuggestedCandidate = () => {
   const dispatch = useDispatch();
   const [applicationsArray, setApplicationsArray] = useState([]);
   const [leaderSet, setLoaderSet] = useState(false);
-  const { employerEditJob } = useSelector((state:any) => state.employerEditJob);
+  const { employerEditJob } = useSelector(
+    (state: any) => state.employerEditJob
+  );
   const {
     employerCandidateData,
     isApplyData,
     allQualificationDataToFilter,
     allTeachingDataToFilter,
-  } = useSelector((state:any) => state.employerCandidate);
+  } = useSelector((state: any) => state.employerCandidate);
   const {
     pageNumber,
     sortDataLength,
@@ -62,7 +67,7 @@ const SuggestedCandidate = () => {
         : "";
     setLoaderSet(true);
     try {
-      const authorizationToken:any = localStorage.getItem("header");
+      const authorizationToken: any = localStorage.getItem("header");
       const storedDataObject = JSON.parse(authorizationToken);
 
       if (!authorizationToken) {
@@ -200,6 +205,16 @@ const SuggestedCandidate = () => {
       getCandidateList();
     }
   }, [jobData, pageNumber]);
+
+  const handleOpenNewPage = (id, cv) => {
+    const link = document.createElement("a");
+    link.href = cv;
+    link.target = "_blank";
+    link.download = "resume.pdf"; // You can set a default file name here
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   return (
     <div className="p-3">
       <h2 className="text-xl font-semibold">Candidate Suggestions</h2>
@@ -322,7 +337,7 @@ const SuggestedCandidate = () => {
         {leaderSet ? (
           <Loader />
         ) : (
-          <div className="flex flex-col gap-4 min-h-[100vh] w-[920px] 2xl:w-[950px] mt-4 ">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 min-h-[100vh] w-full mt-4 ">
             {applicationsArray?.length < 1 ? (
               <div className=" flex flex-col justify-center items-center z-30">
                 {" "}
@@ -332,11 +347,11 @@ const SuggestedCandidate = () => {
                 <img className=" w-[40%]" src={NODATAPIC} alt="No Data" />
               </div>
             ) : (
-              applicationsArray?.map((application:any, index) => {
+              applicationsArray?.map((application: any, index) => {
                 return (
                   <div
                     key={application?.applyID}
-                    className=" cursor-default relative transition-all duration-500 hover:translate-y-2 w-[920px] 2xl:w-[950px] min-h-[250px] bg-neutral-50 rounded-lg shadow-xl flex flex-row items-center justify-start gap-4 p-3 before:absolute before:w-full hover:before:top-0 before:duration-500 before:-top-1 before:h-1 "
+                    className=" cursor-default relative transition-all duration-500 hover:translate-y-2 w-full min-h-[250px] bg-neutral-50 rounded-lg shadow-xl flex flex-row items-center justify-start gap-4 p-3 before:absolute before:w-full hover:before:top-0 before:duration-500 before:-top-1 before:h-1 "
                   >
                     {/* {schedulePopup[index] && (
                     <div className="z-50 flex flex-col gap-3 justify-center items-center shadow-2xl absolute right-[21vw] xl:right-[21vw] 2xl:right-[19vw] rounded-[10px] w-[500px] min-h-[270px] bg-white border-1 border-solid border-gray-300">
@@ -441,41 +456,50 @@ const SuggestedCandidate = () => {
                   )} */}
 
                     <div className=" flex w-[100%]  min-h-[250px] pt-[20px] pb-4 gap-[10px]">
-                      <div className="w-[10%]  flex flex-col justify-top gap-4">
-                        <img
-                          className="w-[80px] h-[80px] rounded-[50%]"
-                          src={
-                            application?.image
-                              ? application?.image
-                              : DefaultAvatar
-                          }
-                        />
-                        {/* <a href={`tel:${application?.mobile}`}>
-                        <div className="text-[#458d76] hover:text-white cursor-pointer w-[100%] border-1 border-solid border-[#458d76] hover:bg-[#458d76] rounded-[6px] h-[30px] flex justify-center items-center gap-2">
-                          <Phone className="w-[15px] " />
-                          <h3 className=" font-semibold ">Call</h3>
+                      <div className="w-[20%]  flex flex-col justify-top gap-4">
+                        <div className="relative w-[80px] h-[80px]">
+                          {application?.work_status === 1 && (
+                            <img
+                              className="baseImage w-[80px] h-[80px] rounded-[50%] absolute top-0 left-0 "
+                              src={OpenToWork}
+                            />
+                          )}
+                          <img
+                            className="opentoworkimage w-[80px] h-[80px] rounded-[50%] absolute top-0 left-0 "
+                            src={
+                              application?.image
+                                ? application?.image
+                                : DefaultAvatar
+                            }
+                          />
                         </div>
-                      </a> */}
 
-                        {/* {application?.cv_doc.trim() !== "" && (
-                        <div
-                          onClick={() =>
-                            handleOpenNewPage(
-                              application?.faculityID,
-                              application?.cv_doc
-                            )
-                          }
-                          className="text-[#003566] hover:text-white cursor-pointer w-[100%] border-1 border-solid border-[#003566] hover:bg-[#003566] rounded-[6px] h-[30px] flex justify-center items-center gap-2"
-                        >
-                          <Download className="w-[17px] " />
-                          <h3 className=" font-semibold ">CV</h3>
-                        </div>
-                      )} */}
+                        <a href={`tel:${application?.mobile}`}>
+                          <div className="text-[#458d76] hover:text-white cursor-pointer w-[100%] border-1 border-solid border-[#458d76] hover:bg-[#458d76] rounded-[6px] h-[30px] flex justify-center items-center gap-2">
+                            <Phone className="w-[15px] " />
+                            <h3 className=" font-semibold ">Call</h3>
+                          </div>
+                        </a>
+
+                        {application?.cv_doc.trim() !== "" && (
+                          <div
+                            onClick={() =>
+                              handleOpenNewPage(
+                                application?.faculityID,
+                                application?.cv_doc
+                              )
+                            }
+                            className="text-[#003566] hover:text-white cursor-pointer w-[100%] border-1 border-solid border-[#003566] hover:bg-[#003566] rounded-[6px] h-[30px] flex justify-center items-center gap-2"
+                          >
+                            <Download className="w-[17px] " />
+                            <h3 className=" font-semibold ">CV</h3>
+                          </div>
+                        )}
                       </div>
 
                       <div className="ml-1 -mr-1 w-[1%] my-[0px] border-l-[1px] border-r-0 border-t-0 border-b-0 border-dashed border-gray-500"></div>
 
-                      <div className=" flex flex-col gap-2 w-[19%] justify-start items-start  ">
+                      <div className=" flex flex-col gap-2 w-[40%] justify-start items-start  ">
                         <h2 className=" capitalize font-semibold text-[#438e76] text-[22px]">
                           {showFirstAndLastLetter(application?.name)}
                         </h2>
@@ -546,39 +570,23 @@ const SuggestedCandidate = () => {
                               : application?.current_employer}
                           </span>
                         </h3>
+                        { application?.mobile && <h3 className="font-semibold W-[50%]">
+                          Mobile:&nbsp;
+                          <span className="font-normal lowercase break-words">
+                            {application?.mobile}
+                          </span>
+                        </h3>}
                       </div>
 
                       <div className="ml-1 -mr-1 w-[1%] my-[0px] border-l-[1px] border-r-0 border-t-0 border-b-0 border-dashed border-gray-500"></div>
 
-                      <div className=" flex flex-col gap-2 w-[19%] pt-[10px]">
-                        {/* <h3 key={index} className="font-semibold W-[50%]">
-                        Email:&nbsp;
-                        <span className="font-normal lowercase break-words">
-                          {visibleEmails[index]
-                            ? application.email
-                            : maskEmail(application.email)}
-                          <span
-                            className="bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize ml-1 mt-2"
-                            onClick={
-                              visibleEmails[index]
-                                ? null
-                                : () =>
-                                    toggleMask(
-                                      application?.applyID,
-                                      "email",
-                                      index
-                                    )
-                            }
-                            style={{
-                              cursor: visibleEmails[index]
-                                ? "default"
-                                : "pointer",
-                            }}
-                          >
-                            {visibleEmails[index] ? "View Email" : "View Email"}
+                      <div className=" flex flex-col gap-2 w-[40%] pt-[10px]">
+                        <h3 className="font-semibold W-[50%]">
+                          Email:&nbsp;
+                          <span className="font-normal lowercase break-words">
+                            {application?.email}
                           </span>
-                        </span>
-                      </h3> */}
+                        </h3>
                         <h3 className="font-semibold">
                           University:{" "}
                           <span className="font-normal capitalize">
