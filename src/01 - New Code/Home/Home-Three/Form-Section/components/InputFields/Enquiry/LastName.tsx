@@ -16,7 +16,7 @@ export const LastName: React.FC<OrganizationNameProps> = ({
 
     setFormData({
       ...formData,
-      lastName: inputValue,
+      sales_subject: inputValue,
     });
   };
 
@@ -29,15 +29,15 @@ export const LastName: React.FC<OrganizationNameProps> = ({
         First Name *
       </label> */}
       <input
-        placeholder="Enter Last Name..."
+        placeholder="Enter Subject..."
         autoComplete="off"
         required
         onChange={(e) => handleChange(e)}
         type="text"
-        id="LastName"
-        name="LastName"
+        id="sales_subject"
+        name="sales_subject"
         className=" p-2  w-[100%] border-t-0 border-l-0 border-r-0 border-b-[3px] focus:border-[2px] border-gray-300 rounded-md focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-        value={formData?.lastName}
+        value={formData?.sales_subject}
       />
     </div>
   );

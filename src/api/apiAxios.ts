@@ -168,6 +168,18 @@ export const postPhoneOtpRegistrationAxios = async (postData: any) => {
     throw error;
   }
 };
+export const postEnquiryForm = async (postData: any) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/sales-enquiries`,
+      postData
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
 
 // Post Register
 export const postRegisterAxios = async (postData: any) => {

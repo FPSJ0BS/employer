@@ -4,12 +4,13 @@ import { EmailId } from "../InputFields/Enquiry/EmailID";
 import { FirstName } from "../InputFields/Enquiry/FirstName";
 import { LastName } from "../InputFields/Enquiry/LastName";
 import { Industry } from "../InputFields/Enquiry/Industry";
-import { postPhoneOtpRegistrationAxios } from "../../../../../../api/apiAxios";
+import { postEnquiryForm, postPhoneOtpRegistrationAxios } from "../../../../../../api/apiAxios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postAuthRegister } from "../../../../../Employer/Redux/Authentication";
 import { MobileNumber } from "../InputFields/Enquiry/MobileNumber";
 import { EnquiryDescription } from "../InputFields/Enquiry/EnquiryDescription";
+import { SalesCity } from "../InputFields/Enquiry/SalesCity";
 
 const EnquiryForm = ({
   setSnackbarSuccessMessage,
@@ -20,14 +21,15 @@ const EnquiryForm = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    organizationName: "",
-    EmailId: "",
-    firstName: "",
-    lastName: "",
+    sales_company_name: "",
+    sales_email: "",
+    person_first_name: "",
+    sales_subject: "",
+    sales_city: "",
     industry: null,
     password: "",
-    mobile_number: null,
-    organization_description: "",
+    sales_phone: null,
+    sales_message: "",
   });
 
   const registerFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,16 +37,14 @@ const EnquiryForm = ({
 
     // setLoaderState(true);
     try {
-      const response = await postPhoneOtpRegistrationAxios({
-        email_id: formData.EmailId,
-        institute_name: formData.organizationName,
-        person_first_name: formData.firstName,
-        person_last_name: formData.lastName,
-        nt_id: formData.industry,
-        password: "test@123A",
-        lead: 1,
-        mobile_number: formData.mobile_number,
-        organization_description: formData.organization_description,
+      const response = await postEnquiryForm({
+        sales_email: formData.sales_email,
+        sales_company_name: formData.sales_company_name,
+        person_first_name: formData.person_first_name,
+        sales_subject: formData.sales_subject,
+        sales_phone: formData.sales_phone,
+        sales_city: formData.sales_city,
+        sales_message: formData.sales_message,
       });
       if (response?.data?.status) {
         // const header = response?.data?.data[0];
@@ -79,14 +79,14 @@ const EnquiryForm = ({
 
         setFormData({
           ...formData,
-          organizationName: "",
-          EmailId: "",
-          firstName: "",
-          lastName: "",
-          organization_description: "",
+          sales_company_name: "",
+          sales_email: "",
+          person_first_name: "",
+          sales_subject: "",
+          sales_message: "",
+          sales_city: "",
           industry: null,
-          mobile_number: null,
-          nt_id: null,
+          sales_phone: null,
         });
 
         // setTimeout(() => {
@@ -117,7 +117,7 @@ const EnquiryForm = ({
       <MobileNumber formData={formData} setFormData={setFormData} />
       <FirstName formData={formData} setFormData={setFormData} />
       <LastName formData={formData} setFormData={setFormData} />
-      <Industry formData={formData} setFormData={setFormData} />
+      <SalesCity formData={formData} setFormData={setFormData} />
       <EnquiryDescription formData={formData} setFormData={setFormData} />
       {/* <Password formData={formData} setFormData={setFormData} /> */}
       <div className=" w-full flex items-center justify-center">

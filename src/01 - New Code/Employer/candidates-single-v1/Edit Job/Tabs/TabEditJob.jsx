@@ -19,7 +19,7 @@ export default function TabsEditJob({ screenignQuestions, desc }) {
     };
 
     return (
-      <Box className=" w-[920px] sm:w-[950px]">
+      <Box className=" w-[920px] sm:w-full">
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <TabList onChange={handleChange} aria-label="lab API tabs example">
@@ -40,7 +40,7 @@ export default function TabsEditJob({ screenignQuestions, desc }) {
           <TabPanel value="2">
             <div id="descEditJob">{desc}</div>
           </TabPanel>
-          <TabPanel value="1">
+          <TabPanel value="1" className='w-full'>
             <CandidatesApplied />
           </TabPanel>
           

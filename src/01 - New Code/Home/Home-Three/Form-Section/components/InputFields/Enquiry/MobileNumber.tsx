@@ -18,7 +18,7 @@ export const MobileNumber: React.FC<OrganizationNameProps> = ({
   
     setFormData({
       ...formData,
-      mobile_number: numberValue,
+      sales_phone: numberValue,
     });
   };
 
@@ -36,10 +36,10 @@ export const MobileNumber: React.FC<OrganizationNameProps> = ({
         required
         onChange={(e) => handleChange(e)}
         type="tel"
-        id="mobile_number"
-        name="mobile_number"
+        id="sales_phone"
+        name="sales_phone"
         className=" p-2  w-[100%] border-t-0 border-l-0 border-r-0 border-b-[3px] focus:border-[2px] border-gray-300 rounded-md focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-        value={formData?.mobile_number ?? ""}
+        value={formData?.sales_phone ?? ""}
       />
     </div>
   );
