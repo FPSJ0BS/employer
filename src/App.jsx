@@ -139,6 +139,7 @@ import { SingleProfile } from "./01 - New Code/Employer/Company Profile/SinglePr
 import { EMailModalTwo } from "./01 - New Code/UI/Modal/EMailModal2.tsx";
 import SuggestedCandidateEmploeeDBPage from "./pages/employers-dashboard/suggested-candidate/index.jsx";
 import { CustomizedSnackbarTwo } from "./01 - New Code/Reusable Components/Snackbar/snackbarNew.tsx";
+import  Faq  from "./01 - New Code/FAQ/Faq.tsx";
 
 function App() {
 
@@ -257,6 +258,7 @@ function App() {
                   <Route path="login-email" element={<LoginEmail />} />
                   <Route path="register" element={<RegisterNew />} />
                   <Route path="forgot-password" element={<ForgotPassword />} />
+                  <Route path="faq" element={<Faq />} />
                 </>
               ) : (
                 <>
