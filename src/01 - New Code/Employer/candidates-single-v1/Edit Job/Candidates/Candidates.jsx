@@ -45,7 +45,7 @@ import { formatAMPM } from "../../../../../utils/formatAMPM.ts";
 
 export const CandidatesApplied = () => {
   const location = useLocation();
-  
+
   // Split the pathname and extract the second part which contains the ID (7080)
   const parts = location.pathname.split('/');
   const candidateId = parts[2]; // This will be "7080"
@@ -552,14 +552,14 @@ export const CandidatesApplied = () => {
 
   const [visibleEmails, setVisibleEmails] = useState({});
 
-  const toggleMask = async (id, emailId, email,faculityID) => {
+  const toggleMask = async (id, emailId, email, faculityID) => {
     try {
       const res = await postViewMobileAndEmail({
         applyID: id,
         view_field: emailId,
         log_type: "job_applied",
         faculityID,
-        jobID:candidateId
+        jobID: candidateId
       });
 
       if (res?.data?.status) {
@@ -585,14 +585,14 @@ export const CandidatesApplied = () => {
 
   const [visibleMobiles, setVisibleMobiles] = useState({});
 
-  const toggleMaskMobile = async (id, mobileId, index,faculityID) => {
+  const toggleMaskMobile = async (id, mobileId, index, faculityID) => {
     try {
       const res = await postViewMobileAndEmail({
         applyID: id,
         view_field: mobileId,
         log_type: "job_applied",
         faculityID,
-        jobID:candidateId
+        jobID: candidateId
       });
 
       if (res?.data?.status) {
@@ -932,7 +932,7 @@ export const CandidatesApplied = () => {
                             {visibleEmails[index]
                               ? application.email
                               : maskEmail(application.email)}
-                              <br />
+                            <br />
                             <span
                               className="bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize ml-1 mt-2"
                               onClick={
@@ -1037,14 +1037,24 @@ export const CandidatesApplied = () => {
                           application?.m_interview_time !== null &&
                           application?.m_interview_event_type !== null &&
                           application?.m_interview_note !== null && (
-                            <div
-                              onClick={() => toggleInterviewDetailsPopup(index)}
-                              className="text-white text-center hover:text-white cursor-pointer min-w-[50%] px-2 py-1 border border-solid border-[#023e8a] bg-[#023e8a] rounded-[6px] min-h-[35px] flex justify-center items-center gap-2"
-                            >
-                              <h3 className="text-[15px] font-semibold">
-                                View More
-                                <br /> Interview Details
-                              </h3>
+                            <div className="flex flex-col gap-2">
+                              <div
+                                onClick={() => toggleInterviewDetailsPopup(index)}
+                                className="text-white text-center hover:text-white cursor-pointer min-w-[50%] px-2 py-1 border border-solid border-[#023e8a] bg-[#023e8a] rounded-[6px] min-h-[35px] flex justify-center items-center gap-2"
+                              >
+                                <h3 className="text-[15px] font-semibold">
+                                  View More
+                                  <br /> Interview Details
+                                </h3>
+                              </div>
+                              <div
+                              
+                                className="text-white text-center hover:text-white cursor-pointer min-w-[50%] px-2 py-1  bg-red-400 rounded-[6px] min-h-[35px] flex justify-center items-center gap-2"
+                              >
+                                <h3 className="text-[15px] font-semibold">
+                                  Cancel Interview
+                                </h3>
+                              </div>
                             </div>
                           )}
 

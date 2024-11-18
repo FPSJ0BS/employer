@@ -283,7 +283,16 @@ export const ManageProfileNew = () => {
                   <Email />
                   <PhoneNumber />
 
-                  <div className="w-[100%] flex justify-center sm:justify-start items-end col-span-2 mt-4">
+                  <div className="w-[100%] flex justify-center sm:justify-between items-end col-span-2 mt-4">
+                    <button
+                      onClick={() => navigate("/employers-dashboard/dashboard")}
+                      type="button"
+                      className="submitPersonalDetailButton"
+                    >
+                      <span className="submitPersonalDetailButton-content">
+                        {"Cancel"}
+                      </span>
+                    </button>
                     <button className="submitPersonalDetailButton">
                       <span className="submitPersonalDetailButton-content">
                         {employerManageProfileFields?.phoneNumberVerified === 0
@@ -324,7 +333,16 @@ export const ManageProfileNew = () => {
                   <OrganizationContactPersonEmail />
                   <OrganizationContactPersonNumber />
                   <OrganizationContactPersonDesignation />
-                  <div className="w-[100%] flex justify-center sm:justify-start items-end col-span-2 mt-4 gap-2">
+                  <div className="w-[100%] flex justify-center sm:justify-between items-end col-span-2 mt-4 gap-2">
+                    <button
+                      onClick={() => navigate("/employers-dashboard/dashboard")}
+                      type="button"
+                      className="submitPersonalDetailButton"
+                    >
+                      <span className="submitPersonalDetailButton-content">
+                        {"Cancel"}
+                      </span>
+                    </button>
                     <button className="submitPersonalDetailButton">
                       <span className="submitPersonalDetailButton-content">
                         Submit Details
