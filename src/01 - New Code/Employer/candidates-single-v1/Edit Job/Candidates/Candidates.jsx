@@ -5,7 +5,7 @@ import {
   BASE_URL,
   postViewMobileAndEmail,
 } from "../../../../../api/apiAxios.ts";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { ShowDataLength } from "./input/pageData.tsx";
 import { useSelector, useDispatch } from "react-redux";
 import { CadidateStatus } from "./input/candidateStatus.tsx";
@@ -44,6 +44,12 @@ import { setHeaderShow } from "../../../Redux/EmployerSlice.tsx";
 import { formatAMPM } from "../../../../../utils/formatAMPM.ts";
 
 export const CandidatesApplied = () => {
+  const location = useLocation();
+  
+  // Split the pathname and extract the second part which contains the ID (7080)
+  const parts = location.pathname.split('/');
+  const candidateId = parts[2]; // This will be "7080"
+
   const navigate = useNavigate();
 
   // Snackbar start ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -189,18 +195,15 @@ export const CandidatesApplied = () => {
         status === "applied"
           ? ["Applied"]
           : status === "new"
-          ? ["Applied", "Resume Reviewed", "Reviewed By FPS"]
-          : employerCandidateData?.status
-          ? [employerCandidateData?.status]
-          : [];
+            ? ["Applied", "Resume Reviewed", "Reviewed By FPS"]
+            : employerCandidateData?.status
+              ? [employerCandidateData?.status]
+              : [];
 
       const response = await axios.get(
-        `${BASE_URL}/job/${jobID}/applied-candidate-list?page=${
-          employerCandidateData?.pageNumber
-        }&limit=${
-          employerCandidateData?.sortDataLength
-        }&status=${JSON.stringify(_status)}&search=${
-          employerCandidateSearchBox?.search || ""
+        `${BASE_URL}/job/${jobID}/applied-candidate-list?page=${employerCandidateData?.pageNumber
+        }&limit=${employerCandidateData?.sortDataLength
+        }&status=${JSON.stringify(_status)}&search=${employerCandidateSearchBox?.search || ""
         }`,
         {
           headers: {
@@ -326,7 +329,7 @@ export const CandidatesApplied = () => {
   const handleOpenNewPage = (id, cv) => {
     const link = document.createElement("a");
     link.href = cv;
-     link.target = "_blank"; 
+    link.target = "_blank";
     link.download = "resume.pdf"; // You can set a default file name here
     document.body.appendChild(link);
     link.click();
@@ -549,11 +552,14 @@ export const CandidatesApplied = () => {
 
   const [visibleEmails, setVisibleEmails] = useState({});
 
-  const toggleMask = async (id, emailId, email) => {
+  const toggleMask = async (id, emailId, email,faculityID) => {
     try {
       const res = await postViewMobileAndEmail({
         applyID: id,
         view_field: emailId,
+        log_type: "job_applied",
+        faculityID,
+        jobID:candidateId
       });
 
       if (res?.data?.status) {
@@ -579,11 +585,14 @@ export const CandidatesApplied = () => {
 
   const [visibleMobiles, setVisibleMobiles] = useState({});
 
-  const toggleMaskMobile = async (id, mobileId, index) => {
+  const toggleMaskMobile = async (id, mobileId, index,faculityID) => {
     try {
       const res = await postViewMobileAndEmail({
         applyID: id,
         view_field: mobileId,
+        log_type: "job_applied",
+        faculityID,
+        jobID:candidateId
       });
 
       if (res?.data?.status) {
@@ -656,28 +665,28 @@ export const CandidatesApplied = () => {
                 allTeachingDataToFilter.length > 0 ||
                 employerCandidateData?.noticePeriod.trim() !== "" ||
                 employerCandidateData?.applicationWithinDays !== null) && (
-                <button
-                  type="button"
-                  onClick={() => clearingAllFilter()}
-                  className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110"
-                >
-                  <svg
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    className="h-5 w-5 mr-2"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <button
+                    type="button"
+                    onClick={() => clearingAllFilter()}
+                    className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110"
                   >
-                    <path
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      strokeWidth="2"
-                      strokeLinejoin="round"
-                      strokeLinecap="round"
-                    ></path>
-                  </svg>
-                  Clear Filter
-                </button>
-              )}
+                    <svg
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="h-5 w-5 mr-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        strokeWidth="2"
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                      ></path>
+                    </svg>
+                    Clear Filter
+                  </button>
+                )}
             </div>
           </div>
         }
@@ -869,11 +878,12 @@ export const CandidatesApplied = () => {
                                 visibleMobiles[index]
                                   ? null
                                   : () =>
-                                      toggleMaskMobile(
-                                        application?.applyID,
-                                        "mobile",
-                                        index
-                                      )
+                                    toggleMaskMobile(
+                                      application?.applyID,
+                                      "mobile",
+                                      index,
+                                      application?.faculityID,
+                                    )
                               }
                               style={{
                                 cursor: visibleMobiles[index]
@@ -922,17 +932,19 @@ export const CandidatesApplied = () => {
                             {visibleEmails[index]
                               ? application.email
                               : maskEmail(application.email)}
+                              <br />
                             <span
                               className="bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize ml-1 mt-2"
                               onClick={
                                 visibleEmails[index]
                                   ? null
                                   : () =>
-                                      toggleMask(
-                                        application?.applyID,
-                                        "email",
-                                        index
-                                      )
+                                    toggleMask(
+                                      application?.applyID,
+                                      "email",
+                                      index,
+                                      application?.faculityID,
+                                    )
                               }
                               style={{
                                 cursor: visibleEmails[index]
@@ -1087,11 +1099,10 @@ export const CandidatesApplied = () => {
                                   application?.status
                                 )
                               }
-                              className={`${
-                                application?.status === "Rejected"
-                                  ? "bg-[#a45e5c] text-white cursor-default"
-                                  : "cursor-pointer"
-                              } text-[#a45e5c] hover:text-white  w-[50%] border-1 border-solid border-[#a45e5c] hover:bg-[#a45e5c] rounded-[6px] h-[30px] flex justify-center items-center gap-2`}
+                              className={`${application?.status === "Rejected"
+                                ? "bg-[#a45e5c] text-white cursor-default"
+                                : "cursor-pointer"
+                                } text-[#a45e5c] hover:text-white  w-[50%] border-1 border-solid border-[#a45e5c] hover:bg-[#a45e5c] rounded-[6px] h-[30px] flex justify-center items-center gap-2`}
                             >
                               {rejectLoader[application?.applyID] ? (
                                 <LoaderCircleButton />
@@ -1111,11 +1122,10 @@ export const CandidatesApplied = () => {
                                   application?.status
                                 )
                               }
-                              className={`${
-                                application?.status === "Profile Shortlisted"
-                                  ? "bg-[#458d76] text-white cursor-default"
-                                  : "cursor-pointer"
-                              } text-[#458d76] hover:text-white cursor-pointer w-[50%] border-1 border-solid border-[#458d76] hover:bg-[#458d76] rounded-[6px] h-[30px] flex justify-center items-center gap-2`}
+                              className={`${application?.status === "Profile Shortlisted"
+                                ? "bg-[#458d76] text-white cursor-default"
+                                : "cursor-pointer"
+                                } text-[#458d76] hover:text-white cursor-pointer w-[50%] border-1 border-solid border-[#458d76] hover:bg-[#458d76] rounded-[6px] h-[30px] flex justify-center items-center gap-2`}
                             >
                               {acceptLoader[application?.applyID] ? (
                                 <LoaderCircleButton />
@@ -1124,7 +1134,7 @@ export const CandidatesApplied = () => {
                                   <CheckCheck className="w-[18px]" />
                                   <h3 className="font-semibold">
                                     {application?.status ===
-                                    "Profile Shortlisted"
+                                      "Profile Shortlisted"
                                       ? "Shortlisted"
                                       : "Shortlist"}
                                   </h3>
@@ -1142,7 +1152,7 @@ export const CandidatesApplied = () => {
                         right: "0px",
                         bottom: "0px",
                         padding: "5px",
-                        fontSize:"14px"
+                        fontSize: "14px"
                       }}
                     >
                       {new Date(application?.created_at).toLocaleDateString(

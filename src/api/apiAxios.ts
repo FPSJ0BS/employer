@@ -1501,3 +1501,24 @@ export const doSendMail = async (data: any) => {
     throw error;
   }
 };
+
+export const suggestedProfileQuery = async (data: any) => {
+  const authorizationToken: any = localStorage.getItem("header");
+  const storedDataObject = JSON.parse(authorizationToken);
+
+  if (!authorizationToken) {
+    console.error("Authorization token not available");
+    return;
+  }
+  try {
+    const response = await axios.post(`${BASE_URL}/suggested_profile_request`, data, {
+      headers: {
+        Authorization: `Bearer ${storedDataObject}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};

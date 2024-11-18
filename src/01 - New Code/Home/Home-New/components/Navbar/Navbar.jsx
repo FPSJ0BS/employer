@@ -10,7 +10,7 @@ function NavbarNew() {
   const { login } = useSelector((state) => state.login);
 
   return (
-    <nav  className=" bg-black z-40 fixed w-[100%] flex flex-col items-center justify-between 
+    <nav className=" bg-black z-40 fixed w-[100%] flex flex-col items-center justify-between 
     
 
     ">
@@ -48,10 +48,10 @@ function NavbarNew() {
             to={`${login ? "/employers-dashboard/post-jobs" : "/login-otp"}`}
 
           >
-            <button className="cubertoButton">
+            <button className="cubertoButton w-[170px]">
 
 
-              <span data-text="Post Job">Post Job</span>
+              <span data-text="Hiring / Post a Job">Hiring / Post a Job</span>
             </button>
           </Link>
 
@@ -66,6 +66,17 @@ function NavbarNew() {
             <button className="cubertoButton w-[150px]">
               <span data-text={login ? 'Dashboard' : 'Login / Register'}>{login ? 'Dashboard' : 'Login / Register'}</span>
 
+            </button>
+          </Link>
+          <Link
+          target="_blank"
+            to={`https://tallento.ai/`}
+
+          >
+            <button className="cubertoButton w-[150px]">
+
+
+              <span data-text="Go to Tallento">Go to Tallento</span>
             </button>
           </Link>
 

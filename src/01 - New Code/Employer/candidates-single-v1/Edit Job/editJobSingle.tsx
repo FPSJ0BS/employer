@@ -411,15 +411,11 @@ export const EditJObSingle = () => {
               <div className="row flex ">
                 <div className="content-column col-lg-8 col-md-12 col-sm-12">
                   <div className="job-detail">
-                    <div className=" bg-[#faf9f8] w-auto h-[200px] rounded-md flex justify-between items-center px-[50px] mt-4 mb-[50px]">
+                    <div className=" bg-[#faf9f8] w-auto h-[50px] rounded-md flex justify-center items-center px-[50px] mb-[20px]">
                       <h2 className=" text-[25px] font-semibold">
                         Edit Job Details
                       </h2>
-                      <img
-                        className="w-[300px]"
-                        src={PostJobImage}
-                        alt="psotjob"
-                      />
+                      
                     </div>
 
                     {/* Edit Job Fields Start ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/}

@@ -12,6 +12,7 @@ import { postDbtandUpi } from "../../../../api/apiAxios";
 import { DbtOrUpi } from "./input/dbtOrUpi";
 import { useNavigate } from "react-router-dom";
 import { CustomizedSnackbarTwo } from "../../../../01 - New Code/Reusable Components/Snackbar/snackbarNew";
+import { IndianRupee } from "lucide-react";
 
 export const CheckoutModal = ({ paymentSuccesful, setPaymentSuccessful }) => {
   // Snackbar start ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -24,6 +25,10 @@ export const CheckoutModal = ({ paymentSuccesful, setPaymentSuccessful }) => {
   const handleSuccessCloseSnackbar = () => {
     setSnackbarSuccessOpen(false);
   };
+
+  useEffect(() => {
+    console.log("paymentSuccesfulpaymentSuccesful", paymentSuccesful);
+  }, [paymentSuccesful]);
 
   // Snackbar Error
 
@@ -40,8 +45,6 @@ export const CheckoutModal = ({ paymentSuccesful, setPaymentSuccessful }) => {
   const { singlePlanData, employerPackageFields } = useSelector(
     (state) => state.employerPackages
   );
-
-
 
   const dispatch = useDispatch();
   const closeModal = () => {
@@ -64,21 +67,26 @@ export const CheckoutModal = ({ paymentSuccesful, setPaymentSuccessful }) => {
     }, 500);
   }, [paymentSuccesful]);
 
-  const [secondsTime, setSecondsTime] = useState(30);
+  const [secondsTime, setSecondsTime] = useState(0);
+
+  console.log("secondsTimesecondsTime", secondsTime);
 
   useEffect(() => {
-    if (secondsTime > 0) {
-      const timerId = setInterval(() => {
+    let timerId;
+
+    if (paymentSuccesful && secondsTime > 0) {
+      setSecondsTime(30);
+      timerId = setInterval(() => {
         setSecondsTime((prevSeconds) => prevSeconds - 1);
       }, 1000);
-
-      return () => clearInterval(timerId);
     }
 
-    if (secondsTime === 0) {
+    if (secondsTime === 0 && paymentSuccesful) {
       navigate("/employers-dashboard/post-jobs");
     }
-  }, [secondsTime]);
+
+    return () => clearInterval(timerId);
+  }, [paymentSuccesful, secondsTime, navigate]);
 
   const payment = async (e) => {
     e.preventDefault();
@@ -124,10 +132,10 @@ export const CheckoutModal = ({ paymentSuccesful, setPaymentSuccessful }) => {
         severity="error" // or 'success', 'warning', 'info'
         backgroundColor="#9d0208" // Custom background color
       />
-      <div className=" min-h-[30%] w-[100%] flex justify-center items-top z-40 fixed mt-[10px] ">
+      <div className=" h-full w-[100%] flex justify-center items-center z-40 fixed mt-[10px] ">
         {!paymentSuccesful && (
           <div
-            className={` bg-white  min-h-[500px] w-[500px] rounded-lg relative z-50 py-[20px]`}
+            className={`  bg-white  h-[550px] w-[600px] rounded-lg relative z-50   overflow-y-auto pt-[100px] sm:pt-0 pb-[50px] sm:pb-0`}
           >
             <div className=" absolute right-1 top-1 z-50">
               <img
@@ -138,53 +146,39 @@ export const CheckoutModal = ({ paymentSuccesful, setPaymentSuccessful }) => {
               />
             </div>
             <div className=" w-[100%] h-[100%] flex justify-center items-center flex-col gap-2">
-              <img
-                className="w-[150px] pt-[10px]"
-                src={QRImage}
-                alt="Phone Number"
-              />
-
-              <div className="w-[100%] h-[50px] flex justify-center items-center">
-                <span className="w-[50%]">
-                  <hr className="bg-gray-600" />
-                </span>
-                <span className="w-[10%] flex justify-center items-center font-semibold">
-                  OR
-                </span>
-                <span className="w-[50%]">
-                  <hr className="bg-gray-600" />
-                </span>
+              <div className="flex items-center mb-3">
+                <span className="text-[20px] font-semibold pr-2"> Pay</span>
+                <IndianRupee />
+                <h3 className="text-[30px] font-bold">
+                  {employerPackageFields.price}
+                </h3>
               </div>
+              <div className=" flex-col sm:flex-row flex w-full justify-center sm:justify-between gap-4 items-center sm:items-start px-5">
+                <img className="w-[150px]" src={QRImage} alt="Phone Number" />
 
-              <h2 className="text-black font-semibold">Direct Bank Transfer</h2>
-              <div className="w-[60%] flex  justify-center items-center my-[20px]">
-                <div className=" w-[100%] gap-2 flex flex-col items-start">
-                  <h3 className=" font-semibold">Bank Name.</h3>
-                  <h3 className=" font-semibold">Account Name.</h3>
-                  <h3 className=" font-semibold">Account Name.</h3>
-                  <h3 className=" font-semibold">IFSC Code.</h3>
+                <div className="w-full">
+                  <h2 className="text-black font-semibold">
+                    Direct Bank Transfer
+                  </h2>
+                  <div className="w-full flex  justify-center items-center my-[20px]">
+                    <div className=" w-[100%] gap-2 flex flex-col items-start">
+                      <h3 className=" font-semibold">Bank Name.</h3>
+                      <h3 className=" font-semibold">Account Name.</h3>
+                      <h3 className=" font-semibold">Account Name.</h3>
+                      <h3 className=" font-semibold">IFSC Code.</h3>
+                    </div>
+
+                    <div className=" w-[100%] gap-1 flex flex-col items-start">
+                      <p>ICICI Bank</p>
+                      <p>Fps Job Private Limited</p>
+                      <p>341605500211</p>
+                      <p>ICIC0006759</p>
+                    </div>
+                  </div>
                 </div>
+              </div>
 
-                <div className=" w-[100%] gap-1 flex flex-col items-start">
-                  <p>ICICI Bank</p>
-                  <p>Fps Job Private Limited</p>
-                  <p>341605500211</p>
-                  <p>ICIC0006759</p>
-                </div>
-
-                {/* <div className="flex justify-between items-center w-[70%]">
-                <h3 className=" font-semibold">Account Name.</h3>
-                <p>Fps Job Private Limited</p>
-              </div>
-              <div className="flex justify-between items-center w-[70%]">
-                <h3 className=" font-semibold">Account No.</h3>
-                <p>341605500211</p>
-              </div>
-              <div className="flex justify-between items-center w-[70%]">
-                <h3 className=" font-semibold">IFSC Code.</h3>
-                <p>ICIC0006759</p>
-              </div> */}
-              </div>
+             
 
               <div className="w-[100%] h-[50px] flex justify-center items-center">
                 <span className="w-[40%]">

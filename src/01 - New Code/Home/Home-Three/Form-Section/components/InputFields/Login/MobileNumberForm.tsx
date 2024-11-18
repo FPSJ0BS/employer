@@ -9,10 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../../../../../../../redux/Login/loginSlice.jsx";
 
-
-const MobileNumberForm = ({setSnackbarSuccessMessage, setSnackbarSuccessOpen, setSnackbarErrorMessage, setSnackbarErrorOpen}) => {
+const MobileNumberForm = ({
+  setSnackbarSuccessMessage,
+  setSnackbarSuccessOpen,
+  setSnackbarErrorMessage,
+  setSnackbarErrorOpen,
+}) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [mobNumber, setMobNumber] = useState("");
   const [hash, sethash] = useState("");
   const [switchToOtp, setSwitchToOtp] = useState(false);
@@ -29,7 +33,6 @@ const MobileNumberForm = ({setSnackbarSuccessMessage, setSnackbarSuccessOpen, se
       const response = await postPhoneOtpSendAxios(mobNumber);
 
       if (!response.data.status) {
-    
         const onErrorMessage = await response?.data?.message;
         await setSnackbarErrorMessage(onErrorMessage);
         setSnackbarErrorOpen(true);
@@ -138,7 +141,7 @@ const MobileNumberForm = ({setSnackbarSuccessMessage, setSnackbarSuccessOpen, se
           </div>
           <div className=" flex w-full items-center justify-center">
             <button
-            disabled = {login}
+              disabled={login}
               className="w-[80%] h-[40px] bg-[#D94452]  text-white  rounded-[30px] font-semibold text-[16px]"
               type="submit"
             >
@@ -151,10 +154,20 @@ const MobileNumberForm = ({setSnackbarSuccessMessage, setSnackbarSuccessOpen, se
           onSubmit={(e) => otpVerify(e)}
           className=" flex flex-col gap-3 items-center justify-center w-full"
         >
-          <Otp otp={otp} setOtp={setOtp} numberOfDigits={numberOfDigits} />
+          <Otp
+            otp={otp}
+            setOtp={setOtp}
+            numberOfDigits={numberOfDigits}
+            mobNumber={mobNumber}
+            setSnackbarErrorMessage={setSnackbarErrorMessage}
+            setSnackbarErrorOpen={setSnackbarErrorOpen}
+            sethash={sethash}
+            setSnackbarSuccessMessage={setSnackbarSuccessMessage}
+            setSnackbarSuccessOpen={setSnackbarSuccessOpen}
+          />
           <div className=" w-full flex items-center justify-center">
             <button
-            disabled = {login}
+              disabled={login}
               className="w-[80%] h-[40px] bg-[#D94452]  text-white  rounded-[30px] font-semibold text-[16px]"
               type="submit"
             >

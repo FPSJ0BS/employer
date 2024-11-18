@@ -55,7 +55,7 @@ const TopCardBlock = ({ topBLock }) => {
     
       const date = new Date();
       const hours = date.getHours();
-      console.log('time' ,hours);
+    
       let newGreeting = '';
       if (hours >= 8 && hours < 12) {
         newGreeting = 'Good Morning';

@@ -141,7 +141,7 @@ import SuggestedCandidateEmploeeDBPage from "./pages/employers-dashboard/suggest
 import { CustomizedSnackbarTwo } from "./01 - New Code/Reusable Components/Snackbar/snackbarNew.tsx";
 
 function App() {
-  
+
   const { login } = useSelector((state) => state.login);
   const { employerManageProfileFields } = useSelector(
     (state) => state.employerManageProfile
@@ -226,13 +226,10 @@ function App() {
     }
   }, [employerManageProfileFields.emailVerified, authRegister]);
 
- 
+
 
   return (
     <>
-
-      
-
 
       <div className="page-wrapper data-scroll-container">
         {employerManageProfileFields.emailVerified === 0 &&
@@ -240,108 +237,72 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/">
+              {/* Redirect to employers-dashboard if login is true */}
+              {login ? (
+                <Route path="/" element={<Navigate to="/employers-dashboard/dashboard" replace />} />
+              ) : (
+                <Route path="/" element={<HomeTest />} />
+              )}
+
+              {/* 404 and Home Routes */}
               <Route path="*" element={<Page404 />} />
-              <Route path="/" element={<HomeTest />} />
-              <Route path="home-new" element={<HomeNew />} />
+              {/* <Route path="home-new" element={<HomeNew />} />
               <Route path="home-test" element={<HomeTest />} />
-              <Route path="gsap-test" element={<Gsaptest />} />
+              <Route path="gsap-test" element={<Gsaptest />} /> */}
 
-              {!login && <Route path="login-otp" element={<Login />} />}
-              {!login && <Route path="login-email" element={<LoginEmail />} />}
-              {!login && <Route path="register" element={<RegisterNew />} />}
-              {!login && (
-                <Route path="forgot-password" element={<ForgotPassword />} />
-              )}
-              {login && (
-                <Route path="edit-job/:id" element={<EditJObSingle />} />
-              )}
-              {login && <Route path="job-list" element={<JobListPage3 />} />}
-              {login && (
-                <Route
-                  path="candidates-single-v1/:jobID/:status"
-                  element={<CandidateSingleDynamicV1 />}
-                />
-              )}
-              {login && (
-                <Route path="manage-profile" element={<ManageProfileNew />} />
-              )}
-              {login && (
-                <Route path="single-profile" element={<SingleProfile />} />
-              )}
-              {login && (
-                <Route path="employers-dashboard/*">
-                  {employerManageProfileFields?.phoneNumberVerified === 0 ? (
-                    <Route
-                      path="*"
-                      element={<Navigate to="/manage-profile" replace />}
-                    />
-                  ) : (
-                    <>
+              {/* Authentication Routes */}
+              {!login ? (
+                <>
+                  <Route path="login-otp" element={<Login />} />
+                  <Route path="login-email" element={<LoginEmail />} />
+                  <Route path="register" element={<RegisterNew />} />
+                  <Route path="forgot-password" element={<ForgotPassword />} />
+                </>
+              ) : (
+                <>
+                  <Route path="edit-job/:id" element={<EditJObSingle />} />
+                  <Route path="job-list" element={<JobListPage3 />} />
+                  <Route
+                    path="candidates-single-v1/:jobID/:status"
+                    element={<CandidateSingleDynamicV1 />}
+                  />
+                  <Route path="manage-profile" element={<ManageProfileNew />} />
+                  <Route path="single-profile" element={<SingleProfile />} />
+
+                  {/* Employer Dashboard Routes */}
+                  <Route path="employers-dashboard/*">
+                    {employerManageProfileFields?.phoneNumberVerified === 0 ? (
                       <Route
-                        path="dashboard"
-                        element={<DashboardEmploeeDBPage />}
+                        path="*"
+                        element={<Navigate to="/manage-profile" replace />}
                       />
-                      <Route
-                        path="company-profile"
-                        element={<CompanyProfileEmploeeDBPage />}
-                      />
-                      <Route
-                        path="letter/template"
-                        element={<LetterEmploeeDBPage />}
-                      />
-                      <Route path="wallet" element={<WalletEmploeeDBPage />} />
-                      <Route
-                        path="letter/generate"
-                        element={<GenerateEmploeeDBPage />}
-                      />
-                      <Route
-                        path="post-jobs"
-                        element={<PostJobsEmploeeDBPage />}
-                      />
-                      <Route
-                        path="manage-jobs"
-                        element={<ManageJobsEmploeeDBPage />}
-                      />
-                      <Route
-                        path="suggested-candidate/:jobID"
-                        element={<SuggestedCandidateEmploeeDBPage />}
-                      />
-                      <Route
-                        path="all-applicants"
-                        element={<AllApplicantsEmploeesPage />}
-                      />
-                      <Route
-                        path="shortlisted-resumes"
-                        element={<ShortListedResumeEmploeeDBPage />}
-                      />
-                      <Route
-                        path="packages"
-                        element={<PackageEmploeeDBPage />}
-                      />
-                      <Route
-                        path="messages"
-                        element={<MessageEmploeeDBPage />}
-                      />
-                      <Route
-                        path="resume-alerts"
-                        element={<ResumeAlertsEmploeeDBPage />}
-                      />
-                      <Route
-                        path="change-password"
-                        element={<ChangePasswordEmploeeDBPage />}
-                      />
-                      <Route
-                        path="payment-page/:id"
-                        element={<PaymentPage />}
-                      />
-                      <Route path="job-list-v4" element={<JobListPage4 />} />
-                    </>
-                  )}
-                </Route>
+                    ) : (
+                      <>
+                        <Route path="dashboard" element={<DashboardEmploeeDBPage />} />
+                        <Route path="company-profile" element={<CompanyProfileEmploeeDBPage />} />
+                        <Route path="letter/template" element={<LetterEmploeeDBPage />} />
+                        <Route path="wallet" element={<WalletEmploeeDBPage />} />
+                        <Route path="letter/generate" element={<GenerateEmploeeDBPage />} />
+                        <Route path="post-jobs" element={<PostJobsEmploeeDBPage />} />
+                        <Route path="manage-jobs" element={<ManageJobsEmploeeDBPage />} />
+                        <Route path="suggested-candidate/:jobID" element={<SuggestedCandidateEmploeeDBPage />} />
+                        <Route path="all-applicants" element={<AllApplicantsEmploeesPage />} />
+                        <Route path="shortlisted-resumes" element={<ShortListedResumeEmploeeDBPage />} />
+                        <Route path="packages" element={<PackageEmploeeDBPage />} />
+                        <Route path="messages" element={<MessageEmploeeDBPage />} />
+                        <Route path="resume-alerts" element={<ResumeAlertsEmploeeDBPage />} />
+                        <Route path="change-password" element={<ChangePasswordEmploeeDBPage />} />
+                        <Route path="payment-page/:id" element={<PaymentPage />} />
+                        <Route path="job-list-v4" element={<JobListPage4 />} />
+                      </>
+                    )}
+                  </Route>
+
+                  <Route path="checkout" element={<CheckoutPage />} />
+                </>
               )}
 
-              {login && <Route path="checkout" element={<CheckoutPage />} />}
-
+              {/* Static Pages */}
               <Route path="about" element={<AboutPage />} />
               <Route path="pricing" element={<PricingPage />} />
               <Route path="faq" element={<FaqPage />} />
@@ -349,36 +310,28 @@ function App() {
               <Route path="invoice" element={<InvoicePage />} />
               <Route path="contact" element={<ContactPage />} />
 
+              {/* Shop Routes */}
               <Route path="shop">
                 <Route path="shop-list" element={<ShopListPage />} />
                 <Route path="shop-single/:id" element={<ShopSingleDyanmic />} />
                 <Route path="cart" element={<CartPage />} />
                 <Route path="checkout" element={<CheckoutPage />} />
-                <Route
-                  path="order-completed"
-                  element={<OrderCompletedPage />}
-                />
+                <Route path="order-completed" element={<OrderCompletedPage />} />
               </Route>
 
+              {/* Admin Routes */}
               <Route element={<AdminDashboard />}>
-                <Route
-                  path="/admin"
-                  element={<Navigate to="./employer" replace />}
-                />
+                <Route path="/admin" element={<Navigate to="./employer" replace />} />
                 <Route path="/admin/employer" element={<AdminEmployer />} />
-                <Route
-                  path="/admin/employer/edit-employer"
-                  element={<EditEmployer />}
-                />
-                <Route
-                  path="/admin/employer/edit-job"
-                  element={<AdminEditJob />}
-                />
+                <Route path="/admin/employer/edit-employer" element={<EditEmployer />} />
+                <Route path="/admin/employer/edit-job" element={<AdminEditJob />} />
               </Route>
             </Route>
           </Routes>
           <ScrollTopBehaviour />
         </BrowserRouter>
+
+
 
         {/* Toastify */}
         <ToastContainer

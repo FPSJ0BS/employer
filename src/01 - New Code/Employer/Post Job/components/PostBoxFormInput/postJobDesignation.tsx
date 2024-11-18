@@ -4,7 +4,9 @@ import { postEmployerPostJob } from "../../../Redux/EmployerSlice";
 import { TextInputValidEmployer } from "../../../functions/employerFunctions";
 
 export const PostJobDesignation = () => {
-  const { adminEditJob } = useSelector((state: any) => state.adminSlice);
+  const { employerPostJob } = useSelector(
+    (state: any) => state.employerSliceNew
+  );
 
   const dispatch = useDispatch();
 
@@ -44,7 +46,7 @@ export const PostJobDesignation = () => {
         id="EmployerPostJobDesignation"
         name="Designation"
         className=" p-2  sm:w-[100%] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-        value={adminEditJob.job_designation}
+        value={employerPostJob.job_designation}
       />
     </div>
   );

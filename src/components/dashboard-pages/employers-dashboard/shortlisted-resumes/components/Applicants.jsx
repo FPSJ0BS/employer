@@ -471,12 +471,15 @@ const Applicants = () => {
 
   const [visibleEmails, setVisibleEmails] = useState({});
 
-  const toggleMask = async (id, emailId, email) => {
+  const toggleMask = async (id, emailId, email,faculityID,candidateId) => {
 
     try {
       const res = await postViewMobileAndEmail({
         applyID: id,
-        view_field: emailId
+        view_field: emailId,
+        log_type: "job_applied",
+        faculityID,
+        jobID:candidateId
       })
 
       if (res?.data?.status) {
@@ -506,11 +509,14 @@ const Applicants = () => {
 
   const [visibleMobiles, setVisibleMobiles] = useState({});
 
-  const toggleMaskMobile = async (id, mobileId, index) => {
+  const toggleMaskMobile = async (id, mobileId, index,faculityID,candidateId) => {
     try {
       const res = await postViewMobileAndEmail({
         applyID: id,
-        view_field: mobileId
+        view_field: mobileId,
+        log_type: "job_applied",
+        faculityID,
+        jobID:candidateId
       });
 
       if (res?.data?.status) {
@@ -673,7 +679,7 @@ const Applicants = () => {
                       <br />
                       <span
                         className='bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize  mt-2'
-                        onClick={visibleMobiles[index] ? null : () => toggleMaskMobile(application?.applyID, "mobile", index)}
+                        onClick={visibleMobiles[index] ? null : () => toggleMaskMobile(application?.applyID, "mobile", index,application?.faculityID, application?.jobID)}
                         style={{ cursor: visibleMobiles[index] ? 'default' : 'pointer' }}
                       >
                         {visibleMobiles[index] ? 'View Mobile' : 'View Mobile'}
@@ -698,7 +704,7 @@ const Applicants = () => {
                       {visibleEmails[index] ? application.email : maskEmail(application.email)}
                       <span
                         className='bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize ml-1 mt-2'
-                        onClick={visibleEmails[index] ? null : () => toggleMask(application?.applyID, "email", index)}
+                        onClick={visibleEmails[index] ? null : () => toggleMask(application?.applyID, "email", index, application?.faculityID, application?.jobID,)}
                         style={{ cursor: visibleEmails[index] ? 'default' : 'pointer' }}
                       >
                         {visibleEmails[index] ? 'View Email' : 'View Email'}

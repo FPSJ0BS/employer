@@ -233,6 +233,7 @@ const PostBoxForm = () => {
             <div className="bg-gray-300 w-full h-[1px] mt-2 mb-4" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <PostJobJobTitle />
+              <PostJobDesignation />
               <PostJobState  setProcessLoc = {setProcessLoc}/>
               <PostJobCity setProcessLoc = {setProcessLoc}/>
               <PostJobProcessLocation setProcessLoc = {setProcessLoc} />
@@ -247,7 +248,6 @@ const PostBoxForm = () => {
             <div className="bg-gray-300 w-full h-[1px] mt-2 mb-4" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <PostJobJobLevel />
-              <PostJobDesignation />
               <PostJobJobType />
               <PostJobNoOfRequirement />
               <PostJobCategory />

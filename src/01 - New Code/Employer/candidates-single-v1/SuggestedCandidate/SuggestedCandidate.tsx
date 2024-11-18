@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { RxCross1 } from "react-icons/rx";
 import axios from "axios";
 import "../Edit Job/Candidates/candidatesApplied.scss";
-import { BASE_URL, getjobDetail } from "../../../../api/apiAxios";
-import { useParams } from "react-router-dom";
+import {
+  BASE_URL,
+  getjobDetail,
+  getProfile,
+  postViewMobileAndEmail,
+  suggestedProfileQuery,
+} from "../../../../api/apiAxios";
+import { useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { PaginationC } from "../Edit Job/Candidates/ui/PaginationC";
@@ -18,10 +25,85 @@ import { showFirstAndLastLetter } from "../../../../utils/showFirstAndLastLetter
 import { Download, Phone } from "lucide-react";
 import OpenToWork from "../../../../../public/assets/profile/opentowork.png";
 import "./suggestedProfile.scss";
+import { toast } from "react-toastify";
 const SuggestedCandidate = () => {
+  const notifySuccess = () =>
+    toast.success("Request added, We will update you soon...");
+  const location = useLocation();
+  const [totalDataShow, setTotalDataShow] = useState(null);
+
+  const candidateId = location.pathname.split("/").pop();
   const [snackbarSuccessOpen, setSnackbarSuccessOpen] = useState(false);
   const [snackbarSuccessMessage, setSnackbarSuccessMessage] = useState("");
   const [jobData, setjobData] = useState<any>({});
+  const maskEmail = (email) => {
+    if (email) {
+      const emailParts = email.split("@");
+      const username = emailParts[0];
+      const domain = emailParts[1];
+      const visibleLength = Math.ceil(username.length * 0.3);
+      const maskedUsername = username.slice(0, visibleLength) + "******";
+      return maskedUsername + "@" + domain;
+    }
+  };
+
+  const [visibleEmails, setVisibleEmails] = useState({});
+
+  const toggleMask = async (id, emailId, email, faculityID) => {
+    try {
+      const res = await postViewMobileAndEmail({
+        // applyID: id,
+        view_field: emailId,
+        log_type: "suggested_candidate",
+        faculityID,
+        jobID: candidateId,
+      });
+
+      if (res?.data?.status) {
+        setVisibleEmails((prev) => ({
+          ...prev,
+          [email]: !prev[email],
+        }));
+      } else {
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const maskMobile = (mobile: number) => {
+    if (mobile) {
+      const visibleLength = 3; // Number of visible digits
+      const maskedMobile = mobile?.slice(0, visibleLength) + "*******";
+      return maskedMobile;
+    }
+  };
+
+  const [visibleMobiles, setVisibleMobiles] = useState({});
+
+  const toggleMaskMobile = async (id, mobileId, index, faculityID) => {
+    try {
+      const res = await postViewMobileAndEmail({
+        // applyID: id,
+        view_field: mobileId,
+        log_type: "suggested_candidate",
+        faculityID,
+        jobID: candidateId,
+      });
+
+      if (res?.data?.status) {
+        setVisibleMobiles((prev) => ({
+          ...prev,
+          [index]: !prev[index],
+        }));
+      } else {
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const params = useParams();
   const handleSuccessCloseSnackbar = () => {
     setSnackbarSuccessOpen(false);
@@ -32,6 +114,7 @@ const SuggestedCandidate = () => {
     setSnackbarErrorOpen(false);
   };
   console.log(params);
+
   // Snackbar end ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const dispatch = useDispatch();
   const [applicationsArray, setApplicationsArray] = useState([]);
@@ -165,8 +248,9 @@ const SuggestedCandidate = () => {
 
       if (response.data.status) {
         const totalData = await response?.data?.total_data;
+        setTotalDataShow(totalData);
         const data = await response?.data?.data;
-        console.log(data);
+
         await setApplicationsArray(data);
         dispatch(
           editEmployerCandidateData({
@@ -215,9 +299,112 @@ const SuggestedCandidate = () => {
     link.click();
     document.body.removeChild(link);
   };
+
+  const [popupState, setPopupState] = useState(false);
+
+  const [formData, setFormData] = useState({
+    jobID: 7080,
+    employerID: 42,
+    note: "",
+  });
+
+  const querySubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const res = await getProfile();
+
+      if (res?.status) {
+        const employerID = res?.data?.data?.employerDetails?.employerID;
+
+        setFormData({
+          ...formData,
+          jobID: Number(candidateId),
+          employerID,
+        });
+      } else {
+        console.log("profior", res);
+      }
+    } catch (error) {}
+
+    try {
+      const res = await suggestedProfileQuery(formData);
+      if (res?.status) {
+        console.log(res, "resformdata");
+        closePopup();
+        notifySuccess();
+      }
+
+      if (res?.status) {
+      }
+    } catch (error) {
+      console.log("error suggested Profile", error);
+    }
+  };
+
+  const closePopup = () => {
+    setFormData({
+      ...formData,
+      note: "",
+    });
+
+    setPopupState(false);
+  };
+
   return (
     <div className="p-3">
-      <h2 className="text-xl font-semibold">Candidate Suggestions</h2>
+      {popupState && (
+        <div className=" absolute  h-full w-full z-50 flex justify-center items-start top-10">
+          <div className=" bg-white min-h-[100px] w-[600px] shadow-lg rounded-lg fixed p-5">
+            <RxCross1
+              onClick={() => closePopup()}
+              size={20}
+              className=" absolute right-2 top-2 cursor-pointer"
+            />
+            <form
+              onSubmit={(e) => querySubmit(e)}
+              className=" flex flex-col gap-2 "
+            >
+              <textarea
+                required
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    note: e.target.value,
+                  })
+                }
+                value={formData?.note}
+                className="w-full h-40 p-4 border border-gray-300 rounded-lg resize-none"
+                placeholder="Enter your text here..."
+              ></textarea>
+              <div className=" w-full p-0 m-0 flex items-center justify-center ">
+                <button className=" bg-black w-[30%] text-white rounded-lg ">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      <div className=" flex justify-between items-center flex-row-reverse">
+        <div className=" flex gap-3 items-end">
+          <p className="text-l font-medium">
+            {` *The suggested profile`}{" "}
+            <span className=" font-bold underline ">limit</span> for you is
+            currently{" "}
+            <span className=" font-bold underline">{totalDataShow}</span>.
+            Request for more profile....
+          </p>
+          <button
+            onClick={() => setPopupState(true)}
+            className=" bg-red-500 w-[150px] font-medium text-white rounded-lg"
+          >
+            Click Here
+          </button>
+        </div>
+
+        <h2 className="text-xl font-semibold mt-2">Candidate Suggestions</h2>
+      </div>
       <>
         <CustomizedSnackbarTwo
           open={snackbarSuccessOpen}
@@ -570,21 +757,73 @@ const SuggestedCandidate = () => {
                               : application?.current_employer}
                           </span>
                         </h3>
-                        { application?.mobile && <h3 className="font-semibold W-[50%]">
+                        <h3 key={index} className="font-semibold W-[50%]">
                           Mobile:&nbsp;
                           <span className="font-normal lowercase break-words">
-                            {application?.mobile}
+                            {visibleMobiles[index]
+                              ? application.mobile
+                              : maskMobile(application.mobile)}
+                            <br />
+                            <span
+                              className="bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize  mt-2"
+                              onClick={
+                                visibleMobiles[index]
+                                  ? null
+                                  : () =>
+                                      toggleMaskMobile(
+                                        application?.applyID,
+                                        "mobile",
+                                        index,
+                                        application?.faculityID
+                                      )
+                              }
+                              style={{
+                                cursor: visibleMobiles[index]
+                                  ? "default"
+                                  : "pointer",
+                              }}
+                            >
+                              {visibleMobiles[index]
+                                ? "View Mobile"
+                                : "View Mobile"}
+                            </span>
                           </span>
-                        </h3>}
+                        </h3>
                       </div>
 
                       <div className="ml-1 -mr-1 w-[1%] my-[0px] border-l-[1px] border-r-0 border-t-0 border-b-0 border-dashed border-gray-500"></div>
 
                       <div className=" flex flex-col gap-2 w-[40%] pt-[10px]">
-                        <h3 className="font-semibold W-[50%]">
+                        <h3 key={index} className="font-semibold W-[50%]">
                           Email:&nbsp;
                           <span className="font-normal lowercase break-words">
-                            {application?.email}
+                            {visibleEmails[index]
+                              ? application.email
+                              : maskEmail(application.email)}
+                            <br />
+                            <span
+                              className="bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize ml-1 mt-2 "
+                              onClick={
+                                visibleEmails[index]
+                                  ? null
+                                  : () =>
+                                      toggleMask(
+                                        application?.applyID,
+                                        "email",
+                                        index,
+                                        application?.faculityID
+                                      )
+                              }
+                              style={{
+                                cursor: visibleEmails[index]
+                                  ? "default"
+                                  : "pointer",
+                              }}
+                            >
+                              {visibleEmails[index]
+                                ? "View Email"
+                                : "View Email"}
+                            </span>
                           </span>
                         </h3>
                         <h3 className="font-semibold">

@@ -11,6 +11,7 @@ import { updateSinglePlanData, openBuyPackageModal, editPackageFields } from "..
 import NODATAPIC from "../../../../../public/assets/storyset/Innovation-pana.png";
 import { JobsDropDown } from "./inputs/jobsDropDown.tsx";
 import { getProfile } from "../../../../api/apiAxios.ts";
+import { Award, BriefcaseIcon, Clock9 } from "lucide-react";
 
 const PackageDataTable = () => {
   const navigate = useNavigate();
@@ -136,7 +137,7 @@ const PackageDataTable = () => {
   return (
     <>
       {planList?.nationalPlans?.length < 1 &&
-      planList?.statePlans?.length < 1 ? (
+        planList?.statePlans?.length < 1 ? (
         <div className="flex flex-col justify-center items-center z-30">
           <h2 className="mt-4 font-medium text-[20px]">
             Currently, there are no plans available
@@ -177,7 +178,7 @@ const PackageDataTable = () => {
                         {getPriceForJob(
                           plan,
                           selectedJobs[plan?.id] ||
-                            plan?.national_package[0].jobs
+                          plan?.national_package[0].jobs
                         )}
                       </h3>
                     </div>
@@ -223,7 +224,7 @@ const PackageDataTable = () => {
                           {getPriceForJob(
                             plan,
                             selectedJobs[plan?.id] ||
-                              plan?.national_package[0].jobs
+                            plan?.national_package[0].jobs
                           )}
                         </h3>
                       </div>
@@ -232,7 +233,7 @@ const PackageDataTable = () => {
                     {activePlan === plan?.plan_id ? 'Plan Activated' : 'Buy'}
                   </button> */}
                     <button
-                      disabled={activePlan === plan?.id}
+                      
                       onClick={() =>
                         getSinglePlanData(
                           plan,
@@ -242,24 +243,81 @@ const PackageDataTable = () => {
                           plan?.id || plan?.national_package[0].jobs
                         )
                       }
-                      style={{
-                        opacity: activePlan === plan?.id ? 0.5 : 1,
-                        cursor: activePlan === plan?.id ?"no-drop" : "pointer",
-                      }}
+                      
                       className={`cursor-pointer transition-all 
-                                     ${
-                                       activePlan === plan?.plan_id
-                                         ? "bg-mainBgColor"
-                                         : "bg-[#2f5da7]"
-                                     } text-white w-[90%] py-2 rounded-lg
+                                     ${activePlan === plan?.plan_id
+                          ? "bg-mainBgColor"
+                          : "bg-[#2f5da7]"
+                        } text-white w-[90%] py-2 rounded-lg
                                     border-green-400
                                       border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
                                       active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-mainBgColor shadow-mainBgColor active:shadow-none`}
                     >
-                      {activePlan === plan?.id ? "Selected" : " Buy The Plan"}
+                      { " Buy The Plan"}
                     </button>
                   </div>
+
+
                 ))}
+              <div className="h-auto py-[20px] w-[250px] lg:w-[25vw] xl:w-[20vw] border-[1.5px] border-[#dbdde5] border-solid rounded-xl flex flex-col justify-start items-start p-3">
+
+                <h2 className="text-[25px] text-[#19304a] font-semibold">Custom Solution</h2>
+                <p className="text-[#19304a]">Make your own personalised plan</p>
+                <p className="text-[#19304a] text-[30px] font-bold pt-[20px] pb-[40px]">Let's Talk</p>
+
+                <div className="w-full  flex justify-center items-center rounded-lg">
+                  <button className="w-[90%] h-[40px] bg-[#00112f] text-white font-semibold rounded-lg">Contact Sales</button>
+                </div>
+
+                <div className=" pt-[30px] w-full flex flex-col gap-3">
+
+                  <div className="flex gap-2 w-full items-center justify-start">
+                    <div className="w-[10%] flex items-center">
+                      <Award />
+                    </div>
+                    <div className="w-[90%] flex items-center">
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Dedicated <span className="font-bold">account manager.</span></p>
+
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 w-full items-center justify-start">
+                    <div className="w-[10%] flex items-center">
+                      <Clock9 />
+                    </div>
+                    <div className="w-[90%] flex items-center">
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Valid upto <span className="font-bold">360 Days.</span></p>
+
+                    </div>
+                  </div>
+                  <div className="flex gap-2 w-full items-center justify-start">
+                    <div className="w-[10%] flex items-center">
+                      <BriefcaseIcon />
+                    </div>
+                    <div className="w-[90%] flex items-center">
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]"> <span className="font-bold">Multiple logins &</span>Reports.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 w-full items-center justify-start">
+                    <div className="w-[10%] flex items-center">
+                      <Award />
+                    </div>
+                    <div className="w-[90%] flex items-center">
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Company<span className="font-bold">branding & boosting.</span></p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 w-full items-center justify-start">
+                    <div className="w-[10%] flex items-center">
+                      <Award />
+                    </div>
+                    <div className="w-[90%] flex items-center">
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Dedicated <span className="font-bold">account manager.</span></p>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
               {/* {planList?.statePlans?.length > 0 && planSwitch && planList?.statePlans?.map((plan) => (
                 <div key={plan?.id} className="h-auto py-[20px] w-[250px] lg:w-[25vw] xl:w-[20vw] border-2 border-dashed rounded-xl flex flex-col justify-center items-center">
                   <div className="text-center text-[20px] font-bold">

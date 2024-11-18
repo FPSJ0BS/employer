@@ -4,8 +4,9 @@ import { postEmployerPostJob } from "../../../Redux/EmployerSlice";
 import { TextInputValidEmployer } from "../../../functions/employerFunctions";
 
 export const PostJobJobTitle = () => {
-  const { employerPostJob } = useSelector((state: any) => state.employerSliceNew);
-
+  const { employerPostJob } = useSelector(
+    (state: any) => state.employerSliceNew
+  );
 
   const dispatch = useDispatch();
 
@@ -38,8 +39,8 @@ export const PostJobJobTitle = () => {
         Job Title *
       </label>
       <input
-      autoComplete="off"
-      placeholder="Enter Job Title..."
+        autoComplete="off"
+        placeholder="Enter Job Title..."
         required
         onChange={(e) => handleChange(e)}
         type="text"

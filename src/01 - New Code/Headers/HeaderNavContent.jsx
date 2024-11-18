@@ -33,7 +33,7 @@ const HeaderNavContent = () => {
       <nav className="nav main-menu">
         <ul className="navigation" id="navbar">
           {/* current dropdown */}
-          <li
+          {!login && <li
             className={`${
               isActiveParent(homeItems, pathname) ? "current" : ""
             } dropdown`}
@@ -41,7 +41,7 @@ const HeaderNavContent = () => {
             <Link to="/" onClick={changePage}>
               Home
             </Link>
-          </li>
+          </li>}
           {/* End homepage menu items */}
 
           {/* <li

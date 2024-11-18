@@ -127,7 +127,7 @@ export const PostJobSalaryRange = () => {
   };
 
   return (
-    <div className="  relative  sm:w-[100%] w-[250px] sm:col-span-2 ">
+    <div className="  relative  sm:w-[100%] w-[250px] sm:col-span-1 ">
       <label
         htmlFor="EmployerPostSalaryRange"
         className="postJobInputTitle pb-1 block  font-medium text-gray-700"

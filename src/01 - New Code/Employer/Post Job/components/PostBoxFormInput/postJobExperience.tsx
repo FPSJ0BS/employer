@@ -11,92 +11,34 @@ export const PostJobExperience = () => {
   const dispatch = useDispatch();
 
   const [inputValue, setInputValue] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const dropdownOptions = [
-    "West Bengal",
-    "Maharashtra",
-    "Madhya Pradesh",
-    "Chattisgarh",
-    "Rajasthan",
-    "Maharashtra",
-    "Madhya Pradesh",
-    "Chattisgarh",
-    "Rajasthan",
-    "Maharashtra",
-    "Madhya Pradesh",
-    "Chattisgarh",
-    "Rajasthan",
-  ];
-
-  const openDropdown = () => {
-    setShowDropdown(true);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    setInputValue(value);
-    setShowDropdown(true);
-  };
-
-  const handleOptionSelect = (option: string) => {
-    setInputValue(option);
-    setShowDropdown(false);
-
-    dispatch(
-      postEmployerPostJob({
-        experience_unit: option ?? "",
-      })
-    );
-  };
-
-  const handleClickOutside = (e: MouseEvent) => {
-    if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
-      setShowDropdown(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
-  const clearInput = () => {
-    setInputValue("");
-    setShowDropdown(true);
-    dispatch(
-      postEmployerPostJob({
-        experience_unit: "",
-      })
-    );
-  };
 
 
-  const onChangeMinExp = (e:React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    
-    if (isValidNumber(value)) {
-      // Check if value is a valid number
+  const onChangeMinExp = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value ? parseInt(e.target.value) : 0;  // Ensure 0 is captured
+  
+    if (!isNaN(value)) {  // Check if value is a valid number
       if (value < 0) {
+        // Update state and dispatch
+        setInputValue(0);  // Update the input field with 0
         dispatch(
           postEmployerPostJob({
             min_experience: 0,
-            max_experience: 1, // Set max_experience to 1 more than min_experience
+            max_experience: 1,
           })
         );
       } else {
+        // Update state and dispatch
+        setInputValue(value);  // Update the input field with the current value
         dispatch(
           postEmployerPostJob({
             min_experience: value,
-            max_experience: value + 1, // Set max_experience to 1 more than min_experience
+            max_experience: value + 1,
           })
         );
       }
     } else {
+      // Handle invalid input by resetting to 0
+      setInputValue(0);  // Reset the input field to 0
       dispatch(
         postEmployerPostJob({
           min_experience: 0,
@@ -104,7 +46,9 @@ export const PostJobExperience = () => {
         })
       );
     }
-  }
+  };
+  
+  
   
 
   const onChangeMaxExp = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -154,7 +98,7 @@ export const PostJobExperience = () => {
             type="text"
             placeholder="Minimum"
             name="EmployerPostJobExperience"
-            value={employerPostJob.min_experience ? employerPostJob.min_experience :""}
+            value={inputValue}
             onChange={(e) => onChangeMinExp(e)}
             className="mt-1 p-2  w-[100%] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
           />

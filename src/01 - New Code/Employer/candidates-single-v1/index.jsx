@@ -161,6 +161,7 @@ const CandidateSingleDynamicV1 = () => {
 
   return (
     <>
+   
       <MetaComponent meta={metadata} />
       {/* <!-- Header Span --> */}
       {isHeaderShow && <span className="header-span"></span>}

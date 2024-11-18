@@ -49,7 +49,7 @@ export const OrganizationAddress = () => {
         id="manageProfilerganizationAddress"
         name="InstituteName"
         className=" p-2  sm:w-[100%] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-        value={employerManageProfileFields.organizationAddress}
+        value={employerManageProfileFields.organizationAddress.replace(/<\/?[^>]+(>|$)/g, "")}
       />
     </div>
   );

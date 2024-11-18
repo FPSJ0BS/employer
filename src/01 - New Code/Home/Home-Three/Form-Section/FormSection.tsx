@@ -13,6 +13,7 @@ import SwitcherTwo from "./components/SwitcherTwo/SwitcherTwo";
 import MobileNumberForm from "./components/InputFields/Login/MobileNumberForm";
 import EmailForm from "./components/InputFields/Login/EmailForm";
 import { CustomizedSnackbarTwo } from "../../../Reusable Components/Snackbar/snackbarNew";
+import { useSelector } from "react-redux";
 
 export type FormDataType = {
   organizationName: string;
@@ -20,10 +21,13 @@ export type FormDataType = {
   firstName: string;
   lastName: string;
   industry: number | null;
-  password: String;
+  mobile_number: number | null;
+  password: string;
+  organization_description: string;
 };
 
 export const FormSection = () => {
+  const {login} = useSelector(state => state.login);  
   const [mainTabSwitch, setMainTabSwitch] = useState(false);
 
   const [isRecruitmentSelected, setRecruitmentSelected] = useState(true);
@@ -95,7 +99,9 @@ export const FormSection = () => {
       />
       <div className=" flex item min-h-[100vh]  pt-[70px] xl:pt-[85px] xl:pb-[50px] ">
         <div className=" h-full   flex flex-col xl:flex-row w-full pt-[50px] 2xl:pt-[80px] pl-3 pr-3 sm:pl-0 sm:pr-0 md:px-[80px] 2xl:px-[100px] bg-[url('../../../../../public/assets/Home-new/bg.png')] bg-cover bg-center">
-          <div className="  w-full xl:w-[65%] flex flex-col gap-3 2xl:gap-5">
+          
+          
+          <div className="  w-full xl:w-[55%] 2xl:w-[65%] flex flex-col gap-3 2xl:gap-5">
             <div className=" hidden md:flex flex-col gap-2">
               <h1 className="   text-[35px] sm:text-[45px] xl:text-[40px]  2xl:text-[3.5vw] text-black font-semibold">
                 Hiring made super-easy with
@@ -113,16 +119,12 @@ export const FormSection = () => {
               </h2>
             </div>
 
-            <p className="xl:block hidden text-black text-[16px] 2xl:text-[18px] leading-[1.2em]">
+            <p className=" text-black text-[16px] 2xl:text-[18px] leading-[1.2em] md:pr-[50px]">
               Get the top 1% filtered candidates 3x faster with FPSJOBS +
               Tallento.ai. You can focus on
-              <br /> onboarding while we find the perfect fit.
+               onboarding while we find the perfect fit.
             </p>
-            <p className=" xl:hidden text-center text-black text-[16px] 2xl:text-[18px] leading-[1.2em]">
-              Get the top 1% filtered candidates 3x faster with FPSJOBS +
-              Tallento.ai. You can focus on onboarding while we find the perfect
-              fit.
-            </p>
+           
 
             <img
               src={WorkWithUS}
@@ -131,25 +133,27 @@ export const FormSection = () => {
             />
           </div>
 
-          <div className=" h-full  items-center  w-full xl:w-[35%]  ">
+          
+
+          <div className=" h-full  items-center  w-full xl:w-[45%] 2xl:w-[35%]  ">
             <div className=" min-h-[300px] w-full flex flex-col border-1 border-solid border-[#e6e6e6] border-[15px] rounded-[20px] p-4">
               <div className=" w-full flex justify-between pb-2 mb-3 ">
                 <button
                   onClick={() => setMainTabSwitch(false)}
-                  className={` font-semibold text-[15px] sm:text-[18px] w-[50%] ${
+                  className={` font-semibold text-[15px] sm:text-[18px] ${login ? "w-[100%]" : "w-[50%]"}  ${
                     !mainTabSwitch ? "border-red-600" : "border-gray-300"
                   } border-b-1 border-l-0 border-t-0 border-r-0 border-solid  pb-2`}
                 >
                   Sales Enquiry
                 </button>
-                <button
+                { !login && <button
                   onClick={() => setMainTabSwitch(true)}
                   className={` font-semibold text-[15px] sm:text-[18px] w-[50%] ${
                     mainTabSwitch ? "border-red-600" : "border-gray-300"
                   } border-b-1 border-l-0 border-t-0 border-r-0 border-solid border-gray-300 pb-2`}
                 >
                   Login / Register
-                </button>
+                </button>}
               </div>
 
               {!mainTabSwitch ? (

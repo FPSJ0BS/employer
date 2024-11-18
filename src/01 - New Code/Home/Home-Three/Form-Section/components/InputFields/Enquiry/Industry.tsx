@@ -56,7 +56,7 @@ export const Industry: React.FC<OrganizationNameProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    
+
     setInputValue(value);
     setShowDropdown(true);
   };
@@ -64,7 +64,7 @@ export const Industry: React.FC<OrganizationNameProps> = ({
   const handleOptionSelect = async (option: string, id: number) => {
     setInputValue(option);
     setShowDropdown(false);
-    
+
     setFormData({
       ...formData,
       industry: id,
@@ -98,6 +98,12 @@ export const Industry: React.FC<OrganizationNameProps> = ({
       industry: null,
     });
   };
+
+  useEffect(() => {
+    if (formData.industry === null) {
+      setInputValue("");
+    }
+  }, [formData.industry]);
 
   return (
     <div className=" relative  w-[100%] ">

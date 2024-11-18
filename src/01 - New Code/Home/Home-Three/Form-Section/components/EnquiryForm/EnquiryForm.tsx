@@ -8,8 +8,8 @@ import { postPhoneOtpRegistrationAxios } from "../../../../../../api/apiAxios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postAuthRegister } from "../../../../../Employer/Redux/Authentication";
-import { setLogin } from "../../../../../../redux/Login/loginSlice.jsx";
-import { Password } from "../InputFields/Enquiry/Password";
+import { MobileNumber } from "../InputFields/Enquiry/MobileNumber";
+import { EnquiryDescription } from "../InputFields/Enquiry/EnquiryDescription";
 
 const EnquiryForm = ({
   setSnackbarSuccessMessage,
@@ -26,6 +26,8 @@ const EnquiryForm = ({
     lastName: "",
     industry: null,
     password: "",
+    mobile_number: null,
+    organization_description: "",
   });
 
   const registerFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,6 +43,8 @@ const EnquiryForm = ({
         nt_id: formData.industry,
         password: "test@123A",
         lead: 1,
+        mobile_number: formData.mobile_number,
+        organization_description: formData.organization_description,
       });
       if (response?.data?.status) {
         // const header = response?.data?.data[0];
@@ -79,7 +83,10 @@ const EnquiryForm = ({
           EmailId: "",
           firstName: "",
           lastName: "",
+          organization_description: "",
           industry: null,
+          mobile_number: null,
+          nt_id: null,
         });
 
         // setTimeout(() => {
@@ -103,13 +110,15 @@ const EnquiryForm = ({
   return (
     <form
       onSubmit={(e) => registerFormSubmit(e)}
-      className=" flex flex-col gap-4 w-full "
+      className=" grid grid-cols-2 gap-4 w-full "
     >
       <OrganizationName formData={formData} setFormData={setFormData} />
       <EmailId formData={formData} setFormData={setFormData} />
+      <MobileNumber formData={formData} setFormData={setFormData} />
       <FirstName formData={formData} setFormData={setFormData} />
       <LastName formData={formData} setFormData={setFormData} />
       <Industry formData={formData} setFormData={setFormData} />
+      <EnquiryDescription formData={formData} setFormData={setFormData} />
       {/* <Password formData={formData} setFormData={setFormData} /> */}
       <div className=" w-full flex items-center justify-center">
         <button
