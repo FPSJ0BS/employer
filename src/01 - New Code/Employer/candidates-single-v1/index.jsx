@@ -331,32 +331,20 @@ const CandidateSingleDynamicV1 = () => {
                   <span>{jobData?.job_level}</span>
                 </li>
               )}
-              {jobData?.process_state && (
+              {jobData?.state && (
                 <li className="flex flex-col items-center">
                   <div className="flex items-center gap-1">
 
                     <i className="icon ">
                       <Landmark className="text-[#458d76]" />
                     </i>
-                    <h5 className="text-[#458d76]">Process State:</h5>
+                    <h5 className="text-[#458d76]">Process Location:</h5>
                   </div>
-                  <span>{jobData?.process_state}</span>
+                  <span>{jobData?.city}, {jobData?.state}</span>
                 </li>
               )}
 
-              {jobData?.process_city && (
-                <li className="flex flex-col items-center">
-                  <div className="flex items-center gap-1">
-
-                    <i className="icon ">
-                      <Store className="text-[#458d76]" />
-                    </i>
-                    <h5 className="text-[#458d76]">Process City:</h5>
-                  </div>
-
-                  <span>{jobData?.process_city}</span>
-                </li>
-              )}
+             
 
              
             </ul>

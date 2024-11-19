@@ -11,6 +11,8 @@ import { postAuthRegister } from "../../../../../Employer/Redux/Authentication";
 import { MobileNumber } from "../InputFields/Enquiry/MobileNumber";
 import { EnquiryDescription } from "../InputFields/Enquiry/EnquiryDescription";
 import { SalesCity } from "../InputFields/Enquiry/SalesCity";
+import { YourRole } from "../InputFields/Enquiry/YourRole";
+import { CompanySize } from "../InputFields/Enquiry/CompanySize";
 
 const EnquiryForm = ({
   setSnackbarSuccessMessage,
@@ -30,6 +32,8 @@ const EnquiryForm = ({
     password: "",
     sales_phone: null,
     sales_message: "",
+    person_job_role: "",
+    company_size: "",
   });
 
   const registerFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -45,6 +49,8 @@ const EnquiryForm = ({
         sales_phone: formData.sales_phone,
         sales_city: formData.sales_city,
         sales_message: formData.sales_message,
+        person_job_role: formData.person_job_role,
+        company_size: formData.company_size,
       });
       if (response?.data?.status) {
         // const header = response?.data?.data[0];
@@ -85,6 +91,8 @@ const EnquiryForm = ({
           sales_subject: "",
           sales_message: "",
           sales_city: "",
+          person_job_role: "",
+          company_size: "",
           industry: null,
           sales_phone: null,
         });
@@ -118,6 +126,8 @@ const EnquiryForm = ({
       <FirstName formData={formData} setFormData={setFormData} />
       <LastName formData={formData} setFormData={setFormData} />
       <SalesCity formData={formData} setFormData={setFormData} />
+      <YourRole formData={formData} setFormData={setFormData} />
+      <CompanySize formData={formData} setFormData={setFormData} />
       <EnquiryDescription formData={formData} setFormData={setFormData} />
       {/* <Password formData={formData} setFormData={setFormData} /> */}
       <div className=" w-full flex items-center justify-center">

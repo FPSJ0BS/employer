@@ -18,8 +18,8 @@ export const Questions = () => {
     const [newQuestionTypeData, setNewQuestionTypeData] = useState('');
     const params = useParams();
     const paramsId = params.id;
-    const notifySuccess = () => toast.success('Question Posted');
     const notifySuccessUpdate = () => toast.success('Question Updated');
+    const notifySuccess = () => toast.success('Question Posted');
     const notifyError = () => toast.error('Question Post Failed!');
     const [fetchStatus, setFetchStatus] = useState(true);
     const [allQuestions, setAllQuestions] = useState([])

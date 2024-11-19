@@ -25,6 +25,8 @@ export type FormDataType = {
   sales_phone: number | null;
   password: string;
   sales_message: string;
+  person_job_role: string;
+  company_size: string;
 };
 
 export const FormSection = () => {
