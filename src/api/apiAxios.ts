@@ -1140,6 +1140,18 @@ export const getAllStatus = async (catId: number) => {
     throw error;
   }
 };
+export const getAllFaq = async () => {
+  try {
+    
+
+    const response = await axios.get(`${`https://empapi.fpsjob.com/`}/user/faq-list`);
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
 
 export const getTeachingLevel = async () => {
   try {
