@@ -33,7 +33,7 @@ export const Index = () => {
         // Check if both responses are successful
         if (recentApplicationApiResponse?.data?.status && getprof?.data?.status && dashStats.data?.status) {
           console.log('Data loaded successfully from both APIs', dashStats?.data?.data);
-          
+
           const recentAppResponse = recentApplicationApiResponse?.data?.data;
           const stats = dashStats?.data?.data;
           console.log('daxh stats', stats);
@@ -55,6 +55,9 @@ export const Index = () => {
 
   return (
     <div className="page-wrapper dashboard ">
+      {/* <div className="w-full h-[100vh] bg-gray-600 text-white pt-[100px] opacity-90 z-50 fixed ">
+        sfsdgsdgsdgdsg
+      </div> */}
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 
@@ -96,7 +99,7 @@ export const Index = () => {
                     w-[100%]
                   ">
                     {/* <!-- Candidate block three --> */}
-                    <Applicants recentAppData={recentAppData} dataApp = {data} />
+                    <Applicants recentAppData={recentAppData} dataApp={data} />
                   </div>
 
 

@@ -258,10 +258,10 @@ const PostBoxForm = () => {
               <PostJobProcessState />
               <PostJobProcessCity />
             </div>
-            <h2 className="text-2xl mt-3" style={{ color: "#dd4975" }}>
+            {/* <h2 className="text-2xl mt-3" style={{ color: "#dd4975" }}>
               Benefits
             </h2>
-            <Benefits />
+            <Benefits /> */}
             <div className="bg-gray-300 w-full h-[1px] mt-2 mb-4" />
             <div className="flex w-[100%] mt-2">
               <PostJobDocsRequired />
