@@ -77,7 +77,6 @@ export const PostJobJobLevel = () => {
         <input
           placeholder="Set Job Level..."
           autoComplete="off"
-          required
           ref={inputRef}
           type="text"
           id="EmployerPostJobJobLevel"
