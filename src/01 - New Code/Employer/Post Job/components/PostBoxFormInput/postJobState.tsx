@@ -6,9 +6,9 @@ import {
   StateInterface,
 } from "../../../Redux/EmployerSlice";
 import { getCityListAxios } from "../../../../../api/apiAxios";
-import { RootState } from "../../../Redux/store"; // Adjust the import according to your store configuration
+import { RootState } from "../../../Redux/store";
 
-export const PostJobState: React.FC = ({setProcessLoc}) => {
+export const PostJobState: React.FC = ({ setProcessLoc }) => {
   const { PostJobPreFillDataState } = useSelector(
     (state: RootState) => state.employerSliceNew
   );
@@ -16,9 +16,8 @@ export const PostJobState: React.FC = ({setProcessLoc}) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [isSelect, setIsSelect] = useState(false);
-  const [displayedOptions, setDisplayedOptions] = useState<StateInterface[]>(
-    []
-  );
+  const [displayedOptions, setDisplayedOptions] = useState<StateInterface[]>([]);
+  const [activeIndex, setActiveIndex] = useState<number>(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const lazyLoadCount = 50;
@@ -31,13 +30,13 @@ export const PostJobState: React.FC = ({setProcessLoc}) => {
   const handleInputChange = useCallback(
     debounce((value: string) => {
       setInputValue(value);
-      const filteredOptions = PostJobPreFillDataState.filter(
-        (option: StateInterface) =>
-          option.name.toLowerCase().includes(value.toLowerCase())
+      const filteredOptions = PostJobPreFillDataState.filter((option: StateInterface) =>
+        option.name.toLowerCase().includes(value.toLowerCase())
       );
       setDisplayedOptions(filteredOptions.slice(0, lazyLoadCount));
       setShowDropdown(true);
       setIsSelect(false);
+      setActiveIndex(-1);
     }, 100),
     [PostJobPreFillDataState]
   );
@@ -91,6 +90,7 @@ export const PostJobState: React.FC = ({setProcessLoc}) => {
     setInputValue("");
     setShowDropdown(true);
     setIsSelect(false);
+    setActiveIndex(-1);
     dispatch(
       postEmployerPostJob({
         state: "",
@@ -98,7 +98,7 @@ export const PostJobState: React.FC = ({setProcessLoc}) => {
         process_location: "",
       })
     );
-    setProcessLoc(false)
+    setProcessLoc(false);
   };
 
   const handleScroll = () => {
@@ -115,7 +115,33 @@ export const PostJobState: React.FC = ({setProcessLoc}) => {
       }
     }
   };
-  console.log(isSelect);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showDropdown) return;
+
+    switch (e.key) {
+      case "ArrowDown":
+        setActiveIndex((prevIndex) =>
+          prevIndex < displayedOptions.length - 1 ? prevIndex + 1 : prevIndex
+        );
+        break;
+      case "ArrowUp":
+        setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
+        break;
+      case "Enter":
+        if (activeIndex >= 0) {
+          const selectedOption = displayedOptions[activeIndex];
+          handleOptionSelect(selectedOption.name, selectedOption.id);
+        }
+        break;
+      case "Escape":
+        setShowDropdown(false);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="relative sm:w-[100%] w-[250px]">
       <label
@@ -136,6 +162,7 @@ export const PostJobState: React.FC = ({setProcessLoc}) => {
           value={inputValue}
           onChange={(e) => handleInputChange(e.target.value)}
           onClick={openDropdown}
+          onKeyDown={handleKeyDown}
           className="mt-1 p-2 w-[100%] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
         />
         {inputValue ? (
@@ -192,7 +219,9 @@ export const PostJobState: React.FC = ({setProcessLoc}) => {
           {displayedOptions.map((option: StateInterface, index: number) => (
             <li
               key={index}
-              className="cursor-pointer hover:bg-gray-100 py-1 px-3"
+              className={`cursor-pointer hover:bg-gray-100 py-1 px-3 ${
+                index === activeIndex ? "bg-indigo-100" : ""
+              }`}
               onClick={() => handleOptionSelect(option.name, option.id)}
             >
               {option.name}

@@ -11,6 +11,8 @@ import MenuToggler from "../../../components/dashboard-pages/MenuToggler";
 import { getDashboardStats, getRecentApplications, getProfile } from "../../../api/apiAxios";
 import { useEffect, useState } from "react";
 import Loader from "../../../../public/assets/Loader";
+import DashboardPopup from "./components/DashboardPopup"
+import { useSelector } from "react-redux";
 
 export const Index = () => {
 
@@ -51,13 +53,13 @@ export const Index = () => {
     fetchData();
   }, []);
 
-
+  const { dashboardPopup } = useSelector(
+    (state) => state.employerEditJob
+  );
 
   return (
-    <div className="page-wrapper dashboard ">
-      {/* <div className="w-full h-[100vh] bg-gray-600 text-white pt-[100px] opacity-90 z-50 fixed ">
-        sfsdgsdgsdgdsg
-      </div> */}
+    <div className="page-wrapper dashboard relative">
+     {dashboardPopup && <DashboardPopup heading={"Are you sure you want to cancel?"} buttonTextOne = {"Go Back"} buttonTextTwo   = {"Cancel"}/>}
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 

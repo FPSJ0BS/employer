@@ -45,7 +45,7 @@ import { formatAMPM } from "../../../../../utils/formatAMPM.ts";
 
 export const CandidatesApplied = () => {
   const location = useLocation();
-  
+
   // Split the pathname and extract the second part which contains the ID (7080)
   const parts = location.pathname.split('/');
   const candidateId = parts[2]; // This will be "7080"
@@ -552,14 +552,14 @@ export const CandidatesApplied = () => {
 
   const [visibleEmails, setVisibleEmails] = useState({});
 
-  const toggleMask = async (id, emailId, email,faculityID) => {
+  const toggleMask = async (id, emailId, email, faculityID) => {
     try {
       const res = await postViewMobileAndEmail({
         applyID: id,
         view_field: emailId,
         log_type: "job_applied",
         faculityID,
-        jobID:candidateId
+        jobID: candidateId
       });
 
       if (res?.data?.status) {
@@ -585,14 +585,14 @@ export const CandidatesApplied = () => {
 
   const [visibleMobiles, setVisibleMobiles] = useState({});
 
-  const toggleMaskMobile = async (id, mobileId, index,faculityID) => {
+  const toggleMaskMobile = async (id, mobileId, index, faculityID) => {
     try {
       const res = await postViewMobileAndEmail({
         applyID: id,
         view_field: mobileId,
         log_type: "job_applied",
         faculityID,
-        jobID:candidateId
+        jobID: candidateId
       });
 
       if (res?.data?.status) {
@@ -876,7 +876,13 @@ export const CandidatesApplied = () => {
                               className="bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize  mt-2"
                               onClick={
                                 visibleMobiles[index]
-                                  ? null
+                                  ? () =>
+                                    toggleMaskMobile(
+                                      application?.applyID,
+                                      "mobile",
+                                      index,
+                                      application?.faculityID,
+                                    )
                                   : () =>
                                     toggleMaskMobile(
                                       application?.applyID,
@@ -887,12 +893,12 @@ export const CandidatesApplied = () => {
                               }
                               style={{
                                 cursor: visibleMobiles[index]
-                                  ? "default"
+                                  ? "pointer"
                                   : "pointer",
                               }}
                             >
                               {visibleMobiles[index]
-                                ? "View Mobile"
+                                ? "Hide Mobile"
                                 : "View Mobile"}
                             </span>
                           </span>
@@ -932,12 +938,18 @@ export const CandidatesApplied = () => {
                             {visibleEmails[index]
                               ? application.email
                               : maskEmail(application.email)}
-                              <br />
+                            <br />
                             <span
                               className="bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize ml-1 mt-2"
                               onClick={
                                 visibleEmails[index]
-                                  ? null
+                                  ? () =>
+                                    toggleMask(
+                                      application?.applyID,
+                                      "email",
+                                      index,
+                                      application?.faculityID,
+                                    )
                                   : () =>
                                     toggleMask(
                                       application?.applyID,
@@ -948,12 +960,12 @@ export const CandidatesApplied = () => {
                               }
                               style={{
                                 cursor: visibleEmails[index]
-                                  ? "default"
+                                  ? "pointer"
                                   : "pointer",
                               }}
                             >
                               {visibleEmails[index]
-                                ? "View Email"
+                                ? "Hide Email"
                                 : "View Email"}
                             </span>
                           </span>
