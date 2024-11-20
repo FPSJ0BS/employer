@@ -138,6 +138,7 @@ import { editEmployerManageProfileFields } from "./01 - New Code/Employer/Redux/
 import { SingleProfile } from "./01 - New Code/Employer/Company Profile/SingleProfile/SingleProfile.tsx";
 import { EMailModalTwo } from "./01 - New Code/UI/Modal/EMailModal2.tsx";
 import SuggestedCandidateEmploeeDBPage from "./pages/employers-dashboard/suggested-candidate/index.jsx";
+import WhatsAppButton from "./components/WhatsappIcon/WhatsappIcon.tsx";
 import { CustomizedSnackbarTwo } from "./01 - New Code/Reusable Components/Snackbar/snackbarNew.tsx";
 import  Faq  from "./01 - New Code/FAQ/Faq.tsx";
 
@@ -231,7 +232,7 @@ function App() {
 
   return (
     <>
-   
+<WhatsAppButton />
 
       <div className="page-wrapper data-scroll-container">
         {employerManageProfileFields.emailVerified === 0 &&

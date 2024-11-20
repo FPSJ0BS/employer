@@ -1049,14 +1049,24 @@ export const CandidatesApplied = () => {
                           application?.m_interview_time !== null &&
                           application?.m_interview_event_type !== null &&
                           application?.m_interview_note !== null && (
-                            <div
-                              onClick={() => toggleInterviewDetailsPopup(index)}
-                              className="text-white text-center hover:text-white cursor-pointer min-w-[50%] px-2 py-1 border border-solid border-[#023e8a] bg-[#023e8a] rounded-[6px] min-h-[35px] flex justify-center items-center gap-2"
-                            >
-                              <h3 className="text-[15px] font-semibold">
-                                View More
-                                <br /> Interview Details
-                              </h3>
+                            <div className="flex flex-col gap-2">
+                              <div
+                                onClick={() => toggleInterviewDetailsPopup(index)}
+                                className="text-white text-center hover:text-white cursor-pointer min-w-[50%] px-2 py-1 border border-solid border-[#023e8a] bg-[#023e8a] rounded-[6px] min-h-[35px] flex justify-center items-center gap-2"
+                              >
+                                <h3 className="text-[15px] font-semibold">
+                                  View More
+                                  <br /> Interview Details
+                                </h3>
+                              </div>
+                              <div
+                              
+                                className="text-white text-center hover:text-white cursor-pointer min-w-[50%] px-2 py-1  bg-red-400 rounded-[6px] min-h-[35px] flex justify-center items-center gap-2"
+                              >
+                                <h3 className="text-[15px] font-semibold">
+                                  Cancel Interview
+                                </h3>
+                              </div>
                             </div>
                           )}
 
