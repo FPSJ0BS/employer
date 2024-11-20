@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import checkPng from '../../../../../public/assets/icons/check.png';
 import Loader from "../../../../../public/assets/Loader";
@@ -10,8 +10,12 @@ import ReactHtmlParser from 'react-html-parser';
 import { updateSinglePlanData, openBuyPackageModal, editPackageFields } from "../../Redux/EmployerPackages";
 import NODATAPIC from "../../../../../public/assets/storyset/Innovation-pana.png";
 import { JobsDropDown } from "./inputs/jobsDropDown.tsx";
-import { getProfile } from "../../../../api/apiAxios.ts";
+import { getProfile, getStateListAxios, postEnquiryForm } from "../../../../api/apiAxios.ts";
 import { Award, BriefcaseIcon, Clock9 } from "lucide-react";
+import { CustomizedSnackbarTwo } from "../../../Reusable Components/Snackbar/snackbarNew.tsx";
+import { toast } from "react-toastify";
+import { editEmployerManageProfileFields, setManageProfileStatesData } from "../../Redux/CompanyProfile.tsx";
+
 
 const PackageDataTable = () => {
   const navigate = useNavigate();
@@ -23,8 +27,14 @@ const PackageDataTable = () => {
   const [singlePlanData, setSinglePlanData] = useState([]);
   const [planSwitch, setPlanSwitch] = useState(false);
   const [selectedJobs, setSelectedJobs] = useState({});
+  const notifySuccess = () => toast.success('Thanks for the inquiry. Our team will contact you soon...');
+  const notifyError = () => toast.error("Error, please contact the backend team!");
+  const { employerManageProfileFields } = useSelector(
+    (state) => state.employerManageProfile
+  );
 
   useEffect(() => {
+
     const getPlans = async () => {
       try {
         const res = await getPackagesList();
@@ -134,8 +144,76 @@ const PackageDataTable = () => {
 
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      // setLoader(true)
+      try {
+        const [getState, getProfileData] = await Promise.all([
+          getStateListAxios(),
+          getProfile(),
+        ]);
+
+        if (getState?.data?.status && getProfileData?.data?.status) {
+          await dispatch(setManageProfileStatesData(getState?.data?.data));
+          const profData = await getProfileData?.data?.data?.employerDetails;
+          const userData = await getProfileData?.data?.data?.userData;
+
+          await dispatch(
+            editEmployerManageProfileFields({
+              firstName: profData?.contact_person_first_name,
+              lastName: profData?.contact_person_last_name,
+              email: userData?.email,
+              organizationName: userData?.name,
+              phoneNumberVerified: parseInt(userData?.phone_verified),
+              phoneNumber: userData?.mobile,
+              organizationDescription: profData?.organization_description,
+              state: profData?.state,
+              city: profData?.city,
+              organizationAddress: profData?.address,
+              contactPersonEmail: profData?.contact_person_email,
+              contactPersonNumber: profData?.contact_person_no,
+              contactPersonDesignation: profData?.contact_person_desig,
+            })
+          );
+          // setLoader(false)
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+  const enquiryApiSubmit = async () => {
+
+    try {
+      const response = await postEnquiryForm({
+        person_first_name: `${employerManageProfileFields.firstName || ""} ${employerManageProfileFields.lastName || ""}`,
+        sales_email: employerManageProfileFields.email || "",
+        sales_company_name: employerManageProfileFields?.organizationName || "",
+        sales_subject: "Custom Solution Enquiry",
+        sales_phone: employerManageProfileFields?.phoneNumber || "",
+        sales_city: employerManageProfileFields?.city || "",
+        sales_message: "Custom Solution Enquiry",
+        person_job_role: employerManageProfileFields.contactPersonDesignation || "",
+        company_size: 10,
+      });
+      if (response?.data?.status) {
+        notifySuccess()
+      } else {
+       notifyError();
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  };
+
   return (
     <>
+
+
       {planList?.nationalPlans?.length < 1 &&
         planList?.statePlans?.length < 1 ? (
         <div className="flex flex-col justify-center items-center z-30">
@@ -233,7 +311,7 @@ const PackageDataTable = () => {
                     {activePlan === plan?.plan_id ? 'Plan Activated' : 'Buy'}
                   </button> */}
                     <button
-                      
+
                       onClick={() =>
                         getSinglePlanData(
                           plan,
@@ -243,7 +321,7 @@ const PackageDataTable = () => {
                           plan?.id || plan?.national_package[0].jobs
                         )
                       }
-                      
+
                       className={`cursor-pointer transition-all 
                                      ${activePlan === plan?.plan_id
                           ? "bg-mainBgColor"
@@ -253,7 +331,7 @@ const PackageDataTable = () => {
                                       border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
                                       active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-mainBgColor shadow-mainBgColor active:shadow-none`}
                     >
-                      { " Buy The Plan"}
+                      {" Buy The Plan"}
                     </button>
                   </div>
 
@@ -266,7 +344,7 @@ const PackageDataTable = () => {
                 <p className="text-[#19304a] text-[30px] font-bold pt-[20px] pb-[40px]">Let's Talk</p>
 
                 <div className="w-full  flex justify-center items-center rounded-lg">
-                  <button className="w-[90%] h-[40px] bg-[#00112f] text-white font-semibold rounded-lg">Contact Sales</button>
+                  <button onClick={() => enquiryApiSubmit()} className="w-[90%] h-[40px] bg-[#00112f] text-white font-semibold rounded-lg">Contact Sales</button>
                 </div>
 
                 <div className=" pt-[30px] w-full flex flex-col gap-3">

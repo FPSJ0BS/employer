@@ -168,6 +168,18 @@ export const postPhoneOtpRegistrationAxios = async (postData: any) => {
     throw error;
   }
 };
+export const postEnquiryForm = async (postData: any) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/sales-enquiries`,
+      postData
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
 
 // Post Register
 export const postRegisterAxios = async (postData: any) => {
@@ -1133,6 +1145,18 @@ export const getAllStatus = async (catId: number) => {
         Authorization: `Bearer ${storedDataObject}`,
       },
     });
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
+export const getAllFaq = async () => {
+  try {
+    
+
+    const response = await axios.get(`${`https://empapi.fpsjob.com/`}/user/faq-list`);
 
     return response;
   } catch (error) {

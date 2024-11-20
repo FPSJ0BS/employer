@@ -15,7 +15,20 @@ function NavbarNew() {
 
     ">
       <div className="w-[100%] flex items-center justify-between text-white px-[5vw] py-[1.5vw]">
-        <img className="w-[150px]" src={talentoLogo} alt="Tallento" />
+        <div className="flex items-center gap-4">
+          <img className="w-[150px]" src={talentoLogo} alt="Tallento" />
+          <Link
+            target="_blank"
+            to={`https://tallento.ai/`}
+
+          >
+            <button className="cubertoButton w-[150px]">
+
+
+              <span data-text="Looking for a job?">Looking for a job?</span>
+            </button>
+          </Link>
+        </div>
         <div className=" flex gap-[3vw] text-[1vw] font-normal">
 
           {/* {!login && <h4>
@@ -68,17 +81,7 @@ function NavbarNew() {
 
             </button>
           </Link>
-          <Link
-          target="_blank"
-            to={`https://tallento.ai/`}
 
-          >
-            <button className="cubertoButton w-[150px]">
-
-
-              <span data-text="Go to Tallento">Go to Tallento</span>
-            </button>
-          </Link>
 
           {login && <div className="mt-[-10px]"><LogoutButton /></div>}
 

@@ -21,7 +21,6 @@ export const PostJobProcessState = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const lazyLoadCount = 50;
-
   const openDropdown = () => {
     setDisplayedOptions(PostJobPreFillDataState.slice(0, lazyLoadCount));
     setShowDropdown(true);

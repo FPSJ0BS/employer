@@ -46,7 +46,7 @@ export const JobDescriptionInput = ({ type }: { type: boolean }) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer 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`,
+        Authorization: `Bearer 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`,
       },
     };
 

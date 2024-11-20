@@ -695,7 +695,7 @@ export const CandidatesApplied = () => {
       {leaderSet ? (
         <Loader />
       ) : (
-        <div className="flex flex-col gap-4 min-h-[100vh] w-[920px] 2xl:w-[950px] mt-4 ">
+        <div className="flex flex-col gap-4 min-h-[100vh] w-full mt-4 ">
           {applicationsArray?.length < 1 ? (
             <div className=" flex flex-col justify-center items-center z-30">
               {" "}
@@ -712,7 +712,7 @@ export const CandidatesApplied = () => {
                   <div
                     key={application?.applyID}
                     style={{ position: "relative" }}
-                    className=" cursor-default relative transition-all duration-500 hover:translate-y-2 w-[920px] 2xl:w-[950px] min-h-[250px] bg-neutral-50 rounded-lg shadow-xl flex flex-row items-center justify-start gap-4 p-3 before:absolute before:w-full hover:before:top-0 before:duration-500 before:-top-1 before:h-1 "
+                    className=" cursor-default relative transition-all duration-500 hover:translate-y-2 w-full min-h-[250px] bg-neutral-50 rounded-lg shadow-xl flex flex-row items-center justify-start gap-4 p-3 before:absolute before:w-full hover:before:top-0 before:duration-500 before:-top-1 before:h-1 "
                   >
                     {schedulePopup[index] && (
                       <div className="z-50 flex flex-col gap-3 justify-center items-center shadow-2xl absolute right-[21vw] xl:right-[21vw] 2xl:right-[19vw] rounded-[10px] w-[500px] min-h-[270px] bg-white border-1 border-solid border-gray-300">
@@ -876,7 +876,13 @@ export const CandidatesApplied = () => {
                               className="bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize  mt-2"
                               onClick={
                                 visibleMobiles[index]
-                                  ? null
+                                  ? () =>
+                                    toggleMaskMobile(
+                                      application?.applyID,
+                                      "mobile",
+                                      index,
+                                      application?.faculityID,
+                                    )
                                   : () =>
                                     toggleMaskMobile(
                                       application?.applyID,
@@ -887,12 +893,12 @@ export const CandidatesApplied = () => {
                               }
                               style={{
                                 cursor: visibleMobiles[index]
-                                  ? "default"
+                                  ? "pointer"
                                   : "pointer",
                               }}
                             >
                               {visibleMobiles[index]
-                                ? "View Mobile"
+                                ? "Hide Mobile"
                                 : "View Mobile"}
                             </span>
                           </span>
@@ -937,7 +943,13 @@ export const CandidatesApplied = () => {
                               className="bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize ml-1 mt-2"
                               onClick={
                                 visibleEmails[index]
-                                  ? null
+                                  ? () =>
+                                    toggleMask(
+                                      application?.applyID,
+                                      "email",
+                                      index,
+                                      application?.faculityID,
+                                    )
                                   : () =>
                                     toggleMask(
                                       application?.applyID,
@@ -948,12 +960,12 @@ export const CandidatesApplied = () => {
                               }
                               style={{
                                 cursor: visibleEmails[index]
-                                  ? "default"
+                                  ? "pointer"
                                   : "pointer",
                               }}
                             >
                               {visibleEmails[index]
-                                ? "View Email"
+                                ? "Hide Email"
                                 : "View Email"}
                             </span>
                           </span>

@@ -16,7 +16,7 @@ export const EmailId: React.FC<EmailIdProps> = ({ formData, setFormData }) => {
 
       setFormData({
         ...formData,
-        EmailId : inputValue
+        sales_email : inputValue
       })
        
       
@@ -41,7 +41,7 @@ export const EmailId: React.FC<EmailIdProps> = ({ formData, setFormData }) => {
         id="OrganizationName"
         name="OrganizationName"
         className=" p-2  w-[100%] border-t-0 border-l-0 border-r-0 border-b-[3px] focus:border-[2px] border-gray-300 rounded-md focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-        value={formData?.EmailId}
+        value={formData?.sales_email}
       />
     </div>
   );

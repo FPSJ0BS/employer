@@ -166,29 +166,55 @@ const Applicants = ({ recentAppData, dataApp }) => {
                     </div>
                   </div>
 
-                  <div className="flex gap-1 items-center pt-2 cursor-pointer">
-                    <h2
-                      onClick={() =>
-                        navigate(`/candidates-single-v1/${jobID}/""`)
-                      }
-                      className=" text-[#2c5ca3] font-medium hover:underline"
-                    >
-                      View Candidates
-                    </h2>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="0.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-chevron-right"
-                    >
-                      <path d="m9 18 6-6-6-6" />
-                    </svg>
+                  <div className="flex flex-col ">
+                    <div className="flex gap-1 items-center pt-2 cursor-pointer">
+                      <h2
+                        onClick={() =>
+                          navigate(`/candidates-single-v1/${jobID}/""`)
+                        }
+                        className=" text-[#2c5ca3] font-medium hover:underline"
+                      >
+                        View Candidates
+                      </h2>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="0.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-chevron-right"
+                      >
+                        <path d="m9 18 6-6-6-6" />
+                      </svg>
+                    </div>
+                    <div className="flex gap-1 items-center  cursor-pointer">
+                      <h2
+                        onClick={() =>
+                          navigate(`/employers-dashboard/suggested-candidate/${jobID}`)
+                        }
+                        className=" text-[#2c5ca3] font-medium hover:underline"
+                      >
+                        Instant Applications
+                      </h2>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="0.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-chevron-right"
+                      >
+                        <path d="m9 18 6-6-6-6" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
 
@@ -201,7 +227,7 @@ const Applicants = ({ recentAppData, dataApp }) => {
                       className="hover:underline font-normal text-[16px] capitalize text-black cursor-pointer"
                     >
                       <span className="text-[#438e76] font-medium">
-                        {total_inactive_application ? total_inactive_application :0}
+                        {total_inactive_application ? total_inactive_application : 0}
                       </span>{" "}
                       New
                     </h2>

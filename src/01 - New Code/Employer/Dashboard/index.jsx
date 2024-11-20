@@ -11,6 +11,8 @@ import MenuToggler from "../../../components/dashboard-pages/MenuToggler";
 import { getDashboardStats, getRecentApplications, getProfile } from "../../../api/apiAxios";
 import { useEffect, useState } from "react";
 import Loader from "../../../../public/assets/Loader";
+import DashboardPopup from "./components/DashboardPopup"
+import { useSelector } from "react-redux";
 
 export const Index = () => {
 
@@ -33,7 +35,7 @@ export const Index = () => {
         // Check if both responses are successful
         if (recentApplicationApiResponse?.data?.status && getprof?.data?.status && dashStats.data?.status) {
           console.log('Data loaded successfully from both APIs', dashStats?.data?.data);
-          
+
           const recentAppResponse = recentApplicationApiResponse?.data?.data;
           const stats = dashStats?.data?.data;
           console.log('daxh stats', stats);
@@ -51,10 +53,13 @@ export const Index = () => {
     fetchData();
   }, []);
 
-
+  const { dashboardPopup } = useSelector(
+    (state) => state.employerEditJob
+  );
 
   return (
-    <div className="page-wrapper dashboard ">
+    <div className="page-wrapper dashboard relative">
+     {dashboardPopup && <DashboardPopup heading={"Are you sure you want to cancel?"} buttonTextOne = {"Go Back"} buttonTextTwo   = {"Cancel"}/>}
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 
@@ -96,7 +101,7 @@ export const Index = () => {
                     w-[100%]
                   ">
                     {/* <!-- Candidate block three --> */}
-                    <Applicants recentAppData={recentAppData} dataApp = {data} />
+                    <Applicants recentAppData={recentAppData} dataApp={data} />
                   </div>
 
 

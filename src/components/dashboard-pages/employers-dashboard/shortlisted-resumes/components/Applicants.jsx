@@ -679,10 +679,10 @@ const Applicants = () => {
                       <br />
                       <span
                         className='bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize  mt-2'
-                        onClick={visibleMobiles[index] ? null : () => toggleMaskMobile(application?.applyID, "mobile", index,application?.faculityID, application?.jobID)}
-                        style={{ cursor: visibleMobiles[index] ? 'default' : 'pointer' }}
+                        onClick={visibleMobiles[index] ? () => toggleMaskMobile(application?.applyID, "mobile", index,application?.faculityID, application?.jobID) : () => toggleMaskMobile(application?.applyID, "mobile", index,application?.faculityID, application?.jobID)}
+                        style={{ cursor: visibleMobiles[index] ? 'pointer' : 'pointer' }}
                       >
-                        {visibleMobiles[index] ? 'View Mobile' : 'View Mobile'}
+                        {visibleMobiles[index] ? 'Hide Mobile' : 'View Mobile'}
                       </span>
                     </span>
                   </h3>
@@ -704,10 +704,10 @@ const Applicants = () => {
                       {visibleEmails[index] ? application.email : maskEmail(application.email)}
                       <span
                         className='bg-[#9b2226] px-2 rounded-md text-[13px] cursor-pointer text-white capitalize ml-1 mt-2'
-                        onClick={visibleEmails[index] ? null : () => toggleMask(application?.applyID, "email", index, application?.faculityID, application?.jobID,)}
-                        style={{ cursor: visibleEmails[index] ? 'default' : 'pointer' }}
+                        onClick={visibleEmails[index] ? () => toggleMask(application?.applyID, "email", index, application?.faculityID, application?.jobID,) : () => toggleMask(application?.applyID, "email", index, application?.faculityID, application?.jobID,)}
+                        style={{ cursor: visibleEmails[index] ? 'pointer' : 'pointer' }}
                       >
-                        {visibleEmails[index] ? 'View Email' : 'View Email'}
+                        {visibleEmails[index] ? 'Hide Email' : 'View Email'}
                       </span>
                     </span>
                   </h3>

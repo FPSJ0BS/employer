@@ -161,7 +161,7 @@ const CandidateSingleDynamicV1 = () => {
 
   return (
     <>
-   
+
       <MetaComponent meta={metadata} />
       {/* <!-- Header Span --> */}
       {isHeaderShow && <span className="header-span"></span>}
@@ -184,7 +184,7 @@ const CandidateSingleDynamicV1 = () => {
       {loaderState ? (
         <Loader />
       ) : (
-        <section className="candidate-detail-section ">
+        <section className="candidate-detail-section  ">
           {modal && <CandidateProfileModal />}
 
           <div className="upper-box h-[200px] flex flex-col justify-center items-center">
@@ -203,7 +203,7 @@ const CandidateSingleDynamicV1 = () => {
                     <h4 className="name">
                       {jobData?.job_title &&
                         jobData?.job_title.charAt(0).toUpperCase() +
-                          jobData?.job_title.slice(1)}
+                        jobData?.job_title.slice(1)}
                     </h4>
 
                     <ul className="candidate-info">
@@ -239,12 +239,122 @@ const CandidateSingleDynamicV1 = () => {
               {/*  <!-- Candidate block Five --> */}
             </div>
           </div>
+          {/* ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
+
+          <div className="w-[100%] flex justify-between items-center mt-5 px-[50px] 2xl:px-[100px]">
+            <ul className="flex gap-3 justify-between items-center w-full">
+
+
+              <li className="flex flex-col items-center">
+                <div className="flex items-center gap-1">
+                  <i className="icon ">
+                    <BarChart className="text-[#458d76]" />
+                  </i>
+                  <h5 className="text-[#458d76]">Job Status:</h5>
+                </div>
+                <span>
+                  {jobData?.status === 0 ? "Inactive" : "Active"}
+                </span>
+              </li>
+
+
+              {jobData?.no_of_requirement && (
+                <li className="flex flex-col items-center">
+                  <div className="flex items-center gap-1">
+
+                    <i className="icon ">
+                      <ArrowDown01 className="text-[#458d76]" />
+                    </i>
+                    <h5 className="text-[#458d76]">Requirement:</h5>
+
+                  </div>
+                  <span>{jobData?.no_of_requirement}</span>
+                </li>
+              )}
+
+              <li className="flex flex-col items-center">
+                <div className="flex items-center gap-1">
+
+                  <i className="icon ">
+                    <Calendar className="text-[#458d76]" />
+                  </i>
+                  <h5 className="text-[#458d76]">Experience:</h5>
+                </div>
+                <span>
+                  {jobData?.min_experience} -{" "}
+                  {jobData?.max_experience} Years
+                </span>
+              </li>
+
+              {/* <li className="flex flex-col items-center">
+                          <i className="icon icon-expiry"></i>
+                          <h5>Landmark:</h5>
+                          <span>{jobData?.area && jobData?.area.charAt(0).toUpperCase() + jobData?.area.slice(1)}</span>
+                        </li> */}
+              {jobData?.selection_process && (
+                <li className="flex flex-col items-center">
+                  <div className="flex items-center gap-1">
+
+                    <i className="icon ">
+                      <CircuitBoard className="text-[#458d76]" />
+                    </i>
+                    <h5 className="text-[#458d76]">
+                      Interview Process
+                    </h5>
+                  </div>
+                  <span>{jobData?.selection_process}</span>
+                </li>
+              )}
+
+              {jobData?.job_type && (
+                <li className="flex flex-col items-center">
+                  <div className="flex items-center gap-1">
+
+                    <i className="icon ">
+                      <UserRoundSearch className="text-[#458d76]" />
+                    </i>
+                    <h5 className="text-[#458d76]">Job Type:</h5>
+                  </div>
+                  <span>{jobData?.job_type}</span>
+                </li>
+              )}
+
+              {jobData?.job_level && (
+                <li className="flex flex-col items-center">
+                  <div className="flex items-center gap-1">
+
+                    <i className="icon ">
+                      <CircleGauge className="text-[#458d76]" />
+                    </i>
+                    <h5 className="text-[#458d76]">Job Level:</h5>
+                  </div>
+                  <span>{jobData?.job_level}</span>
+                </li>
+              )}
+              {jobData?.state && (
+                <li className="flex flex-col items-center">
+                  <div className="flex items-center gap-1">
+
+                    <i className="icon ">
+                      <Landmark className="text-[#458d76]" />
+                    </i>
+                    <h5 className="text-[#458d76]">Process Location:</h5>
+                  </div>
+                  <span>{jobData?.city}, {jobData?.state}</span>
+                </li>
+              )}
+
+             
+
+             
+            </ul>
+          </div>
           {/* <!-- Upper Box --> */}
 
           <div className="candidate-detail-outer">
             <div className="auto-container">
-              <div className="row">
-                <div className="content-column col-lg-8 col-md-12 col-sm-12 ">
+              <div className="w-full">
+                <div className="w-full ">
                   <div className="job-detail">
                     {/* <!-- Job Description --> */}
                     <div className=" ">
@@ -301,147 +411,7 @@ const CandidateSingleDynamicV1 = () => {
                 </div>
                 {/* End .content-column */}
 
-                <div className="sidebar-column col-lg-4 col-md-12 col-sm-12 w-[270px] ml-[130px]">
-                  <aside className=" ">
-                    <div className="sidebar-widget ">
-                      <div className="widget-content">
-                        <ul className="job-overview">
-                          <li>
-                            <i className="icon ">
-                              <BarChart className="text-[#458d76]" />
-                            </i>
-                            <h5 className="text-[#458d76]">Job Status:</h5>
-                            <span>
-                              {jobData?.status === 0 ? "Inactive" : "Active"}
-                            </span>
-                          </li>
-                          {jobData?.no_of_requirement && (
-                            <li>
-                              <i className="icon ">
-                                <ArrowDown01 className="text-[#458d76]" />
-                              </i>
-                              <h5 className="text-[#458d76]">Requirement:</h5>
-                              <span>{jobData?.no_of_requirement}</span>
-                            </li>
-                          )}
-
-                          <li>
-                            <i className="icon ">
-                              <Calendar className="text-[#458d76]" />
-                            </i>
-                            <h5 className="text-[#458d76]">Experience:</h5>
-                            <span>
-                              {jobData?.min_experience} -{" "}
-                              {jobData?.max_experience} Years
-                            </span>
-                          </li>
-
-                          {/* <li>
-                          <i className="icon icon-expiry"></i>
-                          <h5>Landmark:</h5>
-                          <span>{jobData?.area && jobData?.area.charAt(0).toUpperCase() + jobData?.area.slice(1)}</span>
-                        </li> */}
-                          {jobData?.selection_process && (
-                            <li>
-                              <i className="icon ">
-                                <CircuitBoard className="text-[#458d76]" />
-                              </i>
-                              <h5 className="text-[#458d76]">
-                                Interview Process
-                              </h5>
-                              <span>{jobData?.selection_process}</span>
-                            </li>
-                          )}
-
-                          {jobData?.job_type && (
-                            <li>
-                              <i className="icon ">
-                                <UserRoundSearch className="text-[#458d76]" />
-                              </i>
-                              <h5 className="text-[#458d76]">Job Type:</h5>
-                              <span>{jobData?.job_type}</span>
-                            </li>
-                          )}
-
-                          {jobData?.job_level && (
-                            <li>
-                              <i className="icon ">
-                                <CircleGauge className="text-[#458d76]" />
-                              </i>
-                              <h5 className="text-[#458d76]">Job Level:</h5>
-                              <span>{jobData?.job_level}</span>
-                            </li>
-                          )}
-                          {jobData?.process_state && (
-                            <li>
-                              <i className="icon ">
-                                <Landmark className="text-[#458d76]" />
-                              </i>
-                              <h5 className="text-[#458d76]">Process State:</h5>
-                              <span>{jobData?.process_state}</span>
-                            </li>
-                          )}
-
-                          {jobData?.process_city && (
-                            <li>
-                              <i className="icon ">
-                                <Store className="text-[#458d76]" />
-                              </i>
-                              <h5 className="text-[#458d76]">Process City:</h5>
-                              <span>{jobData?.process_city}</span>
-                            </li>
-                          )}
-
-                          {jobData?.process_location && (
-                            <li>
-                              <i className="icon ">
-                                <Locate className="text-[#458d76]" />
-                              </i>
-                              <h5 className="text-[#458d76]">
-                                Process Location:
-                              </h5>
-                              <span>{jobData?.process_location}</span>
-                            </li>
-                          )}
-                        </ul>
-                      </div>
-                    </div>
-                    {/* End .sidebar-widget conadidate overview */}
-
-                    {/* <div className="sidebar-widget social-media-widget">
-                    <h4 className="widget-title">Social media</h4>
-                    <div className="widget-content">
-                      <div className="social-links">
-                        <Social />
-                      </div>
-                    </div>
-                  </div> */}
-                    {/* End .sidebar-widget social-media-widget */}
-
-                    {/* <div className="sidebar-widget">
-                    <h4 className="widget-title">Professional Skills</h4>
-                    <div className="widget-content">
-                      <ul className="job-skills">
-                        <JobSkills />
-                      </ul>
-                    </div>
-                  </div> */}
-
-                    {/* End .sidebar-widget skill widget */}
-
-                    {/* <div className="sidebar-widget contact-widget">
-                    <h4 className="widget-title">Contact Us</h4>
-                    <div className="widget-content">
-                      <div className="default-form">
-                        <Contact />
-                      </div>
-                    </div>
-                  </div> */}
-
-                    {/* End .sidebar-widget contact-widget */}
-                  </aside>
-                  {/* End .sidebar */}
-                </div>
+                
                 {/* End .sidebar-column */}
               </div>
             </div>

@@ -16,7 +16,7 @@ export const OrganizationName: React.FC<OrganizationNameProps> = ({
 
     setFormData({
       ...formData,
-      organizationName: inputValue,
+      sales_company_name: inputValue,
     });
   };
 
@@ -34,10 +34,10 @@ export const OrganizationName: React.FC<OrganizationNameProps> = ({
         required
         onChange={(e) => handleChange(e)}
         type="text"
-        id="OrganizationName"
-        name="OrganizationName"
+        id="sales_company_name"
+        name="sales_company_name"
         className=" p-2  w-[100%] border-t-0 border-l-0 border-r-0 border-b-[3px] focus:border-[2px] border-gray-300 rounded-md focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-        value={formData?.organizationName}
+        value={formData?.sales_company_name}
       />
     </div>
   );

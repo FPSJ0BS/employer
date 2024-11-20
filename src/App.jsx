@@ -140,6 +140,7 @@ import { EMailModalTwo } from "./01 - New Code/UI/Modal/EMailModal2.tsx";
 import SuggestedCandidateEmploeeDBPage from "./pages/employers-dashboard/suggested-candidate/index.jsx";
 import WhatsAppButton from "./components/WhatsappIcon/WhatsappIcon.tsx";
 import { CustomizedSnackbarTwo } from "./01 - New Code/Reusable Components/Snackbar/snackbarNew.tsx";
+import  Faq  from "./01 - New Code/FAQ/Faq.tsx";
 
 function App() {
 
@@ -232,6 +233,7 @@ function App() {
   return (
     <>
 <WhatsAppButton />
+
       <div className="page-wrapper data-scroll-container">
         {employerManageProfileFields.emailVerified === 0 &&
           JSON.parse(localStorage.getItem("isModal")) && <EMailModalTwo />}
@@ -258,6 +260,7 @@ function App() {
                   <Route path="login-email" element={<LoginEmail />} />
                   <Route path="register" element={<RegisterNew />} />
                   <Route path="forgot-password" element={<ForgotPassword />} />
+                  <Route path="faq" element={<Faq />} />
                 </>
               ) : (
                 <>
@@ -304,29 +307,29 @@ function App() {
               )}
 
               {/* Static Pages */}
-              <Route path="about" element={<AboutPage />} />
+              {/* <Route path="about" element={<AboutPage />} />
               <Route path="pricing" element={<PricingPage />} />
               <Route path="faq" element={<FaqPage />} />
               <Route path="terms" element={<TermsPage />} />
               <Route path="invoice" element={<InvoicePage />} />
-              <Route path="contact" element={<ContactPage />} />
+              <Route path="contact" element={<ContactPage />} /> */}
 
               {/* Shop Routes */}
-              <Route path="shop">
+              {/* <Route path="shop">
                 <Route path="shop-list" element={<ShopListPage />} />
                 <Route path="shop-single/:id" element={<ShopSingleDyanmic />} />
                 <Route path="cart" element={<CartPage />} />
                 <Route path="checkout" element={<CheckoutPage />} />
                 <Route path="order-completed" element={<OrderCompletedPage />} />
-              </Route>
+              </Route> */}
 
               {/* Admin Routes */}
-              <Route element={<AdminDashboard />}>
+              {/* <Route element={<AdminDashboard />}>
                 <Route path="/admin" element={<Navigate to="./employer" replace />} />
                 <Route path="/admin/employer" element={<AdminEmployer />} />
                 <Route path="/admin/employer/edit-employer" element={<EditEmployer />} />
                 <Route path="/admin/employer/edit-job" element={<AdminEditJob />} />
-              </Route>
+              </Route> */}
             </Route>
           </Routes>
           <ScrollTopBehaviour />

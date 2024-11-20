@@ -111,6 +111,7 @@ interface EmployerPostJobType {
   categoryData: CategoryInterface[];
 
   subCategoryData: SubCategoryInterface[];
+  dashboardPopup: boolean;
 }
 
 // Define the initial state
@@ -158,6 +159,8 @@ const initialState: EmployerPostJobType = {
     process_city: "",
     remarks: "",
   },
+
+  dashboardPopup : false
 };
 
 // Create the slice
@@ -245,6 +248,10 @@ export const employerSliceNew = createSlice({
     ) => {
       state.subCategoryData = action.payload;
     },
+
+    setToggleDashboardPopup: (state) => {
+      state.dashboardPopup = !state.dashboardPopup;
+    },
   },
 });
 
@@ -261,6 +268,7 @@ export const {
   setCategoryData,
   setSubCategoryData,
   setHeaderShow,
+  setToggleDashboardPopup
 } = employerSliceNew.actions;
 
 export default employerSliceNew.reducer;

@@ -16,14 +16,17 @@ import { CustomizedSnackbarTwo } from "../../../Reusable Components/Snackbar/sna
 import { useSelector } from "react-redux";
 
 export type FormDataType = {
-  organizationName: string;
-  EmailId: string;
-  firstName: string;
-  lastName: string;
+  sales_company_name: string;
+  sales_email: string;
+  person_first_name: string;
+  sales_subject: string;
+  sales_city: string;
   industry: number | null;
-  mobile_number: number | null;
+  sales_phone: number | null;
   password: string;
-  organization_description: string;
+  sales_message: string;
+  person_job_role: string;
+  company_size: string;
 };
 
 export const FormSection = () => {

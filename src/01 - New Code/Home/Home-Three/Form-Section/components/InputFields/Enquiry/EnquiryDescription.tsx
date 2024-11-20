@@ -15,7 +15,7 @@ export const EnquiryDescription: React.FC<OrganizationNameProps> = ({
 
     setFormData({
       ...formData,
-      organization_description: inputValue,
+      sales_message: inputValue,
     });
   };
 
@@ -30,7 +30,7 @@ export const EnquiryDescription: React.FC<OrganizationNameProps> = ({
         id="EnquiryDescription"
         name="EnquiryDescription"
         className="p-2 w-[100%] border-b-[3px] focus:border-[2px] border-gray-300 rounded-md focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 resize-none"
-        value={formData?.organization_description}
+        value={formData?.sales_message}
       />
     </div>
   );
