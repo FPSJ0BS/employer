@@ -11,7 +11,7 @@ import { updateSinglePlanData, openBuyPackageModal, editPackageFields } from "..
 import NODATAPIC from "../../../../../public/assets/storyset/Innovation-pana.png";
 import { JobsDropDown } from "./inputs/jobsDropDown.tsx";
 import { getProfile, getStateListAxios, postEnquiryForm } from "../../../../api/apiAxios.ts";
-import { Award, BriefcaseIcon, Clock9 } from "lucide-react";
+import { Award, BarChart2, BrainCircuit, BriefcaseIcon, CalendarCheck2, CircleUserRound, Clock9, IndianRupee, Network, PackageCheck, SendToBack } from "lucide-react";
 import { CustomizedSnackbarTwo } from "../../../Reusable Components/Snackbar/snackbarNew.tsx";
 import { toast } from "react-toastify";
 import { editEmployerManageProfileFields, setManageProfileStatesData } from "../../Redux/CompanyProfile.tsx";
@@ -203,7 +203,7 @@ const PackageDataTable = () => {
       if (response?.data?.status) {
         notifySuccess()
       } else {
-       notifyError();
+        notifyError();
       }
     } catch (error) {
       console.error("Error occurred:", error);
@@ -223,7 +223,7 @@ const PackageDataTable = () => {
           <img className="w-[40%]" src={NODATAPIC} alt="No Data" />
         </div>
       ) : (
-        <div className="flex flex-col justify-center items-center gap-10">
+        <div className="flex flex-col justify-center items-center gap-10 w-full">
           {/* {isLoading && (
             <div className="flex flex-col sm:flex-row sm:gap-4">
               {planList?.nationalPlans?.length > 0 && (
@@ -238,20 +238,20 @@ const PackageDataTable = () => {
           {!isLoading && <Loader />}
 
           {isLoading && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:grid-cols-3 2xl:grid-cols-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:grid-cols-3 2xl:grid-cols-3 w-full">
               {planList?.nationalPlans?.length > 0 &&
                 !planSwitch &&
                 planList?.nationalPlans?.map((plan) => (
                   <div
                     key={plan?.id}
-                    className="h-auto py-[20px] w-[250px] lg:w-[25vw] xl:w-[20vw] border-[1.5px] border-[#dbdde5] border-solid rounded-xl flex flex-col justify-center items-center"
+                    className="h-auto py-[20px] p-2 w-[250px] lg:w-[25vw] xl:w-[100%] border-[1.5px] border-[#dbdde5] border-solid rounded-xl flex flex-col justify-center items-center"
                   >
                     <div className="text-center text-[20px] font-bold">
-                      <h1 className="font-bold">{plan?.name}</h1>
+                      <h1 className="font-bold capitalize">{plan?.name}</h1>
                     </div>
 
                     <div className="flex my-3">
-                      <p>₹</p>
+                      <IndianRupee />
                       <h3 className="text-[45px] text-[#293756]">
                         {getPriceForJob(
                           plan,
@@ -262,31 +262,68 @@ const PackageDataTable = () => {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-1 mt-[30px] gap-y-4 px-2 w-full">
-                      <div className="flex justify-start items-center gap-2 w-full ml-4">
-                        <img
-                          height="25px"
-                          width="20px"
-                          src={checkPng}
-                          alt="check"
-                        />
-                        <p>Package Type:</p>
-                        <span className="font-semibold">
-                          {plan?.emp_type.charAt(0).toUpperCase() +
-                            plan?.emp_type.slice(1)}
-                        </span>
+                      
+                      <div className="flex gap-2 w-full items-center justify-start">
+                        <div className="w-[10%] flex items-center">
+                          <PackageCheck />
+                        </div>
+                        <div className="w-[90%] flex items-center">
+                          <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em] capitalize"><span className="font-semibold">{plan?.emp_type}</span> Package.</p>
+
+                        </div>
                       </div>
-                      <div className="flex justify-start items-center gap-2 w-full ml-4">
-                        <img
-                          height="25px"
-                          width="20px"
-                          src={checkPng}
-                          alt="check"
-                        />
-                        <p>Plan Validity:</p>
-                        <span className="font-semibold">
-                          {plan.validfor} Days
-                        </span>
+                      <div className="flex gap-2 w-full items-center justify-start">
+                        <div className="w-[10%] flex items-center">
+                          <CalendarCheck2 />
+                        </div>
+                        <div className="w-[90%] flex items-center">
+                          <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Valid upto <span className="font-bold">{plan.validfor} Days.</span></p>
+
+                        </div>
                       </div>
+                      <div className="flex gap-2 w-full items-center justify-start">
+                    <div className="w-[10%] flex items-center">
+                      <SendToBack />
+                    </div>
+                    <div className="w-[90%] flex items-center">
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">End-to-End <span className="font-bold">Recruitment Services.</span></p>
+
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 w-full items-center justify-start">
+                    <div className="w-[10%] flex items-center">
+                      <BrainCircuit />
+                    </div>
+                    <div className="w-[90%] flex items-center">
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]"><span className="font-bold">AI-Driven</span> Candidate Matching.</p>
+
+                    </div>
+                  </div>
+                  <div className="flex gap-2 w-full items-center justify-start">
+                    <div className="w-[10%] flex items-center">
+                      <CircleUserRound />
+                    </div>
+                    <div className="w-[90%] flex items-center">
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]"> <span className="font-bold">Dedicated</span> Account Manager.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 w-full items-center justify-start">
+                    <div className="w-[10%] flex items-center">
+                      <BarChart2 />
+                    </div>
+                    <div className="w-[90%] flex items-center">
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Enhanced<span className="font-bold"> Employer Branding.</span></p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 w-full items-center justify-start">
+                    <div className="w-[10%] flex items-center">
+                      <Network />
+                    </div>
+                    <div className="w-[90%] flex items-center">
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Exclusive talent pool of<span className="font-bold"> 1 million+ professionals.</span></p>
+                    </div>
+                  </div>
                       <div className="flex items-center justify-between my-4 h-[60px] border-t-[1.5px] border-b-[1.5px] border-l-0 border-r-0 border-dashed">
                         <JobsDropDown
                           packageOptions={plan?.national_package}
@@ -337,11 +374,12 @@ const PackageDataTable = () => {
 
 
                 ))}
-              <div className="h-auto py-[20px] w-[250px] lg:w-[25vw] xl:w-[20vw] border-[1.5px] border-[#dbdde5] border-solid rounded-xl flex flex-col justify-start items-start p-3">
+
+              <div className=" py-[20px] h-fit w-[250px] lg:w-[25vw] xl:w-[20vw] border-[1.5px] border-[#dbdde5] border-solid rounded-xl flex flex-col justify-start items-start p-3">
 
                 <h2 className="text-[25px] text-[#19304a] font-semibold">Custom Solution</h2>
                 <p className="text-[#19304a]">Make your own personalised plan</p>
-                <p className="text-[#19304a] text-[30px] font-bold pt-[20px] pb-[40px]">Let's Talk</p>
+                <p className="text-[#19304a] text-[30px] font-bold pt-[20px] pb-[40px]">Let&apos;s Talk</p>
 
                 <div className="w-full  flex justify-center items-center rounded-lg">
                   <button onClick={() => enquiryApiSubmit()} className="w-[90%] h-[40px] bg-[#00112f] text-white font-semibold rounded-lg">Contact Sales</button>
@@ -351,45 +389,45 @@ const PackageDataTable = () => {
 
                   <div className="flex gap-2 w-full items-center justify-start">
                     <div className="w-[10%] flex items-center">
-                      <Award />
+                      <SendToBack />
                     </div>
                     <div className="w-[90%] flex items-center">
-                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Dedicated <span className="font-bold">account manager.</span></p>
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">End-to-End <span className="font-bold">Recruitment Services.</span></p>
 
                     </div>
                   </div>
 
                   <div className="flex gap-2 w-full items-center justify-start">
                     <div className="w-[10%] flex items-center">
-                      <Clock9 />
+                      <BrainCircuit />
                     </div>
                     <div className="w-[90%] flex items-center">
-                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Valid upto <span className="font-bold">360 Days.</span></p>
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]"><span className="font-bold">AI-Driven</span> Candidate Matching.</p>
 
                     </div>
                   </div>
                   <div className="flex gap-2 w-full items-center justify-start">
                     <div className="w-[10%] flex items-center">
-                      <BriefcaseIcon />
+                      <CircleUserRound />
                     </div>
                     <div className="w-[90%] flex items-center">
-                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]"> <span className="font-bold">Multiple logins &</span>Reports.</p>
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]"> <span className="font-bold">Dedicated</span> Account Manager.</p>
                     </div>
                   </div>
                   <div className="flex gap-2 w-full items-center justify-start">
                     <div className="w-[10%] flex items-center">
-                      <Award />
+                      <BarChart2 />
                     </div>
                     <div className="w-[90%] flex items-center">
-                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Company<span className="font-bold">branding & boosting.</span></p>
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Enhanced<span className="font-bold"> Employer Branding.</span></p>
                     </div>
                   </div>
                   <div className="flex gap-2 w-full items-center justify-start">
                     <div className="w-[10%] flex items-center">
-                      <Award />
+                      <Network />
                     </div>
                     <div className="w-[90%] flex items-center">
-                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Dedicated <span className="font-bold">account manager.</span></p>
+                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Exclusive talent pool of<span className="font-bold"> 1 million+ professionals.</span></p>
                     </div>
                   </div>
 

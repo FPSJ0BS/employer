@@ -36,6 +36,16 @@ import { OrganizationContactPersonNumber } from "./inputOrg/organizationContactP
 import { OrganizationContactPersonDesignation } from "./inputOrg/organizationContactPersonDesignation";
 import { postAuthPhoneOtpSendAxios } from "../../../../api/apiAxios";
 import { useNavigate } from "react-router-dom";
+import { Gst } from "./input/Gst";
+import { OtherBrandLevel } from "./inputOther/OtherBrandLevel";
+import { OtherEmployerWebsite } from "./inputOther/OtherEmployerWebsite";
+import { OtherShiftTiming } from "./inputOther/OtherShiftTiming";
+import { OtherDays } from "./inputOther/OtherDays";
+import { OtherEstabYear } from "./inputOther/OtherEstabYear";
+import { OtherEmployeesWorking } from "./inputOther/OtherEmployeesWorking";
+import { OtherSalaryDay } from "./inputOther/OtherSalaryDay";
+import { OtherNoOfEmployees } from "./inputOther/OtherNoOfEmployees";
+import { ModalEmailProfile } from "./ui/ModalEmailProfile";
 
 export const ManageProfileNew = () => {
   const navigate = useNavigate();
@@ -104,6 +114,13 @@ export const ManageProfileNew = () => {
 
   const dispatch = useDispatch();
   const [nextSection, setNextSection] = useState(false);
+
+  const [sectionState, setSectionDate] = useState({
+    sectionOne: true,
+    sectionTwo: false,
+    sectionThree: false,
+  });
+
   const { employerManageProfileFields, modal } = useSelector(
     (state: any) => state.employerManageProfile
   );
@@ -136,7 +153,12 @@ export const ManageProfileNew = () => {
     e.preventDefault();
 
     if (employerManageProfileFields?.phoneNumberVerified === 1) {
-      setNextSection(true);
+      setSectionDate((prevState) => ({
+        ...prevState,
+        sectionOne: false,
+        sectionTwo: true,
+        sectionThree: false,
+      }));
       return;
     }
 
@@ -200,6 +222,7 @@ export const ManageProfileNew = () => {
         await dispatch(
           editEmployerManageProfileFields({
             phoneNumberVerified: parseInt(userData?.phone_verified),
+            emailVerified: parseInt(userData?.email_verified),
             phoneNumber: userData?.mobile,
           })
         );
@@ -249,6 +272,69 @@ export const ManageProfileNew = () => {
 
   // Change page ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
 
+  const otpVerifyEmailandPhone = async (e,otpEmail, otpMobile) => {
+    e.preventDefault()
+    try {
+      // Ensure at least one OTP is provided
+      if (!otpEmail && !otpMobile) {
+        throw new Error("Both OTP Email and OTP Mobile are missing.");
+      }
+
+      // Prepare the payload based on inputs
+      const dataMain = {
+        ...(otpEmail && {
+          email_id: employerManageProfileFields.email,
+          email_verified_otp: otpEmail,
+        }),
+        ...(otpMobile && {
+          mobile_number: employerManageProfileFields?.phoneNumber,
+          phone_verified_otp: otpMobile,
+        }),
+      };
+
+      // Make the API call
+      const response = await postAuthPhoneOtpVerifyAxios(dataMain);
+
+      // Handle the response
+      if (response?.data?.status) {
+        handleCompanyProfile1()
+        if (otpMobile) {
+          const header = response?.data?.data[0];
+          await localStorage.setItem("header", JSON.stringify(header));
+          const onSuccessMessage = await response?.data?.message;
+          await setSnackbarSuccessMessage(onSuccessMessage);
+          setSnackbarSuccessOpen(true);
+          await dispatch(closePhoneNumberManageProfileModal());
+
+        } else {
+          
+          setEmailState(false)
+          const header = response?.data?.data[0];
+          await localStorage.setItem("header", JSON.stringify(header));
+          const onSuccessMessage = await response?.data?.message;
+          await setSnackbarSuccessMessage(onSuccessMessage);
+          setSnackbarSuccessOpen(true);
+          const successMessage =
+            response?.data?.message || "Verification successful.";
+          await setSnackbarSuccessMessage(successMessage);
+          setSnackbarSuccessOpen(true);
+        }
+      } else {
+        const errorMessage = response?.data?.message || "Verification failed.";
+        await setSnackbarErrorMessage(errorMessage);
+        setSnackbarErrorOpen(true);
+      }
+    } catch (error) {
+      console.error("Error occurred during OTP verification:", error);
+      await setSnackbarErrorMessage(
+        error.message || "An unexpected error occurred."
+      );
+      setSnackbarErrorOpen(true);
+    }
+  };
+
+  const [emailState,setEmailState] = useState(false);
+
   return (
     <div className=" w-[100%] ">
       <DefaulHeader2 />
@@ -258,20 +344,33 @@ export const ManageProfileNew = () => {
         <ModalPhoneNumber
           timerNew={timer}
           resendOtpfunc={sendOtpFromPhone}
-          verifyOtpFromPhoneFunc={verifyOtpFromPhone}
+          verifyOtpFromPhoneFunc={otpVerifyEmailandPhone}
+        
+        />
+      )}
+      {emailState && (
+        <ModalEmailProfile
+          timerNew={timer}
+          resendOtpfunc={sendOtpFromPhone}
+          verifyOtpFromPhoneFunc={otpVerifyEmailandPhone}
+       
+        
         />
       )}
       {
         <div className="min-h-[100vh] w-[100%] flex-col flex justify-center items-center">
           <div className="mt-[80px] w-[100%] mb-8">
             <Steps
-              setNextSection={setNextSection}
-              nextSectionData={nextSection}
+              sectionState={sectionState}
+              setSectionDate={setSectionDate}
             />
           </div>
-          {!nextSection && (
-            <div className=" min-h-[400px] w-[100%] flex justify-center items-center flex-col gap-6 mb-[50px]">
+          {sectionState.sectionOne && (
+            <div className=" min-h-[400px] w-[100%] flex justify-center items-center flex-col gap-4 mb-[50px]">
               <h2 className="text-[30px] font-semibold">Personal Details</h2>
+              <p className=" font-semibold">
+                We need these details to identify you and create your account
+              </p>
               <div className="relative p-[20px] min-h-[400px] w-[600px] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
                 <BorderBeam />
                 <form
@@ -280,11 +379,12 @@ export const ManageProfileNew = () => {
                 >
                   <FirstName />
                   <LastName />
-                  <Email />
+                  <Gst />
+                  <Email setEmailState = {setEmailState}/>
                   <PhoneNumber />
 
-                  <div className="w-[100%] flex justify-center sm:justify-between items-end col-span-2 mt-4">
-                    <button
+                  <div className="w-[100%] flex justify-center  items-center col-span-2 mt-4">
+                    {/* <button
                       onClick={() => navigate("/employers-dashboard/dashboard")}
                       type="button"
                       className="submitPersonalDetailButton"
@@ -292,12 +392,17 @@ export const ManageProfileNew = () => {
                       <span className="submitPersonalDetailButton-content">
                         {"Cancel"}
                       </span>
-                    </button>
-                    <button className="submitPersonalDetailButton">
+                    </button> */}
+                    {/* <button className="submitPersonalDetailButton">
                       <span className="submitPersonalDetailButton-content">
                         {employerManageProfileFields?.phoneNumberVerified === 0
                           ? "Submit Details"
                           : "Next"}
+                      </span>
+                    </button> */}
+                    <button className="submitPersonalDetailButton">
+                      <span className="submitPersonalDetailButton-content">
+                        Continue
                       </span>
                     </button>
                   </div>
@@ -306,7 +411,7 @@ export const ManageProfileNew = () => {
             </div>
           )}
 
-          {nextSection && (
+          {sectionState.sectionTwo && (
             <div className=" w-[100%] flex justify-center items-center flex-col gap-6 mb-[50px] ">
               <h2 className="text-[30px] font-semibold">
                 Organization Details
@@ -314,8 +419,14 @@ export const ManageProfileNew = () => {
               <div className="relative flex justify-center items-center p-[20px] min-h-[500px] w-[600px] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
                 <BorderBeam />
 
+                
                 <button
-                  onClick={() => navigate("/employers-dashboard/post-jobs")}
+                  onClick={() => setSectionDate((prevState) => ({
+                    ...prevState,
+                    sectionOne: false,
+                    sectionTwo: false,
+                    sectionThree: true,
+                  }))}
                   className=" cursor-pointer absolute w-[80px] h-[30px] rounded-[5px] top-[5px] right-[5px] flex justify-center items-center bg-[#be5b75] text-white font-medium"
                 >
                   Skip
@@ -333,6 +444,51 @@ export const ManageProfileNew = () => {
                   <OrganizationContactPersonEmail />
                   <OrganizationContactPersonNumber />
                   <OrganizationContactPersonDesignation />
+                  <div className="w-[100%] flex justify-center sm:justify-between items-end col-span-2 mt-4 gap-4">
+                    <button
+                      onClick={() => navigate("/employers-dashboard/dashboard")}
+                      type="button"
+                      className="submitPersonalDetailButton"
+                    >
+                      <span className="submitPersonalDetailButton-content">
+                        {"Go Back"}
+                      </span>
+                    </button>
+                    <button className="submitPersonalDetailButton">
+                      <span className="submitPersonalDetailButton-content">
+                        Submit Details
+                      </span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+          {sectionState.sectionThree && (
+            <div className=" w-[100%] flex justify-center items-center flex-col gap-6 mb-[50px] ">
+              <h2 className="text-[30px] font-semibold">Other Details</h2>
+              <div className="relative flex justify-center items-start p-[20px] min-h-[500px] w-[600px] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                <BorderBeam />
+
+                <button
+                  onClick={() => navigate("/employers-dashboard/post-jobs")}
+                  className=" cursor-pointer absolute w-[80px] h-[30px] rounded-[5px] top-[5px] right-[5px] flex justify-center items-center bg-[#be5b75] text-white font-medium"
+                >
+                  Skip
+                </button>
+
+                <form
+                  onSubmit={(e) => handleCompanyProfile2(e)}
+                  className="w-[100%] h-[100%] grid grid-cols-1 sm:grid-cols-2 gap-3 place-content-center place-items-center sm:place-items-start"
+                >
+                  <OtherBrandLevel />
+                  <OtherEmployerWebsite />
+                  <OtherDays />
+                  <OtherEstabYear />
+                  <OtherNoOfEmployees />
+                  <OtherSalaryDay />
+                  <OtherShiftTiming />
+
                   <div className="w-[100%] flex justify-center sm:justify-between items-end col-span-2 mt-4 gap-2">
                     <button
                       onClick={() => navigate("/employers-dashboard/dashboard")}

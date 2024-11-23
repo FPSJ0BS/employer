@@ -242,7 +242,7 @@ input[type="number"] {
 .submitPersonalDetailButton {
   position: relative;
   display: inline-block;
-  padding: 16px 32px;
+  padding: 8px 32px;
   border-radius: 14px;
   overflow: hidden;
   z-index: 1;
@@ -253,6 +253,7 @@ input[type="number"] {
   color: #cc5475;
   transition: all 1.2s linear;
   cursor: pointer;
+  width: 300px;
 }
 
 .submitPersonalDetailButton::after {
@@ -276,9 +277,9 @@ input[type="number"] {
 }
 
 .submitPersonalDetailButton:hover::after {
-  right: -60px;
+  right: -30px;
   bottom: -92px;
-  width: 256px;
+  width: 300px;
   height: 256px;
 }
 

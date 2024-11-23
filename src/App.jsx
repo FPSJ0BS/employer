@@ -140,7 +140,8 @@ import { EMailModalTwo } from "./01 - New Code/UI/Modal/EMailModal2.tsx";
 import SuggestedCandidateEmploeeDBPage from "./pages/employers-dashboard/suggested-candidate/index.jsx";
 import WhatsAppButton from "./components/WhatsappIcon/WhatsappIcon.tsx";
 import { CustomizedSnackbarTwo } from "./01 - New Code/Reusable Components/Snackbar/snackbarNew.tsx";
-import  Faq  from "./01 - New Code/FAQ/Faq.tsx";
+import Faq from "./01 - New Code/FAQ/Faq.tsx";
+import DashboardPopup from "./01 - New Code/Employer/Dashboard/components/DashboardPopup.tsx";
 
 function App() {
 
@@ -149,14 +150,7 @@ function App() {
     (state) => state.employerManageProfile
   );
   const { authRegister } = useSelector((state) => state.autheticationSlice);
-  useEffect(() => {
-    console.log("employerManageProfileFields", employerManageProfileFields);
-    console.log(
-      "phoneNumberVerified:",
-      employerManageProfileFields?.phoneNumberVerified
-    );
-    console.log("emailVerified:", employerManageProfileFields?.emailVerified);
-  }, [employerManageProfileFields]);
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -174,7 +168,7 @@ function App() {
         const res = await getProfile();
         if (res?.data?.status) {
           const profileAllData = await res?.data?.data;
-          console.log("profile", profileAllData);
+      
           const profileImageData = profileAllData?.employerDetails?.empimage;
           await localStorage.setItem("insProfileImage", profileImageData);
           await dispatch(setProfileImageSliceFunc(profileImageData));
@@ -192,7 +186,7 @@ function App() {
           const lastName = await profileAllData?.employerDetails
             ?.contact_person_last_name;
 
-          console.log(profileAllData);
+      
           await setPhoneVerified(phoneVerify);
           dispatch(
             editEmployerManageProfileFields({
@@ -222,21 +216,22 @@ function App() {
 
   useEffect(() => {
     const isModal = localStorage.getItem("isModal");
-    console.log(localStorage.getItem("isModal"));
     if (!isModal && employerManageProfileFields.emailVerified === 0) {
       localStorage.setItem("isModal", "true");
     }
   }, [employerManageProfileFields.emailVerified, authRegister]);
 
-
+  const { dashboardPopup } = useSelector(
+    (state) => state.employerSliceNew
+  );
 
   return (
     <>
-<WhatsAppButton />
-
+      <WhatsAppButton />
+      {dashboardPopup && <DashboardPopup  />}
       <div className="page-wrapper data-scroll-container">
-        {employerManageProfileFields.emailVerified === 0 &&
-          JSON.parse(localStorage.getItem("isModal")) && <EMailModalTwo />}
+        {/* {employerManageProfileFields.emailVerified === 0 &&
+          JSON.parse(localStorage.getItem("isModal")) && <EMailModalTwo />} */}
         <BrowserRouter>
           <Routes>
             <Route path="/">

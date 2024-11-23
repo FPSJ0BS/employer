@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import CloseIcon from "../../../../../../public/assets/icons/remove.png";
 import { useDispatch } from "react-redux";
 import { closePhoneNumberManageProfileModal } from "../../../Redux/CompanyProfile";
-import PhoneGifIcon from "../../../../../../public/assets/gif/chat.gif";
+import PhoneGifIcon from "../../../../../../public/assets/gif/email-file.gif";
 import Edit from "../../../../../../public/assets/icons/edit.png";
 import { useSelector } from "react-redux";
 import { useState } from "react";
@@ -11,11 +11,10 @@ import { editEmployerManageProfileFields } from "../../../Redux/CompanyProfile";
 import { toast } from "react-toastify";
 import { postAuthPhoneOtpSendAxios } from "../../../../../api/apiAxios";
 
-export const ModalPhoneNumber = ({
+export const ModalEmailProfile = ({
   timerNew,
   resendOtpfunc,
   verifyOtpFromPhoneFunc,
-
 }) => {
   const dispatch = useDispatch();
 
@@ -43,9 +42,8 @@ export const ModalPhoneNumber = ({
     }
   };
 
-  const [otpState, setOtpState] = useState(false); 
-  const [timer, setTimer] = useState<number | null>(null); 
-
+  const [otpState, setOtpState] = useState(false);
+  const [timer, setTimer] = useState<number | null>(null);
 
   const notifySuccess = () => toast.success("OTP sent successfully");
 
@@ -61,7 +59,6 @@ export const ModalPhoneNumber = ({
           notifySuccess();
           setOtpState(false);
           setTimer(60);
-          
         } else {
           const errMessage = await res?.data?.message;
           console.log("Error message:", errMessage);
@@ -86,10 +83,9 @@ export const ModalPhoneNumber = ({
     return () => clearInterval(interval);
   }, [timer]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setTimer(60);
-
-  },[])
+  }, []);
 
   return (
     <div className="fixed h-full w-full bg-gray-600 bg-opacity-80 z-50">
@@ -111,12 +107,12 @@ export const ModalPhoneNumber = ({
               alt="Phone Number"
             />
             <h2 className=" font-bold text-[30px] text-center cursor-default">
-              Verify your Phone Number
+              Verify your Email Address
             </h2>
             <p className="text-center text-[18px] font-normal leading-[1.6em] cursor-default">
               One Time Password(OTP) has been sent on <br />
               <span className="flex justify-center items-center gap-2 font-semibold">
-                {employerManageProfileFields?.phoneNumber}
+                {employerManageProfileFields?.email}
                 {/* <img
                   onClick={() => closeModal()}
                   className="w-[20px] cursor-pointer"
@@ -128,7 +124,7 @@ export const ModalPhoneNumber = ({
 
             <form
               onSubmit={(e) =>
-                verifyOtpFromPhoneFunc(e,"", employerManageProfileFields?.otp)
+                verifyOtpFromPhoneFunc(e, employerManageProfileFields?.otp, "")
               }
               className="flex flex-col gap-2 justify-center items-center"
             >
@@ -137,10 +133,10 @@ export const ModalPhoneNumber = ({
                   htmlFor="contactPersonName"
                   className=" postJobInputTitle font-semibold text-gray-700"
                 >
-                  Enter the otp to verify your Phone Number
+                  Enter the otp to verify your Email
                 </label>
                 <input
-                placeholder="Enter 6 digit otp..."
+                  placeholder="Enter 6 digit otp..."
                   autoComplete="off"
                   required
                   onChange={(e) => handleChange(e)}
@@ -163,24 +159,26 @@ export const ModalPhoneNumber = ({
                 }
                 className="w-[300px] relative px-8 py-2 rounded-md bg-[#cc5475] isolation-auto z-10 border-2 border-solid text-white before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-lime-500 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700"
               >
-                Verify Phone Number
+                Verify Email Address
               </button>
             </form>
 
             <button
-            type="button"
-            onClick={sendOtpFromPhone}
-            disabled={otpState || timer !== null}
-            className={`bg-[#d8e2dc] text-black px-3 rounded-md text-[14px] font-medium ${
-              otpState || timer !== null ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-          >
-            {otpState
-              ? "Sending..."
-              : timer !== null
-              ? `Resend OTP in ${timer}s`
-              : "Resend OTP on Mobile Number"}
-          </button>
+              type="button"
+              onClick={sendOtpFromPhone}
+              disabled={otpState || timer !== null}
+              className={`bg-[#d8e2dc] text-black px-3 rounded-md text-[14px] font-medium ${
+                otpState || timer !== null
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
+            >
+              {otpState
+                ? "Sending..."
+                : timer !== null
+                ? `Resend OTP in ${timer}s`
+                : "Resend OTP on Email Address"}
+            </button>
           </div>
         </div>
       </div>

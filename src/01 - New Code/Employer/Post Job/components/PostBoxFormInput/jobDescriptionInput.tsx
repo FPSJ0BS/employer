@@ -12,7 +12,7 @@ export const JobDescriptionInput = ({ type }: { type: boolean }) => {
   const [editorData, setEditorData] = useState("");
   const [debouncedData, setDebouncedData] = useState("");
   const [loading, setLoading] = useState(false);
-  const editorInstanceRef = useRef(null);  // Add a ref to access CKEditor instance
+  const editorInstanceRef = useRef(null); // Add a ref to access CKEditor instance
   const dispatch = useDispatch();
 
   const { employerPostJob } = useSelector(
@@ -87,16 +87,31 @@ export const JobDescriptionInput = ({ type }: { type: boolean }) => {
 
   return (
     <div className="w-[300px] sm:w-[1000px] mb-[40px] relative">
+      <style>
+        {`
+      .ck.ck-editor__main .ck-placeholder {
+        font-size: 16px; /* Adjust font size */
+        font-weight: semiBold; /* Make bold */
+        color: #aaa; /* Optional color */
+      }
+    `}
+      </style>
       <div className="py-2">
-        <h2 className="font-semibold">Please enter a Job Description</h2>
+        <h2 className="font-semibold">
+          Describe the responsibilities of this job and other specific requirements here.
+        </h2>
       </div>
       <CKEditor
         editor={ClassicEditor}
         onReady={(editor) => {
-          editorInstanceRef.current = editor;  // Store editor instance
+          editorInstanceRef.current = editor;
         }}
         onChange={(event, editor) => handleEditorData(event, editor)}
         data={type ? debouncedData : ""}
+        config={{
+          placeholder:
+            "Enter the job description, including the main responsibility and tasks...",
+        }}
       />
       <LoadingButton
         loading={loading}

@@ -1,7 +1,7 @@
 // api.js
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const BASE_URL = 'http://89.116.34.153:3000/institute';
+const BASE_URL = 'http://localhost:3000/institute';
 const authorizationToken = localStorage.getItem('header');
 const Fcm = localStorage.getItem('Fcm');
 

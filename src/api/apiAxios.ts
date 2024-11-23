@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const BASE_URL = "https://empapi.fpsjob.com/institute";
-// export const BASE_URL = "http://localhost:3005/institute";
+// export const BASE_URL = "https://empapi.fpsjob.com/institute";
+export const BASE_URL = "http://localhost:3000/institute";
 const Fcm = localStorage.getItem("Fcm");
 
 // Authentication Flow -->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -50,12 +50,7 @@ export const postAuthPhoneOtpSendAxios = async (postData: any) => {
   try {
     const authorizationToken: any = localStorage.getItem("header");
     const storedDataObject = JSON.parse(authorizationToken);
-
-    if (!authorizationToken) {
-      console.error("Authorization token not available");
-      return;
-    }
-
+    
     const response = await axios.post(
       `${BASE_URL}/authentication/mobile-send-otp`,
       postData,
@@ -77,10 +72,7 @@ export const postAuthPhoneOtpVerifyAxios = async (postData: any) => {
     const authorizationToken: any = localStorage.getItem("header");
     const storedDataObject = JSON.parse(authorizationToken);
 
-    if (!authorizationToken) {
-      console.error("Authorization token not available");
-      return;
-    }
+ 
 
     const response = await axios.post(
       `${BASE_URL}/authentication/mobile-verify-otp`,
@@ -809,7 +801,8 @@ export const postPostJobAxios = async (
   area: string,
   process_state: string,
   process_city: string,
-  remarks: string
+  remarks: string,
+  benefits: number[]
 ) => {
   try {
     const authorizationToken: any = localStorage.getItem("header");
@@ -847,6 +840,7 @@ export const postPostJobAxios = async (
         process_state,
         process_city,
         remarks,
+        benefits,
       },
       {
         headers: {
@@ -1536,6 +1530,27 @@ export const suggestedProfileQuery = async (data: any) => {
   }
   try {
     const response = await axios.post(`${BASE_URL}/suggested_profile_request`, data, {
+      headers: {
+        Authorization: `Bearer ${storedDataObject}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
+
+export const doGetJobTypes = async () => {
+  const authorizationToken: any = localStorage.getItem("header");
+  const storedDataObject = JSON.parse(authorizationToken);
+
+  if (!authorizationToken) {
+    console.error("Authorization token not available");
+    return;
+  }
+  try {
+    const response = await axios.get(`${BASE_URL}/benefits-list`, {
       headers: {
         Authorization: `Bearer ${storedDataObject}`,
       },

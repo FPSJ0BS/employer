@@ -118,12 +118,13 @@ const Otp: React.FC<OtpProps> = ({
               onChange={(e) => handleChange(e.target.value, index)}
               onKeyUp={(e) => handleBackspaceAndEnter(e, index)}
               ref={(reference) => (otpBoxReference.current[index] = reference)}
-              className="border w-12 h-12 text-white p-3 rounded-md block bg-black focus:border-2 focus:outline-none appearance-none"
+              className=" w-12 h-12 text- p-3 rounded-md block bg-white border-solid border-2 border-gray-400 focus:border-2 focus:outline-none appearance-none"
             />
           ))}
         </div>
 
         <div className="text-center">
+          <p>One time pwd has been sent on the {mobNumber}</p>
           <p className="text-lg font-semibold text-gray-500">
             {timer > 0 ? (
               `Resend OTP in ${timer}s`

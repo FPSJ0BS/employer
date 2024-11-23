@@ -1,7 +1,8 @@
-import React from "react";
+import { Briefcase, ListCollapse, UserRound } from "lucide-react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-export const Steps = ({ setNextSection, nextSectionData }) => {
+export const Steps = ({ sectionState, setSectionDate }) => {
   const { employerManageProfileFields } = useSelector(
     (state) => state.employerManageProfile
   );
@@ -10,82 +11,97 @@ export const Steps = ({ setNextSection, nextSectionData }) => {
     if (employerManageProfileFields?.phoneNumberVerified === 0) {
       return;
     } else {
-      setNextSection(true);
+      setSectionDate((prevState) => ({
+        ...prevState,
+        sectionOne: false,
+        sectionThree: false,
+        sectionTwo: true,
+      }));
     }
   };
+
+  const nextSetThree = () => {
+    if (employerManageProfileFields?.phoneNumberVerified === 0) {
+      return;
+    } else {
+      setSectionDate((prevState) => ({
+        ...prevState,
+        sectionOne: false,
+        sectionThree: true,
+        sectionTwo: false,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    console.log("sectionStatesectionState", sectionState);
+  }, [sectionState]);
   return (
     <div className="w-[100%] flex justify-center items-center">
-      <div className=" w-[100%] sm:w-[30%]  h-[100px] flex ">
-        <div className=" w-[30%] h-[100%]  flex  justify-end items-center relative">
-          
-          <div
-            onClick={() => setNextSection(false)}
-            className={`  cursor-pointer w-[50px] h-[50px] rounded-[50%] border-2  border-solid border-[#cc5475] ${
-              !nextSectionData ? "bg-[#cc5475]" : "bg-white"
-            }  flex justify-center items-center`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={`lucide lucide-users-round  ${
-                !nextSectionData ? " text-white" : "text-[#cc5475]"
-              }`}
-            >
-              <path d="M18 21a8 8 0 0 0-16 0" />
-              <circle cx="10" cy="8" r="5" />
-              <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
-            </svg>
-          </div>
+     <div className="w-full sm:w-[50%] h-[100px] flex items-center">
+  {/* Section 1 */}
+  <div className="w-[10%] h-full flex justify-end items-center relative">
+    <div
+      onClick={() => {
+        setSectionDate((prevState) => ({
+          ...prevState,
+          sectionOne: true,
+          sectionTwo: false,
+          sectionThree: false,
+        }));
+      }}
+      className={`cursor-pointer w-[50px] h-[50px] rounded-full border-2 border-solid border-[#cc5475] ${
+        sectionState.sectionOne ? "bg-[#cc5475] text-white" : "bg-white"
+      } flex justify-center items-center`}
+    >
+      <UserRound />
+    </div>
+    <h2 className="absolute bottom-[-20px] left-[70%] transform -translate-x-1/2 text-center font-medium">
+      Personal Details
+    </h2>
+  </div>
 
-          <h2 className=" absolute bottom-0 xl:left-[30%] 2xl:left-[40%] mr-[-50px] font-medium">Personal Details</h2>
+  {/* Line between Section 1 and Section 2 */}
+  <div className="w-[35%] h-full flex justify-center items-center">
+    <hr className="bg-[#cc5475] h-[2px] w-full" />
+  </div>
 
-        </div>
+  {/* Section 2 */}
+  <div className="w-[10%] h-full flex justify-start items-center relative -mr-8">
+    <div
+      onClick={() => nextSet()}
+      className={`cursor-pointer w-[50px] h-[50px] rounded-full border-2 border-solid border-[#cc5475] ${
+        sectionState.sectionTwo ? "bg-[#cc5475] text-white" : "bg-white"
+      } flex justify-center items-center`}
+    >
+      <Briefcase />
+    </div>
+    <h2 className="absolute bottom-[-20px] left-6 transform -translate-x-1/2 text-center font-medium">
+      Organization Details
+    </h2>
+  </div>
 
-        <div className=" w-[40%] h-[100%]  flex justify-center items-center">
-          <div className="w-[100%]">
-            <hr className="bg-[#cc5475] opacity-100 h-[2px]" />
-          </div>
-        </div>
+  {/* Line between Section 2 and Section 3 */}
+  <div className="w-[35%] h-full flex justify-center items-center">
+    <hr className="bg-[#cc5475] h-[2px] w-[95%]" /> {/* Adjusted the width */}
+  </div>
 
-        <div className=" w-[30%] h-[100px] ">
-          <div className=" w-[100%] h-[100%]  flex justify-start items-center relative">
-            <div
-              onClick={() => nextSet()}
-              className={`cursor-pointer w-[50px] h-[50px] rounded-[50%] border-2 opacity-100 border-[#cc5475] ${
-                nextSectionData ? "bg-[#cc5475]" : "bg-white"
-              } border-solid flex justify-center items-center`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className={`lucide lucide-briefcase-business ${
-                  nextSectionData ? " text-white" : "text-[#cc5475]"
-                }`}
-              >
-                <path d="M12 12h.01" />
-                <path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-                <path d="M22 13a18.15 18.15 0 0 1-20 0" />
-                <rect width="20" height="14" x="2" y="6" rx="2" />
-              </svg>
-            </div>
-            <h2 className=" absolute bottom-0 xl:left-[-40%] 2xl:left-[-30%] mr-[-50px] font-medium">Organization Details</h2>
-          </div>
-        </div>
-      </div>
+  {/* Section 3 */}
+  <div className="w-[10%] h-full flex justify-start items-center relative -ml-3">
+    <div
+      onClick={() => nextSetThree()}
+      className={`cursor-pointer w-[50px] h-[50px] rounded-full border-2 border-solid border-[#cc5475] ${
+        sectionState.sectionThree ? "bg-[#cc5475] text-white" : "bg-white"
+      } flex justify-center items-center`}
+    >
+      <ListCollapse />
+    </div>
+    <h2 className="absolute bottom-[-20px]  left-6 right-1 transform -translate-x-1/2 text-center font-medium">
+      Other Details
+    </h2>
+  </div>
+</div>
+
     </div>
   );
 };

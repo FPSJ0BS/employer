@@ -38,6 +38,8 @@ import Benefits from "./Benefits/Benefits";
 
 const PostBoxForm = () => {
   const dispatch = useDispatch();
+  const [selectedBenefits, setSelectedBenefits] = useState([]);
+  const [customBenefits, setCustomBenefits] = useState([]);
   // Snackbar start ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   // Snackbar Success
@@ -125,9 +127,10 @@ const PostBoxForm = () => {
         employerPostJob?.salary_type,
         employerPostJob?.selection_process,
         employerPostJob?.process_location,
-        employerPostJob?.process_state,
-        employerPostJob?.process_city,
-        employerPostJob?.remarks
+        employerPostJob?.state,
+        employerPostJob?.city,
+        employerPostJob?.remarks,
+        selectedBenefits.map((item) => item.id)
       );
 
       if (res?.data?.status) {
@@ -174,15 +177,16 @@ const PostBoxForm = () => {
         salary_type: "",
         selection_process: "",
         process_location: "",
-        process_state: "",
-        process_city: "",
         remarks: "",
       })
     );
   };
 
   const [processLoc, setProcessLoc] = useState(false);
- 
+
+  useEffect(() => {
+    console.log("selectedBenefits", selectedBenefits);
+  }, [selectedBenefits]);
 
   return (
     <div className="pb-[20px] w-[100%] sm:px-[5px]">
@@ -217,15 +221,23 @@ const PostBoxForm = () => {
           onSubmit={(e) => postJobFormSubmit(e)}
           className="flex flex-col gap-1"
         >
-          <div className=" bg-[#faf9f8] w-[100%] h-[200px] rounded-md flex-col sm:flex-row flex justify-between items-center px-[50px] my-4">
-            <h2 className=" pt-3 sm:pt-0 text-[25px] font-semibold">
-              Post Job
+          <div className=" bg-[#faf9f8] w-[100%] h-[60px] rounded-md flex-col sm:flex-row flex justify-between items-center px-[50px] my-4">
+            <h2 className=" sm:pt-0 text-[25px] font-semibold">
+              Post a new Job
             </h2>
             {/* <img className="w-[300px]" src={PostJobImage} alt="psotjob" /> */}
-            <div className=" flex flex-col justify-center items-center font-medium gap-2">
+            <div className=" flex justify-center items-center font-medium gap-2">
               <h2 className=" text-[20px]">Available Jobs</h2>
               <CircularProgressBar />
             </div>
+          </div>
+          <div>
+            <h3 className="font-semibold text-[16px]">
+              We use this information to find the best candidates for the job.
+            </h3>
+            <p className="font-semibold text-[15px]">
+              *Marked fields are mandatory
+            </p>
           </div>
           <div>
             <h2 className="text-2xl mt-3" style={{ color: "#dd4975" }}>
@@ -235,10 +247,7 @@ const PostBoxForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <PostJobJobTitle />
               <PostJobDesignation />
-              <PostJobState  setProcessLoc = {setProcessLoc}/>
-              <PostJobCity setProcessLoc = {setProcessLoc}/>
-              <PostJobProcessLocation setProcessLoc = {setProcessLoc} />
-             {processLoc && <PostJobProcessLocationOther />}
+              <PostJobJobType />
               <PostJobExperience />
               <PostJobQualification />
             </div>
@@ -248,24 +257,36 @@ const PostBoxForm = () => {
             </h2>
             <div className="bg-gray-300 w-full h-[1px] mt-2 mb-4" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {!(employerPostJob?.job_type === "Work From Home") && (
+                <>
+                  <PostJobState setProcessLoc={setProcessLoc} />
+                  <PostJobCity setProcessLoc={setProcessLoc} />
+                  <PostJobProcessLocation setProcessLoc={setProcessLoc} />
+                  {processLoc && <PostJobProcessLocationOther />}
+                </>
+              )}
+
               <PostJobJobLevel />
-              <PostJobJobType />
               <PostJobNoOfRequirement />
               <PostJobCategory />
               <PostJobSubject />
               <PostJobSalaryRange />
               <PostJobSelectionProcess />
-              <PostJobProcessState />
-              <PostJobProcessCity />
             </div>
-            {/* <h2 className="text-2xl mt-3" style={{ color: "#dd4975" }}>
+            <h2 className="text-2xl mt-3" style={{ color: "#dd4975" }}>
               Benefits
             </h2>
-            <Benefits /> */}
             <div className="bg-gray-300 w-full h-[1px] mt-2 mb-4" />
-            <div className="flex w-[100%] mt-2">
-              <PostJobDocsRequired />
-            </div>
+            <Benefits
+              selectedBenefits={selectedBenefits}
+              setSelectedBenefits={setSelectedBenefits}
+              customBenefits={customBenefits}
+              setCustomBenefits={setCustomBenefits}
+            />
+            <h2 className="text-2xl mt-3" style={{ color: "#dd4975" }}>
+              Job Description
+            </h2>
+            <div className="bg-gray-300 w-full h-[1px] mt-2 mb-4" />
             {(employerPostJob?.job_title &&
               employerPostJob?.state &&
               employerPostJob?.city &&
@@ -290,6 +311,9 @@ const PostBoxForm = () => {
                 </div>
               </Tooltip>
             )}
+            <div className="flex w-[100%] mt-2">
+              <PostJobDocsRequired />
+            </div>
           </div>
 
           {/* <div className="w-[100%] mb-6 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 lg:gap-x-[20px] gap-y-[20px] sm:gap-x-[20px] place-items-center place-content-center ">

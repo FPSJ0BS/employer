@@ -69,6 +69,19 @@ export interface SubCategoryInterface {
   created_at: string;
 }
 
+interface DashboardPopupItems {
+  heading: string;
+  buttonTextOne: string;
+  buttonTextTwo: string;
+  iconOnePercentage: string;
+  iconTwoPercentage: string;
+  btnOneTextPl: string;
+  btnOneTextPr: string;
+  btnTwoTextPl: string;
+  btnTwoTextPr: string;
+  hitApi: boolean;
+}
+
 interface EmployerPostJobType {
   employerPostJob: {
     job_title: string;
@@ -99,7 +112,7 @@ interface EmployerPostJobType {
   PostJobPreFillDataState: StateInterface[];
   PostJobPreFillDataCity: CityInterface[];
   PostJobPreFillDataProcessCity: CityInterface[];
-  isHeaderShow:boolean;
+  isHeaderShow: boolean;
   allJobTypes: JobType[];
 
   boardLevel: BoardLevelType[];
@@ -112,6 +125,7 @@ interface EmployerPostJobType {
 
   subCategoryData: SubCategoryInterface[];
   dashboardPopup: boolean;
+  dashboardPopupFields: DashboardPopupItems;
 }
 
 // Define the initial state
@@ -132,8 +146,8 @@ const initialState: EmployerPostJobType = {
 
   categoryData: [],
 
-  subCategoryData:[],
-  isHeaderShow:true,
+  subCategoryData: [],
+  isHeaderShow: true,
   employerPostJob: {
     job_title: "",
     catID: null,
@@ -160,7 +174,19 @@ const initialState: EmployerPostJobType = {
     remarks: "",
   },
 
-  dashboardPopup : false
+  dashboardPopup: false,
+  dashboardPopupFields: {
+    heading: "",
+    buttonTextOne: "",
+    buttonTextTwo: "",
+    iconOnePercentage: "",
+    iconTwoPercentage: "",
+    btnOneTextPl: "",
+    btnOneTextPr: "",
+    btnTwoTextPl: "",
+    btnTwoTextPr: "",
+    hitApi: false,
+  },
 };
 
 // Create the slice
@@ -252,6 +278,13 @@ export const employerSliceNew = createSlice({
     setToggleDashboardPopup: (state) => {
       state.dashboardPopup = !state.dashboardPopup;
     },
+    setDashboardPopupFields: (state, action) => {
+      // Merge the existing fields with the new ones from action.payload
+      state.dashboardPopupFields = {
+        ...state.dashboardPopupFields,
+        ...action.payload,
+      };
+    },
   },
 });
 
@@ -268,7 +301,8 @@ export const {
   setCategoryData,
   setSubCategoryData,
   setHeaderShow,
-  setToggleDashboardPopup
+  setToggleDashboardPopup,
+  setDashboardPopupFields,
 } = employerSliceNew.actions;
 
 export default employerSliceNew.reducer;

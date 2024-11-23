@@ -52,14 +52,12 @@ export const Index = () => {
 
     fetchData();
   }, []);
+ 
 
-  const { dashboardPopup } = useSelector(
-    (state) => state.employerEditJob
-  );
 
   return (
     <div className="page-wrapper dashboard relative">
-     {dashboardPopup && <DashboardPopup heading={"Are you sure you want to cancel?"} buttonTextOne = {"Go Back"} buttonTextTwo   = {"Cancel"}/>}
+
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 

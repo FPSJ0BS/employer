@@ -15,14 +15,19 @@ export interface EmployerManageProfile {
   employerManageProfileFields: {
     firstName: string;
     lastName: string;
+    website: string;
+    establish_year: string;
+    working_days: string;
     designation: string;
     phoneNumber: number | null;
     email: string;
     otp: string;
+    faculty_no: string;
     organizationDescription: string;
     organizationName: string;
     state: string;
     city: string;
+    gst: string;
     organizationAddress: string;
     contactPersonEmail: string;
     contactPersonNumber: string;
@@ -47,9 +52,14 @@ const initialState: EmployerManageProfile & ModalState = {
     firstName: "",
     lastName: "",
     designation: "",
+    website: "",
+    working_days: "",
+    establish_year: "",
+    faculty_no: "",
     phoneNumber: null,
     email: "",
     otp: "",
+    gst: "",
     organizationDescription: "",
     organizationName: "",
     state: "",

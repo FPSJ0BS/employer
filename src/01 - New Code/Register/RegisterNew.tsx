@@ -14,6 +14,8 @@ import {
   getCityListAxios,
   postPhoneOtpRegistrationAxios,
   postRegisterAxios,
+  postAuthPhoneOtpSendAxios,
+  postAuthPhoneOtpVerifyAxios,
 } from "../../api/apiAxios";
 import { useDispatch } from "react-redux";
 import { InstituteNameInputReg } from "./Inputs/InstituteNameInputReg";
@@ -34,13 +36,14 @@ import { cn } from "../../lib/utils";
 import Lottie from "lottie-react";
 import RegisterLottieAnimation from "../../../public/assets/Lottie/Animation - 1714629102573.json";
 import { openAdminModal } from "../Employer/Redux/Authentication";
-import { EmailModal } from "../UI/Modal/Modal";
+import { EmailModal, MobileModal } from "../UI/Modal/MobileModal";
 import { closeAdminModal } from "../Employer/Redux/Authentication";
 
 import SignUpImage from "../../../public/assets/storyset/Sign up-bro.png";
 
 import { LoaderEmployer } from "../../../public/assets/LoaderEmployer";
 import { WalletDataInterface, setWalletData } from "../Employer/Redux/Wallet";
+import { ModalEmail } from "../UI/Modal/ModalEmail";
 
 export const RegisterNew = () => {
   // Snackbar start ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -74,9 +77,7 @@ export const RegisterNew = () => {
     (state: any) => state.autheticationSlice
   );
 
-  useEffect(() => {
-    console.log("auth", authRegister);
-  }, [authRegister]);
+  const [openEmailModal, setOpenEmailModal] = useState(false);
 
   const [allDataValid, setAllDataValid] = useState(false);
 
@@ -129,8 +130,10 @@ export const RegisterNew = () => {
         person_last_name: authRegister.last_name,
         nt_id: authRegister.nt_id,
         password: authRegister.password,
+        mobile_number: authRegister.mobile_number,
       });
       if (response?.data?.status) {
+        sendOtpFromPhone();
         setLoaderState(false);
         const hash = response?.data?.data[0];
         dispatch(
@@ -148,14 +151,14 @@ export const RegisterNew = () => {
           bonusCoins: "100",
         };
         localStorage.setItem("wallet", JSON.stringify(data));
-         localStorage.setItem("walletData", JSON.stringify([data]));
+        localStorage.setItem("walletData", JSON.stringify([data]));
         dispatch(setWalletData(data));
         const onSuccessMessage = await response?.data?.message;
         await setSnackbarSuccessMessage(onSuccessMessage);
         setSnackbarSuccessOpen(true);
         setTimeout(() => {
           dispatch(openAdminModal("true"));
-          setTimer(30);
+          setTimer(60);
         }, 500);
       } else {
         const errMessage = await response?.data?.message;
@@ -169,76 +172,114 @@ export const RegisterNew = () => {
     }
   };
 
-  const resendOtp = async () => {
+  const sendOtpFromPhone = async () => {
     try {
-      const response = await postPhoneOtpRegistrationAxios(
-        authRegister.email_id
-      );
-      if (response?.data?.status) {
-        const hash = response?.data?.data[0];
-        dispatch(
-          postAuthRegister({
-            hash,
-          })
-        );
+      const res = await postAuthPhoneOtpSendAxios({
+        mobile_number: authRegister.mobile_number,
+        // email_id: employerManageProfileFields?.email,
+      });
 
-        const onSuccessMessage = await response?.data?.message;
+      if (res?.data?.status) {
+        const onSuccessMessage = await res?.data?.message;
         await setSnackbarSuccessMessage(onSuccessMessage);
-        setSnackbarSuccessOpen(true);
-        setTimer(30);
+        await setSnackbarSuccessOpen(true);
+        setTimerMobile(60);
       } else {
-        const errMessage = await response?.data?.message;
-
+        const errMessage = await res?.data?.message;
         await setSnackbarErrorMessage(errMessage);
         setSnackbarErrorOpen(true);
       }
     } catch (error) {
-      console.error("Error occurred:", error);
-      // Handle error here
+      console.log(error);
+    }
+  };
+  const sendOtpFromEMail = async () => {
+    try {
+      const res = await postAuthPhoneOtpSendAxios({
+        // mobile_number: authRegister.mobile_number,
+        email_id: authRegister.email_id,
+      });
+
+      if (res?.data?.status) {
+        const onSuccessMessage = await res?.data?.message;
+        await setSnackbarSuccessMessage(onSuccessMessage);
+        await setSnackbarSuccessOpen(true);
+        setTimer(60);
+      } else {
+        const errMessage = await res?.data?.message;
+        await setSnackbarErrorMessage(errMessage);
+        setSnackbarErrorOpen(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+   const otpVerifyEmailandPhone = async (otpEmail, otpMobile) => {
+    try {
+      // Ensure at least one OTP is provided
+      if (!otpEmail && !otpMobile) {
+        throw new Error("Both OTP Email and OTP Mobile are missing.");
+      }
+
+      // Prepare the payload based on inputs
+      const dataMain = {
+        ...(otpEmail && {
+          email_id: authRegister.email_id,
+          email_verified_otp: otpEmail,
+        }),
+        ...(otpMobile && {
+          mobile_number: authRegister.mobile_number,
+          phone_verified_otp: otpMobile,
+        }),
+      };
+
+      // Make the API call
+      const response = await postAuthPhoneOtpVerifyAxios(dataMain);
+
+      // Handle the response
+      if (response?.data?.status) {
+        if (otpMobile) {
+          dispatch(closeAdminModal());
+          sendOtpFromEMail();
+          setOpenEmailModal(true);
+          const header = response?.data?.data[0];
+          await localStorage.setItem("header", JSON.stringify(header));
+          const onSuccessMessage = await response?.data?.message;
+          await setSnackbarSuccessMessage(onSuccessMessage);
+          setSnackbarSuccessOpen(true);
+        } else {
+          
+        
+          setOpenEmailModal(false);
+          const header = response?.data?.data[0];
+          await localStorage.setItem("header", JSON.stringify(header));
+          const onSuccessMessage = await response?.data?.message;
+          await setSnackbarSuccessMessage(onSuccessMessage);
+          setSnackbarSuccessOpen(true);
+          await dispatch(setLogin(true));
+          navigate("/manage-profile");
+
+          const successMessage =
+            response?.data?.message || "Verification successful.";
+          await setSnackbarSuccessMessage(successMessage);
+          setSnackbarSuccessOpen(true);
+        }
+      } else {
+        const errorMessage = response?.data?.message || "Verification failed.";
+        await setSnackbarErrorMessage(errorMessage);
+        setSnackbarErrorOpen(true);
+      }
+    } catch (error) {
+      console.error("Error occurred during OTP verification:", error);
+      await setSnackbarErrorMessage(
+        error.message || "An unexpected error occurred."
+      );
+      setSnackbarErrorOpen(true);
     }
   };
 
   // opt verify
-
-  const otpVerify = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      const response = await postRegisterAxios({
-        // institute_name: authRegister.institute_name,
-        // person_name: authRegister.first_name,
-        email_id: authRegister.email_id,
-        // person_first_name: authRegister.first_name,
-        // person_last_name: authRegister.last_name,
-        hash: authRegister.hash,
-        otp: authRegister.otp,
-        // nt_id: parseInt(authRegister.nt_id),
-        // password: authRegister.password,
-      });
-
-      if (response?.data?.status) {
-        setLoaderState(false);
-        const header = response?.data?.data[0];
-        await localStorage.setItem("header", JSON.stringify(header));
-        await dispatch(setLogin(true));
-        const onSuccessMessage = await response?.data?.message;
-        await setSnackbarSuccessMessage(onSuccessMessage);
-        setSnackbarSuccessOpen(true);
-        await dispatch(closeAdminModal());
-        await clearFields();
-        navigate("/manage-profile");
-      } else {
-        const onErrorMessage = await response?.data?.message;
-        await setSnackbarErrorMessage(onErrorMessage);
-        setSnackbarErrorOpen(true);
-        setRegisterOtp(false);
-      }
-    } catch (error) {
-      await setSnackbarErrorMessage("Registration Unsuccessful, try again!");
-      setSnackbarErrorOpen(true);
-      setRegisterOtp(false);
-    }
-  };
 
   const clearFields = () => {
     dispatch(
@@ -288,14 +329,43 @@ export const RegisterNew = () => {
     };
   }, [timer]);
 
+  // Otp Timer ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
+
+  const [timerMobile, setTimerMobile] = useState(60);
+
+  useEffect(() => {
+    let interval;
+
+    if (timerMobile > 0) {
+      interval = setInterval(() => {
+        setTimerMobile((prevTimer) => prevTimer - 1);
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [timerMobile]);
+
   return (
     <div className="w-[100%] ">
       <div className="w-[100%] h-[100vh] flex items-end justify-center relative">
         {modal.state && (
-          <EmailModal
+          <MobileModal
             timerNew={timer}
-            resendOtpfunc={resendOtp}
-            otpVerifyNew={otpVerify}
+            resendOtpfunc={sendOtpFromEMail}
+            resendOtpMobilefunc={sendOtpFromPhone}
+            otpVerifyNew={otpVerifyEmailandPhone}
+            timerMobile={timerMobile}
+          />
+        )}
+        {openEmailModal && (
+          <ModalEmail
+            timerNew={timer}
+            resendOtpfunc={sendOtpFromEMail}
+            resendOtpMobilefunc={sendOtpFromPhone}
+            otpVerifyNew={otpVerifyEmailandPhone}
+            timerMobile={timerMobile}
           />
         )}
         {/* Left Side */}
@@ -336,11 +406,11 @@ export const RegisterNew = () => {
 
                 <InstituteNameInputReg />
                 <InstituteEmailInputReg />
+                <InstituteNumberInputReg />
                 <InstituteContactPersonNameInputReg />
                 <InstituteContactPersonLastNameInputReg />
                 <InstituteInsdustryTypeInputReg />
                 <InstitutePasswordInputReg />
-                {/* <InstituteNumberInputReg /> */}
 
                 <div className="w-[100%] flex justify-center items-center gap-2 sm:col-span-2 mt-4">
                   <button

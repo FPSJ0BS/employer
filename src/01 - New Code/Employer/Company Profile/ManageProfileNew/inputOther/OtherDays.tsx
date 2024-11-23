@@ -1,52 +1,32 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postEmployerPostJob } from "../../../Redux/EmployerSlice";
-import { CategoryInterface } from "../../../Redux/EmployerSlice";
-import { setSubCategoryData } from "../../../Redux/EmployerSlice";
-import { getProfile, getSubCategories } from "../../../../../api/apiAxios";
+import { editEmployerManageProfileFields } from "../../../Redux/CompanyProfile";
 
-export const PostJobCategory = () => {
-  const { categoryData, employerPostJob } = useSelector(
+export const OtherDays = () => {
+  const { employerPostJob, PostJobPreFillDataCity } = useSelector(
     (state: any) => state.employerSliceNew
   );
 
-  const [inputValue, setInputValue] = useState("");
+  const [daysArray, setDaysArray] = useState([]);
+
+  console.log('daysArraydaysArray',daysArray);
 
   useEffect(() => {
-    const handleCompanyProfile1 = async () => {
-      try {
-        const res = await getProfile();
-
-        if (res?.data?.status) {
-          const profData = await res?.data?.data?.employerDetails;
-          const userData = await res?.data?.data?.userData;
-
-          const catName = userData.category_name;
-          const catId = userData.category;
-          setInputValue(catName);
-          setIsSelect(true);
-          dispatch(
-            postEmployerPostJob({
-              catID: catId,
-            })
-          );
-          const subCatData = await fetchingSubcategories(catId);
-
-          if (subCatData ?? false) {
-            dispatch(setSubCategoryData(subCatData));
-          }
-
-        }
-      } catch (error) {
-        console.log(error);
+    const generateDaysArray = () => {
+      const array = [];
+      for (let i = 1; i <= 100; i++) {
+        const dayLabel = i < 10 ? `${i} Day` : `${i} Days`;
+        array.push(dayLabel);
       }
+      return array;
     };
 
-    handleCompanyProfile1();
+    setDaysArray(generateDaysArray());
   }, []);
 
   const dispatch = useDispatch();
   const [isSelect, setIsSelect] = useState(false);
+  const [inputValue, setInputValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const openDropdown = () => {
@@ -55,38 +35,21 @@ export const PostJobCategory = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setIsSelect(false);
+
     setInputValue(value);
     setShowDropdown(true);
+    setIsSelect(false);
   };
 
-  const handleOptionSelect = async (option: string, id: number) => {
+  const handleOptionSelect = (option: string) => {
     setInputValue(option);
     setShowDropdown(false);
     setIsSelect(true);
-    const subCatData = await fetchingSubcategories(id);
-
-    if (subCatData ?? false) {
-      dispatch(setSubCategoryData(subCatData));
-    }
-
     dispatch(
-      postEmployerPostJob({
-        catID: id,
+      editEmployerManageProfileFields({
+        working_days: option ?? "",
       })
     );
-  };
-
-  const fetchingSubcategories = async (id: number) => {
-    try {
-      const response = await getSubCategories(id);
-
-      if (response?.data.status) {
-        return response?.data.data;
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   useEffect(() => {
@@ -110,33 +73,35 @@ export const PostJobCategory = () => {
 
   const clearInput = () => {
     setInputValue("");
-    setShowDropdown(true);
     setIsSelect(false);
+    setShowDropdown(true);
     dispatch(
-      postEmployerPostJob({
-        catID: null,
-        functionID: null,
+      editEmployerManageProfileFields({
+        working_days: "",
       })
     );
+    
   };
 
   return (
-    <div className=" relative  sm:w-[100%] w-[250px] ">
+    <div className=" relative  sm:w-[100%] w-[250px]">
       <label
-        htmlFor="EmployerPostJobCategory"
-        className="postJobInputTitle pb-1 block  font-medium text-gray-700"
+        htmlFor="EmployerPostJobCity"
+        className="postJobInputTitle pb-1 block font-medium text-gray-700"
       >
-        Category *
+        Working Days *
+     
       </label>
+
       <div className="relative">
         <input
+          placeholder="Choose City..."
           autoComplete="off"
           required
-          placeholder="Choose Category..."
           ref={inputRef}
           type="text"
-          id="EmployerPostJobCategory"
-          name="EmployerPostJobCategory"
+          id="EmployerPostJobCity"
+          name="EmployerPostJobCity"
           value={inputValue}
           onChange={handleInputChange}
           onClick={openDropdown}
@@ -165,6 +130,7 @@ export const PostJobCategory = () => {
           </button>
         ) : (
           <button
+            disabled={employerPostJob.state.trim() === ""}
             onClick={openDropdown}
             className="absolute inset-y-0 right-0 flex items-center px-3 focus:outline-none"
             aria-label="Clear input"
@@ -190,32 +156,28 @@ export const PostJobCategory = () => {
       {showDropdown && (
         <ul className=" postjobHandleScrollbar max-h-[300px] overflow-y-auto absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
           {inputValue
-            ? categoryData
-                .filter((option: CategoryInterface) =>
-                  option.category
-                    .toLowerCase()
-                    .includes(inputValue.toLowerCase())
-                )
-                .map((option: CategoryInterface, index: number) => (
-                  <li
-                    key={index}
-                    className="cursor-pointer hover:bg-gray-100 py-1 px-3"
-                    onClick={() =>
-                      handleOptionSelect(option.category, option.ID)
-                    }
-                  >
-                    {option.category}
-                  </li>
-                ))
-            : categoryData.map((option: CategoryInterface, index: number) => (
+            ? daysArray.filter((option) =>
+                option.toLowerCase().includes(inputValue.toLowerCase())
+              ).map((option, index: number) => (
                 <li
                   key={index}
                   className="cursor-pointer hover:bg-gray-100 py-1 px-3"
-                  onClick={() => handleOptionSelect(option.category, option.ID)}
+                  onClick={() => handleOptionSelect(option)}
                 >
-                  {option.category}
+                  {option}
                 </li>
-              ))}
+              ))
+            : daysArray.map(
+                (option, index: number) => (
+                  <li
+                    key={index}
+                    className="cursor-pointer hover:bg-gray-100 py-1 px-3"
+                    onClick={() => handleOptionSelect(option)}
+                  >
+                    {option}
+                  </li>
+                )
+              )}
         </ul>
       )}
     </div>

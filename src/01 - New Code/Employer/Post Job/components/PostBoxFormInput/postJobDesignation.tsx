@@ -36,7 +36,7 @@ export const PostJobDesignation = () => {
         htmlFor="EmployerPostJobDesignation"
         className=" postJobInputTitle font-medium text-gray-700"
       >
-        Designation
+        Designation (Optional)
       </label>
       <input
       autoComplete="off"

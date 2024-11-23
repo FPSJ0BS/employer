@@ -7,10 +7,10 @@ export const CircularProgressBar = () => {
     (state) => state.employerManageProfile
   );
 
-  const totalJobs = employerManageProfileFields?.totalJobs; // Assuming this is the initial total number of jobs
-  const currentJobs = employerManageProfileFields?.jobsAvailable; // Current remaining jobs
+  const totalJobs = employerManageProfileFields?.totalJobs;
+  const currentJobs = employerManageProfileFields?.jobsAvailable;
 
-  const progressValue = (currentJobs / totalJobs) * 100; // Calculate the percentage
+  const progressValue = (currentJobs / totalJobs) * 100; 
 
   return (
     <>
@@ -18,11 +18,11 @@ export const CircularProgressBar = () => {
       <CircularProgress
         value={progressValue ? progressValue : 0}
         color="#cc5475"
-        size="100px"
+        size="45px"
         thickness="10px"
       >
         
-        <CircularProgressLabel>
+        <CircularProgressLabel className="text-[20px]">
           {currentJobs ? currentJobs : 0}
         </CircularProgressLabel>
       </CircularProgress>

@@ -305,6 +305,7 @@ export const Register = () => {
             <InstituteContactPersonNameInputReg />
             <InstitutePasswordInputReg />
             <InstituteEmailInputReg />
+   
             
 
             <div className=" w-[400px] flex justify-center gap-2 sm:col-span-2 mt-4">

@@ -40,7 +40,7 @@ import { openFilterModal } from "../../../Redux/EmployerCandidate.tsx";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import NODATAPIC from "../../../../../../public/assets/storyset/Innovation-pana.png";
-import { setHeaderShow } from "../../../Redux/EmployerSlice.tsx";
+import { setDashboardPopupFields, setHeaderShow, setToggleDashboardPopup } from "../../../Redux/EmployerSlice.tsx";
 import { formatAMPM } from "../../../../../utils/formatAMPM.ts";
 
 export const CandidatesApplied = () => {
@@ -608,6 +608,23 @@ export const CandidatesApplied = () => {
     }
   };
 
+  useEffect(() => {
+
+    dispatch(
+      setDashboardPopupFields({
+        heading: "Are you sure you want to Cancel?",
+        buttonTextOne: "Reschedule",
+        buttonTextTwo: "Cancel Interview",
+        iconOnePercentage: "25%",
+        iconTwoPercentage: "25%",
+        btnOneTextPl: "50px",
+        btnOneTextPr: "30px",
+        btnTwoTextPl: "40px",
+        btnTwoTextPr: "0px",
+      })
+    );
+  }, [])
+
   return (
     <>
       <CustomizedSnackbarTwo
@@ -1059,14 +1076,14 @@ export const CandidatesApplied = () => {
                                   <br /> Interview Details
                                 </h3>
                               </div>
-                              <div
-                              
+                              {/* <div
+                                onClick={() => dispatch(setToggleDashboardPopup())}
                                 className="text-white text-center hover:text-white cursor-pointer min-w-[50%] px-2 py-1  bg-red-400 rounded-[6px] min-h-[35px] flex justify-center items-center gap-2"
                               >
                                 <h3 className="text-[15px] font-semibold">
                                   Cancel Interview
                                 </h3>
-                              </div>
+                              </div> */}
                             </div>
                           )}
 
