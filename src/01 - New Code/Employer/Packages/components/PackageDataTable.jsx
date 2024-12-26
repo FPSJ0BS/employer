@@ -88,7 +88,6 @@ const PackageDataTable = () => {
   const getSinglePlanData = async (plan, selectedJob, planId) => {
 
     const packageOption = await plan?.national_package?.find(option => option.jobs === parseInt(selectedJob, 10));
-    console.log("Selected Package Option:", packageOption);
     const id = await packageOption?.id
     const price = await packageOption?.price
     const packId = await packageOption?.packid
