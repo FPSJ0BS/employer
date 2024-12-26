@@ -58,6 +58,7 @@ import { EditJobDocsRequired } from "./Edit Job Inputs/editJobDocsRequired";
 import PostJobImage from "../../../../../public/assets/storyset/Blog post-pana.png";
 import DefaultAvatar from "../../../../../public/assets/icons/user.png";
 import { CustomizedSnackbarTwo } from "../../../Reusable Components/Snackbar/snackbarNew";
+import EditBenefits from "./EditBenefits/EditBenefits";
 
 export const EditJObSingle = () => {
   // Snackbar start ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -273,6 +274,7 @@ export const EditJObSingle = () => {
 
   // Edit Job API HIt
 
+
   const handleEditJob = async (e) => {
     e.preventDefault();
 
@@ -300,6 +302,7 @@ export const EditJObSingle = () => {
       remarks: employerEditJob.remarks,
       job_description: employerEditJob.job_description,
       doc_required: employerEditJob.doc_required,
+      benefits :  selectedBenefits.map((item) => item.id)
     };
     try {
       const res = await patchEditJobAxios(id, editPostData);
@@ -323,6 +326,9 @@ export const EditJObSingle = () => {
       console.log(error);
     }
   };
+
+  const [selectedBenefits, setSelectedBenefits] = useState([]);
+  const [customBenefits, setCustomBenefits] = useState([]);
 
   return (
     <>
@@ -361,10 +367,11 @@ export const EditJObSingle = () => {
         <Loader />
       ) : (
         <section className="candidate-detail-section">
-          <div className="upper-box h-[200px] flex flex-col justify-center items-center">
-            <div className="auto-container">
-              <div className="candidate-block-five">
-                <div className="inner-box">
+          
+          <div className="upper-box h-[150px] flex flex-col justify-center items-center">
+            <div className="auto-container ">
+              <div className="candidate-block-five ">
+                <div className="inner-box ">
                   <div className="content">
                     <figure className="image">
                       {profileImage && (
@@ -408,7 +415,7 @@ export const EditJObSingle = () => {
 
           <div className="candidate-detail-outer">
             <div className="auto-container">
-              <div className="row flex ">
+              <div className=" flex ">
                 <div className="content-column col-lg-8 col-md-12 col-sm-12">
                   <div className="job-detail">
                     <div className=" bg-[#faf9f8] w-auto h-[50px] rounded-md flex justify-center items-center px-[50px] mb-[20px]">
@@ -442,6 +449,15 @@ export const EditJObSingle = () => {
                         <EditJobProcessState />
                         <EditJobProcessCity />
                         <EditJobRemarks />
+                      </div>
+                      <div>
+                        <EditBenefits 
+                        selectedBenefits={selectedBenefits}
+                        setSelectedBenefits={setSelectedBenefits}
+                        customBenefits={customBenefits}
+                        setCustomBenefits={setCustomBenefits}
+                        jobData = {jobData}
+                        />
                       </div>
                       <div>
                         <EditJobDescriptionInput />

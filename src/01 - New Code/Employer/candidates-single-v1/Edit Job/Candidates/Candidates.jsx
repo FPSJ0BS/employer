@@ -3,6 +3,7 @@ import axios from "axios";
 import "./candidatesApplied.scss";
 import {
   BASE_URL,
+  doGetShareProfile,
   postViewMobileAndEmail,
 } from "../../../../../api/apiAxios.ts";
 import { useLocation, useParams } from "react-router-dom";
@@ -78,6 +79,7 @@ export const CandidatesApplied = () => {
   const { jobID, status } = useParams();
 
   const [applicationsArray, setApplicationsArray] = useState([]);
+
   const [leaderSet, setLoaderSet] = useState(false);
   const {
     employerCandidateData,
@@ -625,6 +627,27 @@ export const CandidatesApplied = () => {
     );
   }, [])
 
+
+  const getShareProfile = async (facID) => {
+
+    try {
+
+
+      const res = await doGetShareProfile(facID);
+      if(res?.data?.status){
+
+        const url = res?.data?.data?.url;
+        window.open(url, "_blank");
+      }
+
+
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
   return (
     <>
       <CustomizedSnackbarTwo
@@ -847,6 +870,12 @@ export const CandidatesApplied = () => {
                             <h3 className=" font-semibold ">Call</h3>
                           </div>
                         </a>
+                        <button
+                        onClick={() => getShareProfile(application?.faculityID)}
+                          className="text-white font-semibold hover:text-white cursor-pointer w-full px-0 border-1 border-solid border-[#264653] bg-[#264653] rounded-[6px] h-[35px] flex justify-center items-center gap-2"
+                        >
+                          View Profile
+                        </button>
 
                         {application?.cv_doc.trim() !== "" && (
                           <div
@@ -1093,7 +1122,7 @@ export const CandidatesApplied = () => {
                       <div className="ml-1 -mr-1 w-[1%] my-[0px] border-l-[1px] border-r-0 border-t-0 border-b-0 border-dashed border-gray-500"></div>
 
                       <div className=" flex flex-col gap-[25px] w-[29%] justify-center items-center">
-                        <div className=" w-[100%] bg-[#264653] flex flex-col justify-center items-center rounded-lg">
+                        <div className=" w-[100%] bg-[#264653] flex flex-col gap-0 justify-center items-center rounded-lg">
                           <h3 className="  font-semibold text-white underline pt-1">
                             Status:
                           </h3>

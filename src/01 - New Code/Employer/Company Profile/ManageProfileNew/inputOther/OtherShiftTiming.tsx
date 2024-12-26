@@ -1,33 +1,48 @@
-import React, { useState } from "react";
-
-const generateOptions = (start: number, end: number) => {
-  return Array.from({ length: end - start + 1 }, (_, i) => i + start).map(
-    (value) => (value < 10 ? `0${value}` : `${value}`)
-  );
-};
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { editEmployerManageProfileFields } from "../../../Redux/CompanyProfile";
 
 export const OtherShiftTiming = () => {
-  const [startTime, setStartTime] = useState({ hour: "", minute: "" });
-  const [endTime, setEndTime] = useState({ hour: "", minute: "" });
+  const { employerManageProfileFields, modal } = useSelector(
+    (state: any) => state.employerManageProfile
+  );
+  const [startTime, setStartTime] = useState("");
 
-  const hours = generateOptions(0, 23); // 0-23 for hours
-  const minutes = generateOptions(0, 59); // 0-59 for minutes
+  const [endTime, setEndTime] = useState("");
 
-  const handleTimeChange = (
-    type: "startTime" | "endTime",
-    field: "hour" | "minute",
-    value: string
-  ) => {
+  useEffect(() => {
+    if (employerManageProfileFields?.shift_start) {
+      setStartTime(employerManageProfileFields?.shift_start);
+    }
+    if (employerManageProfileFields?.shift_end) {
+      setEndTime(employerManageProfileFields?.shift_end);
+    }
+  }, [
+    employerManageProfileFields?.shift_start,
+    employerManageProfileFields?.shift_end,
+  ]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      editEmployerManageProfileFields({
+        shift_start: startTime,
+        shift_end: endTime,
+      })
+    );
+  }, [startTime, endTime]);
+
+  const handleTimeChange = (type: "startTime" | "endTime", value: string) => {
     if (type === "startTime") {
-      setStartTime((prev) => ({ ...prev, [field]: value }));
+      setStartTime(value);
     } else {
-      setEndTime((prev) => ({ ...prev, [field]: value }));
+      setEndTime(value);
     }
   };
 
   return (
-    <div className=" w-[100%]  flex gap-4 col-span-2 sm:col-span-2">
-      {/* Start Time */}
+    <div className="w-[100%] flex gap-4 col-span-2 sm:col-span-2 z-1">
       <div className="flex flex-col gap-2">
         <label
           htmlFor="startTime"
@@ -35,39 +50,13 @@ export const OtherShiftTiming = () => {
         >
           Office Start Time *
         </label>
-        <div className="flex items-center gap-2">
-          <select
-            className="p-2 border-[1px] rounded-md shadow-sm focus:border-indigo-500 focus:outline-none"
-            value={startTime.hour}
-            onChange={(e) => handleTimeChange("startTime", "hour", e.target.value)}
-          >
-            <option value="" disabled>
-              HH
-            </option>
-            {hours.map((hour) => (
-              <option key={hour} value={hour}>
-                {hour}
-              </option>
-            ))}
-          </select>
-          <span className="text-lg font-semibold">:</span>
-          <select
-            className="p-2 border-[1px] rounded-md shadow-sm focus:border-indigo-500 focus:outline-none"
-            value={startTime.minute}
-            onChange={(e) =>
-              handleTimeChange("startTime", "minute", e.target.value)
-            }
-          >
-            <option value="" disabled>
-              MM
-            </option>
-            {minutes.map((minute) => (
-              <option key={minute} value={minute}>
-                {minute}
-              </option>
-            ))}
-          </select>
-        </div>
+        <input
+          type="time"
+          id="startTime"
+          className="p-2 border-[1px] rounded-md shadow-sm focus:border-indigo-500 focus:outline-none border-solid border-gray-300"
+          value={startTime}
+          onChange={(e) => handleTimeChange("startTime", e.target.value)}
+        />
       </div>
 
       {/* End Time */}
@@ -78,57 +67,14 @@ export const OtherShiftTiming = () => {
         >
           Office End Time *
         </label>
-        <div className="flex items-center gap-2">
-          <select
-            className="p-2 border-[1px] rounded-md shadow-sm focus:border-indigo-500 focus:outline-none"
-            value={endTime.hour}
-            onChange={(e) => handleTimeChange("endTime", "hour", e.target.value)}
-          >
-            <option value="" disabled>
-              HH
-            </option>
-            {hours.map((hour) => (
-              <option key={hour} value={hour}>
-                {hour}
-              </option>
-            ))}
-          </select>
-          <span className="text-lg font-semibold">:</span>
-          <select
-            className="p-2 border-[1px] rounded-md shadow-sm focus:border-indigo-500 focus:outline-none"
-            value={endTime.minute}
-            onChange={(e) =>
-              handleTimeChange("endTime", "minute", e.target.value)
-            }
-          >
-            <option value="" disabled>
-              MM
-            </option>
-            {minutes.map((minute) => (
-              <option key={minute} value={minute}>
-                {minute}
-              </option>
-            ))}
-          </select>
-        </div>
+        <input
+          type="time"
+          id="endTime"
+          className="p-2 border-[1px] rounded-md shadow-sm focus:border-indigo-500 focus:outline-none border-solid border-gray-300"
+          value={endTime}
+          onChange={(e) => handleTimeChange("endTime", e.target.value)}
+        />
       </div>
-
-      {/* Display Selected Times */}
-      {/* <div className="mt-4">
-        <h4 className="text-gray-700 font-medium">Selected Times:</h4>
-        <p>
-          Start Time:{" "}
-          {startTime.hour && startTime.minute
-            ? `${startTime.hour}:${startTime.minute}`
-            : "Not set"}
-        </p>
-        <p>
-          End Time:{" "}
-          {endTime.hour && endTime.minute
-            ? `${endTime.hour}:${endTime.minute}`
-            : "Not set"}
-        </p>
-      </div> */}
     </div>
   );
 };

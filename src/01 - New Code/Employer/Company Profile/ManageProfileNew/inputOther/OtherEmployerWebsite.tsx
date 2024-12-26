@@ -1,28 +1,22 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { editEmployerManageProfileFields } from "../../../Redux/CompanyProfile";
-import { TextInputValidEmployer } from "../../../functions/employerFunctions";
 
 export const OtherEmployerWebsite = () => {
-    const { employerManageProfileFields } = useSelector(
-      (state: any) => state.employerManageProfile
-    );
-
+  const { employerManageProfileFields } = useSelector(
+    (state: any) => state.employerManageProfile
+  );
 
   const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = e.target.value;
 
-
-
-        dispatch(
-          editEmployerManageProfileFields({
-            website: inputValue,
-          })
-        );
-
-
+    dispatch(
+      editEmployerManageProfileFields({
+        website: inputValue,
+      })
+    );
   };
 
   return (
@@ -34,7 +28,7 @@ export const OtherEmployerWebsite = () => {
         Website URL *
       </label>
       <input
-      placeholder="Enter Website URL..."
+        placeholder="Enter Website URL..."
         autoComplete="off"
         required
         onChange={(e) => handleChange(e)}

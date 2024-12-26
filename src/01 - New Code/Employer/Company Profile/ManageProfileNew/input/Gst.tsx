@@ -25,7 +25,7 @@ export const Gst = () => {
         htmlFor="manageProfileGst"
         className=" postJobInputTitle font-medium text-gray-700"
       >
-        GST
+        GST (Optional)
       </label>
       <input
         placeholder="Enter GST Number..."

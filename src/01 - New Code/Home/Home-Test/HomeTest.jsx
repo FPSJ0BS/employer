@@ -22,6 +22,7 @@ import TopTalent from "../Home-Three/TopTalent/TopTalent.tsx"
 import VideoSection from "../Home-Three/VideoSection/VideoSection.tsx"
 import FuelBottomLine from "../Home-Three/FuelBottomLine/FuelBottomLine.tsx"
 import WantToSearchForTheJob from "../Home-Three/WantToSearchForTheJob/WantToSearchForTheJob.tsx"
+import LogoSlider from "../Home-Three/LogoSlider/LogoSlider.tsx"
 
 export const HomeTest = () => {
   const containerTest = useRef();
@@ -772,6 +773,7 @@ export const HomeTest = () => {
         setonMouseEnterPageOneSearchBox={onMouseEnterPageOneSearchBox}
       /> */}
       <FormSection />
+      <LogoSlider />
       <FindOutSection />
       <WorriedAbout />
       <AIPowered />

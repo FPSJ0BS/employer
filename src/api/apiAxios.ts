@@ -1,7 +1,8 @@
 import axios from "axios";
 
-// export const BASE_URL = "https://empapi.fpsjob.com/institute";
-export const BASE_URL = "http://localhost:3000/institute";
+export const BASE_URL = "https://empapi.fpsjob.com/institute";
+export const BASE_URL_USER = "https://empapi.fpsjob.com/user";
+// export const BASE_URL = "http://localhost:3000/institute";
 const Fcm = localStorage.getItem("Fcm");
 
 // Authentication Flow -->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -305,6 +306,31 @@ export const getProfile = async () => {
   }
 };
 
+// Getting Brand Level ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+export const getBrandLevel = async () => {
+  try {
+    const authorizationToken: any = localStorage.getItem("header");
+    const storedDataObject = JSON.parse(authorizationToken);
+
+    if (!authorizationToken) {
+      console.error("Authorization token not available");
+      return;
+    }
+
+    const response = await axios.get(`${BASE_URL}/brand-level`, {
+      headers: {
+        Authorization: `Bearer ${storedDataObject}`,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
+
 // Getting Area data ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 export const getArea = async (city : string) => {
@@ -406,6 +432,30 @@ export const postUpdateProfileAxios = async (postData: any) => {
     }
 
     const response = await axios.patch(`${BASE_URL}/profile/update`, postData, {
+      headers: {
+        Authorization: `Bearer ${storedDataObject}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error posting job:", error);
+    throw error;
+  }
+};
+
+//   Dashboard -> Update Other Details ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..
+
+export const postUpdateOtherDetails = async (postData: any) => {
+  try {
+    const authorizationToken: any = localStorage.getItem("header");
+    const storedDataObject = JSON.parse(authorizationToken);
+
+    if (!authorizationToken) {
+      console.error("Authorization token not available");
+      return;
+    }
+
+    const response = await axios.post(`${BASE_URL}/profile/other-details`, postData, {
       headers: {
         Authorization: `Bearer ${storedDataObject}`,
       },
@@ -1551,6 +1601,26 @@ export const doGetJobTypes = async () => {
   }
   try {
     const response = await axios.get(`${BASE_URL}/benefits-list`, {
+      headers: {
+        Authorization: `Bearer ${storedDataObject}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
+export const doGetShareProfile = async (facID:string) => {
+  const authorizationToken: any = localStorage.getItem("header");
+  const storedDataObject = JSON.parse(authorizationToken);
+
+  if (!authorizationToken) {
+    console.error("Authorization token not available");
+    return;
+  }
+  try {
+    const response = await axios.get(`${BASE_URL_USER}/generateProfileLink?facultyID=${facID}`, {
       headers: {
         Authorization: `Bearer ${storedDataObject}`,
       },

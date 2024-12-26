@@ -72,7 +72,7 @@ export const ShowDataLength = ({jobID}) => {
         htmlFor="EmployerPostJobJobType"
         className="postJobInputTitle pb-1 block  font-medium text-gray-700"
       >
-        Sort by
+        Sort byb
       </label>
       <div className="relative">
         <input

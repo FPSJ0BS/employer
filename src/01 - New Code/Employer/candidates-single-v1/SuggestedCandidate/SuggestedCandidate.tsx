@@ -41,7 +41,7 @@ const SuggestedCandidate = () => {
       const emailParts = email.split("@");
       const username = emailParts[0];
       const domain = emailParts[1];
-      const visibleLength = Math.ceil(username.length * 0.3);
+      const visibleLength = Math.ceil(username?.length * 0.3);
       const maskedUsername = username.slice(0, visibleLength) + "******";
       return maskedUsername + "@" + domain;
     }
@@ -139,14 +139,14 @@ const SuggestedCandidate = () => {
   } = employerCandidateData;
   const getCandidateList = async () => {
     const qual =
-      allQualificationDataToFilter && allQualificationDataToFilter.length > 0
+      allQualificationDataToFilter && allQualificationDataToFilter?.length > 0
         ? allQualificationDataToFilter?.[
-            allQualificationDataToFilter.length - 1
+            allQualificationDataToFilter?.length - 1
           ]
         : "";
     const teachingLevel =
-      allTeachingDataToFilter && allTeachingDataToFilter.length > 0
-        ? allTeachingDataToFilter?.[allTeachingDataToFilter.length - 1]
+      allTeachingDataToFilter && allTeachingDataToFilter?.length > 0
+        ? allTeachingDataToFilter?.[allTeachingDataToFilter?.length - 1]
         : "";
     setLoaderSet(true);
     try {
@@ -285,7 +285,7 @@ const SuggestedCandidate = () => {
   }, [params?.jobID]);
 
   useEffect(() => {
-    if (Object.keys(jobData).length > 0) {
+    if (Object.keys(jobData)?.length > 0) {
       getCandidateList();
     }
   }, [jobData, pageNumber]);
@@ -668,7 +668,7 @@ const SuggestedCandidate = () => {
                           </div>
                         </a>
 
-                        {application?.cv_doc.trim() !== "" && (
+                        {application?.cv_doc?.trim() !== "" && (
                           <div
                             onClick={() =>
                               handleOpenNewPage(

@@ -91,6 +91,7 @@ export const OrganizationCity = () => {
       setInputValue("");
     }
   }, [employerManageProfileFields?.city]);
+  
    useEffect(() => {
      employerManageProfileFields.city && setIsSelect(true);
    }, []);
@@ -100,13 +101,13 @@ export const OrganizationCity = () => {
         htmlFor="EmployerPostJobCity"
         className="postJobInputTitle pb-1 block  font-medium text-gray-700"
       >
-        Organization City *
+        Organization City * {`  ${employerManageProfileFields?.state?.trim() === "" ? "(Enter State First)" : ""}  `}
       </label>
       <div className="relative">
         <input
           placeholder="Choose City..."
           autoComplete="off"
-          disabled={employerManageProfileFields.state.trim() === ""}
+          disabled={employerManageProfileFields.state?.trim() === ""}
           required
           ref={inputRef}
           type="text"
@@ -140,7 +141,7 @@ export const OrganizationCity = () => {
           </button>
         ) : (
           <button
-            disabled={employerManageProfileFields.state.trim() === ""}
+            disabled={employerManageProfileFields.state?.trim() === ""}
             onClick={openDropdown}
             className="absolute inset-y-0 right-0 flex items-center px-3 focus:outline-none"
             aria-label="Clear input"

@@ -39,6 +39,7 @@ export const OrganizationContactPersonEmail = () => {
         Contact Person Email *
       </label>
       <input
+      placeholder="Enter Email Address..."
         autoComplete="off"
         required
         onChange={(e) => handleChange(e)}

@@ -40,6 +40,7 @@ export const OrganizationContactPersonDesignation = () => {
         Contact Person Designation *
       </label>
       <input
+      placeholder="Enter Designation..."
         autoComplete="off"
         required
         onChange={(e) => handleChange(e)}

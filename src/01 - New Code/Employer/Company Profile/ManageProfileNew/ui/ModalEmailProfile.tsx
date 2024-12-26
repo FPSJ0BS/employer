@@ -15,11 +15,12 @@ export const ModalEmailProfile = ({
   timerNew,
   resendOtpfunc,
   verifyOtpFromPhoneFunc,
+  setEmailState
 }) => {
   const dispatch = useDispatch();
 
   const closeModal = () => {
-    dispatch(closePhoneNumberManageProfileModal());
+    setEmailState(false)
   };
 
   const { employerManageProfileFields } = useSelector(

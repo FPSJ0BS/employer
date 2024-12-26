@@ -1,55 +1,84 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { TextInputValidEmployer } from "../../Employer/functions/employerFunctions";
 // import { postAuthRegister } from "../../Employer/Redux/Authentication";
 import { editEmployerManageProfileFields } from "../../../Redux/CompanyProfile";
 import { TextInputValidEmployer } from "../../../functions/employerFunctions";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export const OrganizationAddress = () => {
-    const { employerManageProfileFields } = useSelector(
-      (state: any) => state.employerManageProfile
-    );
-
+  const { employerManageProfileFields } = useSelector(
+    (state: any) => state.employerManageProfile
+  );
 
   const dispatch = useDispatch();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
+  const [editorData, setEditorData] = useState("");
+  const [debouncedData, setDebouncedData] = useState("");
+  const [loading, setLoading] = useState(false);
+  const editorInstanceRef = useRef(null); // Add a ref to access CKEditor instance
 
+  const { employerPostJob } = useSelector(
+    (state: any) => state.employerSliceNew
+  );
 
-      if (inputValue ?? false) {
-        dispatch(
-          editEmployerManageProfileFields({
-            organizationAddress: inputValue,
-          })
-        );
-      } else {
-        dispatch(
-          editEmployerManageProfileFields({
-            organizationAddress: "",
-          })
-        );
-      }
-    
+  useEffect(() => {
+    const debounceTimeout = setTimeout(() => {
+      setDebouncedData(editorData);
+    }, 0);
+
+    return () => clearTimeout(debounceTimeout);
+  }, [editorData]);
+
+  useEffect(() => {
+    dispatch(
+      editEmployerManageProfileFields({
+        organizationAddress: debouncedData,
+      })
+    );
+  }, [debouncedData, dispatch]);
+
+  const handleEditorData = (event: any, editor: any) => {
+    const data = editor.getData();
+    setEditorData(data);
   };
 
+  useEffect(() => {
+    if (employerManageProfileFields.organizationAddress) {
+      setDebouncedData(employerManageProfileFields.organizationAddress);
+     
+    }
+  }, [employerManageProfileFields.organizationAddress]);
+
   return (
-    <div className="z-40 sm:w-[100%] w-[250px] flex flex-col gap-2 col-span-2 sm:col-span-1">
-      <label
-        htmlFor="manageProfilerganizationAddress"
-        className=" postJobInputTitle font-medium text-gray-700"
-      >
-        Organization Address *
-      </label>
-      <input
-        autoComplete="off"
-        required
-        onChange={(e) => handleChange(e)}
-        type="text"
-        id="manageProfilerganizationAddress"
-        name="InstituteName"
-        className=" p-2  sm:w-[100%] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-        value={employerManageProfileFields.organizationAddress.replace(/<\/?[^>]+(>|$)/g, "")}
+    <div className="w-full relative col-span-2">
+      <style>
+        {`
+        .ck.ck-editor__main .ck-placeholder {
+        font-size: 16px; /* Adjust font size */
+        font-weight: semiBold; /* Make bold */
+        color: #aaa; /* Optional color */
+        }
+
+        .ck-editor__editable {
+    min-height: 100px;
+}
+    `}
+      </style>
+      <div className="mb-2">
+        <h2 className="font-medium">Organization Address *</h2>
+      </div>
+      <CKEditor
+        editor={ClassicEditor}
+        onReady={(editor) => {
+          editorInstanceRef.current = editor;
+        }}
+        onChange={(event, editor) => handleEditorData(event, editor)}
+        data={debouncedData}
+        config={{
+          placeholder: "Enter Organization address...",
+        }}
       />
     </div>
   );

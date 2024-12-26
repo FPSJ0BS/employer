@@ -34,11 +34,11 @@ export const Index = () => {
 
         // Check if both responses are successful
         if (recentApplicationApiResponse?.data?.status && getprof?.data?.status && dashStats.data?.status) {
-          console.log('Data loaded successfully from both APIs', dashStats?.data?.data);
+          
 
           const recentAppResponse = recentApplicationApiResponse?.data?.data;
           const stats = dashStats?.data?.data;
-          console.log('daxh stats', stats);
+       
           setData(stats);
           setRecentAppData(recentAppResponse)
           setLoaderSet(false);

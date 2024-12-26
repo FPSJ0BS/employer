@@ -239,7 +239,7 @@ const Applicants = () => {
 
         const totalData = await response?.data?.total_data;
         const data = await response?.data?.data;
-        console.log('filter response', response);
+        console.log('filter response->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', response);
         await setApplicationsArray(data);
         dispatch(
           editEmployerCandidateData({
@@ -656,7 +656,7 @@ const Applicants = () => {
                   </a>
 
 
-                  {application?.cv_doc.trim() !== "" && <div onClick={() => handleOpenNewPage(application?.faculityID, application?.cv_doc)} className='text-[#003566] hover:text-white cursor-pointer w-[100%] border-1 border-solid border-[#003566] hover:bg-[#003566] rounded-[6px] h-[30px] flex justify-center items-center gap-2'>
+                  {application?.cv_doc?.trim() !== "" && <div onClick={() => handleOpenNewPage(application?.faculityID, application?.cv_doc)} className='text-[#003566] hover:text-white cursor-pointer w-[100%] border-1 border-solid border-[#003566] hover:bg-[#003566] rounded-[6px] h-[30px] flex justify-center items-center gap-2'>
 
                     <Download className='w-[17px] ' />
                     <h3 className=' font-semibold '>CV</h3>
@@ -748,7 +748,7 @@ const Applicants = () => {
 
                 <div className=' flex flex-col gap-[25px] w-[29%] justify-center items-center'>
 
-                  <div className=' w-[100%] bg-[#264653] flex flex-col justify-center items-center rounded-lg'>
+                  <div className=' w-[100%] bg-[#264653] flex flex-col gap-0 justify-center items-center rounded-lg'>
                     <h3 className='  font-semibold text-white underline pt-1'>Status:</h3>
                     <span className='font-normal text-white'>{application?.status}</span>
                   </div>

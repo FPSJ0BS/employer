@@ -24,11 +24,14 @@ export const EditJobDocsRequired = () => {
     }, [editorData]);
 
     useEffect(() => {
-        if (debouncedData.trim().length >= 50) {
+        if (debouncedData) {
             dispatch(editEmployerEditJob({
               doc_required: debouncedData,
             }));
         }
+
+        console.log('debouncedData',debouncedData);
+        
     }, [debouncedData]);
 
     const handleEditorData = (event, editor) => {

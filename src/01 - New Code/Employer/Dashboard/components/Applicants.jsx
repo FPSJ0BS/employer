@@ -166,7 +166,7 @@ const Applicants = ({ recentAppData, dataApp }) => {
                     </div>
                   </div>
 
-                  <div className="flex flex-col ">
+                  <div className="flex flex-col gap-0">
                     <div className="flex gap-1 items-center pt-2 cursor-pointer">
                       <h2
                         onClick={() =>

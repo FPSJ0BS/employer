@@ -10,6 +10,7 @@ const Benefits = ({
 }) => {
   const [searchText, setSearchText] = useState("");
   const [dummyData, setDummyData] = useState([]);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -48,11 +49,12 @@ const Benefits = ({
   };
 
   const handleAddCustomBenefit = () => {
+    setShowAll(true);
     if (searchText.trim() !== "") {
-      setCustomBenefits((prev) => [...prev, searchText.trim()]);
+      setCustomBenefits((prev) => [searchText.trim(), ...prev]);
       setSelectedBenefits((prev) => [
-        ...prev,
         { id: `custom-${customBenefits.length}`, title: searchText.trim() },
+        ...prev,
       ]);
       setSearchText("");
     }
@@ -73,12 +75,10 @@ const Benefits = ({
   };
 
   return (
-    <div className="py-4">
-      {/* Input Field */}
-
+    <div className="py-2">
       {/* Chips Display */}
       <div className="flex flex-wrap gap-x-2 gap-y-2">
-        {allBenefits.map((benefit) => {
+        {(showAll ? allBenefits : allBenefits.slice(0, 20)).map((benefit) => {
           const isSelected = selectedBenefits.some((b) => b.id === benefit.id);
           return (
             <div
@@ -87,7 +87,7 @@ const Benefits = ({
                 handleChipClick(benefit);
               }}
               className={`cursor-pointer px-3 py-1 rounded-[30px] flex items-center justify-between ${
-                selectedBenefits.some((b) => b.id === benefit.id)
+                isSelected
                   ? "bg-[#a6bedb] border-2 border-gray-400 border-solid text-black font-semibold"
                   : "bg-white border-2 border-gray-400 border-solid text-black font-semibold"
               }`}
@@ -109,7 +109,20 @@ const Benefits = ({
         })}
       </div>
 
-      <div className="mt-4">
+      {allBenefits.length > 20 && (
+        <div className="mt-4 text-start">
+          <button
+            type="button"
+            onClick={() => setShowAll((prev) => !prev)}
+            className="px-4 py-0 bg-[#4a4e69] text-white rounded-md hover:bg-[##4a4e69] focus:outline-none"
+          >
+            {showAll ? "Show Less" : "Show All Benefits"}
+          </button>
+        </div>
+      )}
+
+      {/* Input Field */}
+      <div className="mt-3">
         <input
           type="text"
           value={searchText}

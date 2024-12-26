@@ -18,6 +18,7 @@ import { ModalPhoneNumber } from "./ui/ModalPhoneNumber";
 import {
   postAuthPhoneOtpVerifyAxios,
   postPhoneOtpRegistrationAxios,
+  postUpdateOtherDetails,
   postUpdateProfileAxios,
 } from "../../../../api/apiAxios";
 import { useDispatch } from "react-redux";
@@ -40,14 +41,20 @@ import { Gst } from "./input/Gst";
 import { OtherBrandLevel } from "./inputOther/OtherBrandLevel";
 import { OtherEmployerWebsite } from "./inputOther/OtherEmployerWebsite";
 import { OtherShiftTiming } from "./inputOther/OtherShiftTiming";
-import { OtherDays } from "./inputOther/OtherDays";
-import { OtherEstabYear } from "./inputOther/OtherEstabYear";
-import { OtherEmployeesWorking } from "./inputOther/OtherEmployeesWorking";
 import { OtherSalaryDay } from "./inputOther/OtherSalaryDay";
-import { OtherNoOfEmployees } from "./inputOther/OtherNoOfEmployees";
 import { ModalEmailProfile } from "./ui/ModalEmailProfile";
+import { OrganizationContactPersonFirstName } from "./inputOrg/organizationContactPersonFirstName";
+import { OrganizationContactPersonLastName } from "./inputOrg/organizationContactPersonLastName";
+import OtherShiftTimingTwo from "./inputOther/OtherShiftTimingTwo";
+import { OtherWorkingDaysTwo } from "./inputOther/OtherWorkingDaysTwo";
+import { OtherEstabYearTwo } from "./inputOther/OtherEstabYearTwo";
+import { OtherNoOfEmployeesTwo } from "./inputOther/OtherNoOfEmployeesTwo";
+import { OtherSalaryDayTwo } from "./inputOther/OtherSalaryDayTwo";
+import { toast } from "react-toastify";
 
 export const ManageProfileNew = () => {
+  const notifyInfoVerifyPhoneNumber = () => toast.info("Please Verify Phone Number!");
+
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
@@ -60,8 +67,11 @@ export const ManageProfileNew = () => {
 
         if (getState?.data?.status && getProfileData?.data?.status) {
           await dispatch(setManageProfileStatesData(getState?.data?.data));
-          const profData = await getProfileData?.data?.data?.employerDetails;
-          const userData = await getProfileData?.data?.data?.userData;
+          const profData = await getProfileData?.data?.data?.employerDetails[0];
+          const userData = await getProfileData?.data?.data?.userData[0];
+
+
+
 
           await dispatch(
             editEmployerManageProfileFields({
@@ -74,10 +84,19 @@ export const ManageProfileNew = () => {
               organizationDescription: profData?.organization_description,
               state: profData?.state,
               city: profData?.city,
+              gst: userData?.gst,
               organizationAddress: profData?.address,
               contactPersonEmail: profData?.contact_person_email,
               contactPersonNumber: profData?.contact_person_no,
               contactPersonDesignation: profData?.contact_person_desig,
+              brand_level: userData?.brand_level,
+              website: profData?.website,
+              working_days: profData?.working_days,
+              establish_year: profData?.establish_year,
+              faculty_no: profData?.faculty_no,
+              salary_day: profData?.salary_day,
+              shift_start: profData?.shift_start,
+              shift_end: profData?.shift_end,
             })
           );
           // setLoader(false)
@@ -184,31 +203,6 @@ export const ManageProfileNew = () => {
     }
   };
 
-  const verifyOtpFromPhone = async (e: any) => {
-    e.preventDefault();
-
-    try {
-      const res = await postAuthPhoneOtpVerifyAxios({
-        mobile_number: employerManageProfileFields?.phoneNumber,
-        email_id: employerManageProfileFields?.email,
-        otp: employerManageProfileFields?.otp,
-      });
-      if (res?.data?.status) {
-        const onSuccessMessage = await res?.data?.message;
-        await setSnackbarSuccessMessage(onSuccessMessage);
-        await setSnackbarSuccessOpen(true);
-        await dispatch(closePhoneNumberManageProfileModal());
-        handleCompanyProfile1();
-      } else {
-        const errMessage = await res?.data?.message;
-        await setSnackbarErrorMessage(errMessage);
-        setSnackbarErrorOpen(true);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   // Company Profile 1 - >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   const handleCompanyProfile1 = async () => {
@@ -238,19 +232,20 @@ export const ManageProfileNew = () => {
 
   // Company Profile 2 - >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-  const handleCompanyProfile2 = async (e) => {
+  const handleOtherDetail = async (e) => {
     e.preventDefault();
     try {
-      const res = await postUpdateProfileAxios({
-        organization_description:
-          employerManageProfileFields?.organizationDescription,
-        state: employerManageProfileFields?.state,
-        city: employerManageProfileFields?.city,
-        address: employerManageProfileFields?.organizationAddress,
-        contact_person_email: employerManageProfileFields?.contactPersonEmail,
-        contact_person_no: employerManageProfileFields?.contactPersonNumber,
-        contact_person_desig:
-          employerManageProfileFields?.contactPersonDesignation,
+      const res = await postUpdateOtherDetails({
+        brand_level: employerManageProfileFields?.brand_level,
+        website: employerManageProfileFields?.website,
+        shift_start: employerManageProfileFields?.shift_start,
+        shift_end: employerManageProfileFields?.shift_end,
+        working_days: employerManageProfileFields?.working_days,
+        establish_year: employerManageProfileFields?.establish_year,
+        salary_day: employerManageProfileFields?.salary_day,
+        faculty_no: employerManageProfileFields?.faculty_no,
+        inst_id: 1583,
+        gst: employerManageProfileFields?.gst,
       });
 
       if (res?.data?.status) {
@@ -270,10 +265,69 @@ export const ManageProfileNew = () => {
     }
   };
 
-  // Change page ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
+  const handleCompanyProfile2 = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await postUpdateProfileAxios({
+        organization_description:
+          employerManageProfileFields?.organizationDescription,
+        state: employerManageProfileFields?.state,
+        city: employerManageProfileFields?.city,
+        address: employerManageProfileFields?.organizationAddress,
+        contact_person_first_name: employerManageProfileFields?.firstName,
+        contact_person_last_name: employerManageProfileFields?.lastName,
+        contact_person_email: employerManageProfileFields?.contactPersonEmail,
+        contact_person_no: employerManageProfileFields?.contactPersonNumber,
+        contact_person_desig:
+          employerManageProfileFields?.contactPersonDesignation,
+        inst_id: employerManageProfileFields?.employerID,
+        gst: employerManageProfileFields?.gst,
+        shift_start: employerManageProfileFields?.shift_start,
+        shift_end: employerManageProfileFields?.shift_end,
+        working_days: employerManageProfileFields?.working_days,
+      });
 
-  const otpVerifyEmailandPhone = async (e,otpEmail, otpMobile) => {
-    e.preventDefault()
+      if (res?.data?.status) {
+        const onSuccessMessage = await res?.data?.message;
+        await setSnackbarSuccessMessage(onSuccessMessage);
+        await setSnackbarSuccessOpen(true);
+
+        // setTimeout(() => {
+        //   navigate("/employers-dashboard/post-jobs");
+        // }, 1000);
+
+        if (employerManageProfileFields?.phoneNumberVerified === 0) {
+          return;
+        }
+
+        if (sectionState.sectionTwo) {
+          setSectionDate((prevState) => ({
+            ...prevState,
+            sectionOne: false,
+            sectionTwo: false,
+            sectionThree: true,
+          }));
+        } else {
+          setSectionDate((prevState) => ({
+            ...prevState,
+            sectionOne: false,
+            sectionTwo: true,
+            sectionThree: false,
+          }));
+        }
+      } else {
+        const errMessage = await res?.data?.message;
+        await setSnackbarErrorMessage(errMessage);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Change page ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
+
+  const otpVerifyEmailandPhone = async (e, otpEmail, otpMobile) => {
+    e.preventDefault();
     try {
       // Ensure at least one OTP is provided
       if (!otpEmail && !otpMobile) {
@@ -297,7 +351,7 @@ export const ManageProfileNew = () => {
 
       // Handle the response
       if (response?.data?.status) {
-        handleCompanyProfile1()
+        handleCompanyProfile1();
         if (otpMobile) {
           const header = response?.data?.data[0];
           await localStorage.setItem("header", JSON.stringify(header));
@@ -305,10 +359,8 @@ export const ManageProfileNew = () => {
           await setSnackbarSuccessMessage(onSuccessMessage);
           setSnackbarSuccessOpen(true);
           await dispatch(closePhoneNumberManageProfileModal());
-
         } else {
-          
-          setEmailState(false)
+          setEmailState(false);
           const header = response?.data?.data[0];
           await localStorage.setItem("header", JSON.stringify(header));
           const onSuccessMessage = await response?.data?.message;
@@ -333,7 +385,7 @@ export const ManageProfileNew = () => {
     }
   };
 
-  const [emailState,setEmailState] = useState(false);
+  const [emailState, setEmailState] = useState(false);
 
   return (
     <div className=" w-[100%] ">
@@ -345,7 +397,6 @@ export const ManageProfileNew = () => {
           timerNew={timer}
           resendOtpfunc={sendOtpFromPhone}
           verifyOtpFromPhoneFunc={otpVerifyEmailandPhone}
-        
         />
       )}
       {emailState && (
@@ -353,8 +404,7 @@ export const ManageProfileNew = () => {
           timerNew={timer}
           resendOtpfunc={sendOtpFromPhone}
           verifyOtpFromPhoneFunc={otpVerifyEmailandPhone}
-       
-        
+          setEmailState={setEmailState}
         />
       )}
       {
@@ -373,14 +423,38 @@ export const ManageProfileNew = () => {
               </p>
               <div className="relative p-[20px] min-h-[400px] w-[600px] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
                 <BorderBeam />
+                <button
+                  onClick={() => {
+                    if (
+                      employerManageProfileFields?.phoneNumberVerified === 0
+                    ) {
+                      notifyInfoVerifyPhoneNumber();
+                      return;
+                    }
+                    setSectionDate((prevState) => ({
+                      ...prevState,
+                      sectionOne: false,
+                      sectionTwo: true,
+                      sectionThree: false,
+                    }));
+                  }}
+                  className=" cursor-pointer absolute w-[80px] h-[30px] rounded-[5px] top-[5px] right-[5px] flex justify-center items-center bg-[#be5b75] text-white font-medium"
+                >
+                  Skip
+                </button>
                 <form
-                  onSubmit={(e) => sendOtpFromPhone(e)}
-                  className="w-[100%] h-[100%] grid grid-cols-1 sm:grid-cols-2 gap-2 place-content-center place-items-center"
+                  onSubmit={(e) => handleCompanyProfile2(e)}
+                  className="w-[100%] h-[100%] gap-x-5 grid grid-cols-1 sm:grid-cols-2 gap-2 place-content-center place-items-center"
                 >
                   <FirstName />
                   <LastName />
+                  {/* <OrganizationContactPersonFirstName />
+                  <OrganizationContactPersonLastName /> */}
+                  <OrganizationContactPersonEmail />
+                  <OrganizationContactPersonNumber />
+                  <OrganizationContactPersonDesignation />
                   <Gst />
-                  <Email setEmailState = {setEmailState}/>
+                  <Email setEmailState={setEmailState} />
                   <PhoneNumber />
 
                   <div className="w-[100%] flex justify-center  items-center col-span-2 mt-4">
@@ -402,7 +476,7 @@ export const ManageProfileNew = () => {
                     </button> */}
                     <button className="submitPersonalDetailButton">
                       <span className="submitPersonalDetailButton-content">
-                        Continue
+                        Submit details & Continue
                       </span>
                     </button>
                   </div>
@@ -419,14 +493,15 @@ export const ManageProfileNew = () => {
               <div className="relative flex justify-center items-center p-[20px] min-h-[500px] w-[600px] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
                 <BorderBeam />
 
-                
                 <button
-                  onClick={() => setSectionDate((prevState) => ({
-                    ...prevState,
-                    sectionOne: false,
-                    sectionTwo: false,
-                    sectionThree: true,
-                  }))}
+                  onClick={() =>
+                    setSectionDate((prevState) => ({
+                      ...prevState,
+                      sectionOne: false,
+                      sectionTwo: false,
+                      sectionThree: true,
+                    }))
+                  }
                   className=" cursor-pointer absolute w-[80px] h-[30px] rounded-[5px] top-[5px] right-[5px] flex justify-center items-center bg-[#be5b75] text-white font-medium"
                 >
                   Skip
@@ -437,16 +512,21 @@ export const ManageProfileNew = () => {
                   className="w-[100%] h-[100%] grid grid-cols-1 sm:grid-cols-2 gap-3 place-content-center place-items-center sm:place-items-start"
                 >
                   <OrganizationName />
-                  <OrganizationDescription />
                   <OrganizationState />
                   <OrganizationCity />
+                  <OrganizationDescription />
                   <OrganizationAddress />
-                  <OrganizationContactPersonEmail />
-                  <OrganizationContactPersonNumber />
-                  <OrganizationContactPersonDesignation />
+
                   <div className="w-[100%] flex justify-center sm:justify-between items-end col-span-2 mt-4 gap-4">
                     <button
-                      onClick={() => navigate("/employers-dashboard/dashboard")}
+                      onClick={() =>
+                        setSectionDate((prevState) => ({
+                          ...prevState,
+                          sectionOne: true,
+                          sectionTwo: false,
+                          sectionThree: false,
+                        }))
+                      }
                       type="button"
                       className="submitPersonalDetailButton"
                     >
@@ -464,6 +544,7 @@ export const ManageProfileNew = () => {
               </div>
             </div>
           )}
+
           {sectionState.sectionThree && (
             <div className=" w-[100%] flex justify-center items-center flex-col gap-6 mb-[50px] ">
               <h2 className="text-[30px] font-semibold">Other Details</h2>
@@ -478,25 +559,34 @@ export const ManageProfileNew = () => {
                 </button>
 
                 <form
-                  onSubmit={(e) => handleCompanyProfile2(e)}
+                  onSubmit={(e) => handleOtherDetail(e)}
                   className="w-[100%] h-[100%] grid grid-cols-1 sm:grid-cols-2 gap-3 place-content-center place-items-center sm:place-items-start"
                 >
                   <OtherBrandLevel />
                   <OtherEmployerWebsite />
-                  <OtherDays />
-                  <OtherEstabYear />
-                  <OtherNoOfEmployees />
-                  <OtherSalaryDay />
+                  <OtherWorkingDaysTwo />
+                  <OtherEstabYearTwo />
+                  <OtherNoOfEmployeesTwo />
+
+                  <OtherSalaryDayTwo />
+
                   <OtherShiftTiming />
 
                   <div className="w-[100%] flex justify-center sm:justify-between items-end col-span-2 mt-4 gap-2">
                     <button
-                      onClick={() => navigate("/employers-dashboard/dashboard")}
+                      onClick={() =>
+                        setSectionDate((prevState) => ({
+                          ...prevState,
+                          sectionOne: false,
+                          sectionTwo: true,
+                          sectionThree: false,
+                        }))
+                      }
                       type="button"
                       className="submitPersonalDetailButton"
                     >
                       <span className="submitPersonalDetailButton-content">
-                        {"Cancel"}
+                        {"Go Back"}
                       </span>
                     </button>
                     <button className="submitPersonalDetailButton">

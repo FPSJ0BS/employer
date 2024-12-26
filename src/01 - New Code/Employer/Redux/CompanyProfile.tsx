@@ -29,6 +29,8 @@ export interface EmployerManageProfile {
     city: string;
     gst: string;
     organizationAddress: string;
+    contactPersonFirstName: string;
+    contactPersonLastName: string;
     contactPersonEmail: string;
     contactPersonNumber: string;
     contactPersonDesignation: string;
@@ -36,6 +38,11 @@ export interface EmployerManageProfile {
     emailVerified: number | null;
     totalJobs: number | null;
     jobsAvailable: number | null;
+    employerID: number | null;
+    brand_level: string;
+    shift_start: string;
+    shift_end: string;
+    salary_day: string;
   };
 
   manageProfilePreFillDataState: StateInterface[];
@@ -65,6 +72,8 @@ const initialState: EmployerManageProfile & ModalState = {
     state: "",
     city: "",
     organizationAddress: "",
+    contactPersonFirstName: "",
+    contactPersonLastName: "",
     contactPersonEmail: "",
     contactPersonNumber: "",
     contactPersonDesignation: "",
@@ -72,6 +81,11 @@ const initialState: EmployerManageProfile & ModalState = {
     emailVerified: null,
     totalJobs: null,
     jobsAvailable: null,
+    employerID: null,
+    brand_level: "",
+    shift_start: "",
+    shift_end: "",
+    salary_day: "",
 
   },
 

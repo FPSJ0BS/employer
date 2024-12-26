@@ -37,10 +37,10 @@ export const FirstName = () => {
         htmlFor="manageProfileFirstName"
         className=" postJobInputTitle font-medium text-gray-700"
       >
-        First Name *
+        Contact Person First Name *
       </label>
       <input
-        disabled
+     placeholder="Enter Contact Person First Name..."
         autoComplete="off"
         required
         onChange={(e) => handleChange(e)}

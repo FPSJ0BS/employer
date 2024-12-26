@@ -168,22 +168,32 @@ function App() {
         const res = await getProfile();
         if (res?.data?.status) {
           const profileAllData = await res?.data?.data;
+          
       
-          const profileImageData = profileAllData?.employerDetails?.empimage;
+          const profileImageData = profileAllData?.employerDetails[0]?.empimage;
           await localStorage.setItem("insProfileImage", profileImageData);
           await dispatch(setProfileImageSliceFunc(profileImageData));
-          await dispatch(setInstituteId(profileAllData?.userData?.employerID));
+          await dispatch(setInstituteId(profileAllData?.userData[0]?.employerID));
 
           const phoneVerify = await parseInt(
-            profileAllData?.userData?.phone_verified
+            profileAllData?.userData[0]?.phone_verified
           );
           const emailVerify = await parseInt(
-            profileAllData?.userData?.email_verified
+            profileAllData?.userData[0]?.email_verified
           );
-          const email = await profileAllData?.userData?.email;
-          const firstName = await profileAllData?.employerDetails
+         
+          const email = await profileAllData?.userData[0]?.email;
+          const gst = await profileAllData?.userData?.gst;
+          const organization_description = await profileAllData?.userData?.organization_description;
+          const address = await profileAllData?.userData?.address;
+          const city = await profileAllData?.userData?.city;
+          const state = await profileAllData?.userData?.state;
+          const employerID = await profileAllData?.userData[0]?.employerID;
+          dispatch(setInstituteId(profileAllData?.userData[0]?.employerID))
+          console.log('employerIDemployerID',profileAllData?.employerDetails[0]);
+          const firstName = await profileAllData?.employerDetails[0]
             ?.contact_person_first_name;
-          const lastName = await profileAllData?.employerDetails
+          const lastName = await profileAllData?.employerDetails[0]
             ?.contact_person_last_name;
 
       
@@ -195,6 +205,9 @@ function App() {
               email,
               firstName,
               lastName,
+              employerID,
+              
+              
             })
           );
         }

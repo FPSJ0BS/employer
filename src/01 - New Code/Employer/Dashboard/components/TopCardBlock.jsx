@@ -36,7 +36,7 @@ const TopCardBlock = ({ topBLock }) => {
         const res = await getProfile()
         if (res?.data?.status) {
          
-          const employerName = await res?.data?.data?.employerDetails?.contact_person_name
+          const employerName = await res?.data?.data?.employerDetails[0]?.contact_person_name
           await setNameEmp(employerName)
         }
       } catch (error) {
@@ -160,7 +160,7 @@ const TopCardBlock = ({ topBLock }) => {
         <div className="w-[100%] h-[30%] bg-white flex justify-between items-center px-[30px]">
 
           <div className="w-[90%] text-[#438e76] text-[22px]">
-            <h2 className="flex text-[#438e76]"><Sun className=" w-[50px]"/>{greeting},<span className=" capitalize">&nbsp;{ nameEmp}!</span></h2>
+            <h2 className="flex justify-start items-start gap-0 text-[#438e76] "><Sun className=" w-[50px]"/>{greeting},<span className=" capitalize ">&nbsp;{ nameEmp}!</span></h2>
           </div>
 
           <div className="w-[10%]">

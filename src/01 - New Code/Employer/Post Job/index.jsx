@@ -51,9 +51,10 @@ const Index = () => {
           await dispatch(setCategoryData(getCatData?.data?.data));
           const processLocationData = await getProfileData?.data?.data?.employerDetails?.address;
           const category = await getProfileData?.data?.data?.userData?.category
-          const jobsAvailable = await getProfileData?.data?.data?.subscriptionData?.remaining_jobs
-          const totalJobs = await getProfileData?.data?.data?.subscriptionData?.jobs
+          const jobsAvailable = await getProfileData?.data?.data?.subscriptionData[0]?.remaining_jobs
+          const totalJobs = await getProfileData?.data?.data?.subscriptionData[0]?.jobs
 
+       
           
 
           await dispatch(

@@ -43,6 +43,7 @@ export const OrganizationContactPersonNumber = () => {
         Contact Person Number *
       </label>
       <input
+      placeholder="Enter Mobile Number..."
         autoComplete="off"
         required
         onChange={(e) => handleChange(e)}

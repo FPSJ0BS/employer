@@ -68,18 +68,11 @@ const PostBoxForm = () => {
 
   const { instituteId } = useSelector((state) => state.login);
 
+
+
   const [isFormValid, setIsFormValid] = useState(false);
 
-  useEffect(() => {
-    // const allConditionsTrue = employerPostJob.state.trim() !== "" && employerPostJob.job_title.trim() !== "";
-    // console.log('allConditionsTrue' ,allConditionsTrue);
-    // console.log('isFormValid' ,isFormValid);
-    // if (allConditionsTrue) {
-    //   setIsFormValid(true);
-    // }
 
-    console.log("employer post job", employerPostJob);
-  }, [employerPostJob]);
 
   const navigate = useNavigate();
 
@@ -143,10 +136,13 @@ const PostBoxForm = () => {
         setTimeout(() => {
           navigate(`/candidates-single-v1/${jobId}/""`);
         }, 2000);
+        setLoaderValid(false);
       } else {
         const onErrorMessage = await res?.data?.message;
+     
         await setSnackbarErrorMessage(onErrorMessage);
         setSnackbarErrorOpen(true);
+        setLoaderValid(false);
       }
     } catch (error) {
       await setSnackbarErrorMessage("network Error");
@@ -183,10 +179,6 @@ const PostBoxForm = () => {
   };
 
   const [processLoc, setProcessLoc] = useState(false);
-
-  useEffect(() => {
-    console.log("selectedBenefits", selectedBenefits);
-  }, [selectedBenefits]);
 
   return (
     <div className="pb-[20px] w-[100%] sm:px-[5px]">

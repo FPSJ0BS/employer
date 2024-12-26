@@ -11,6 +11,8 @@ export const Email = ({ setEmailState }) => {
     (state: any) => state.employerManageProfile
   );
 
+
+
   const dispatch = useDispatch();
 
   const [otpState, setOtpState] = useState(false); // State for OTP sending

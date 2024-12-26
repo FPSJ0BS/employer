@@ -15,7 +15,7 @@ export const OrganizationState = () => {
   const { employerManageProfileFields } = useSelector(
     (state: any) => state.employerManageProfile
   );
-   const [isSelect, setIsSelect] = useState(false);
+  const [isSelect, setIsSelect] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [displayedOptions, setDisplayedOptions] = useState<StateInterface[]>(
@@ -33,7 +33,7 @@ export const OrganizationState = () => {
   const handleInputChange = useCallback(
     debounce((value: string) => {
       setInputValue(value);
-       setIsSelect(false);
+      setIsSelect(false);
       const filteredOptions = manageProfilePreFillDataState.filter(
         (option: StateInterface) =>
           option.name.toLowerCase().includes(value.toLowerCase())
@@ -47,7 +47,7 @@ export const OrganizationState = () => {
   const handleOptionSelect = async (option: string, id: number) => {
     setInputValue(option);
     setShowDropdown(false);
-      setIsSelect(true);
+    setIsSelect(true);
     const cityData = await fetchCity(id);
     if (cityData?.data?.data) {
       dispatch(setManageProfileCitiesData(cityData.data.data));
@@ -86,7 +86,7 @@ export const OrganizationState = () => {
   const clearInput = () => {
     setInputValue("");
     setShowDropdown(true);
-     setIsSelect(false);
+    setIsSelect(false);
     dispatch(editEmployerManageProfileFields({ state: "", city: "" }));
   };
 
@@ -117,10 +117,41 @@ export const OrganizationState = () => {
       setDisplayedOptions(filteredOptions.slice(0, lazyLoadCount));
     }
   }, [employerManageProfileFields?.state, manageProfilePreFillDataState]);
- 
-   useEffect(() => {
-     employerManageProfileFields.state && setIsSelect(true);
-   }, []);
+
+  useEffect(() => {
+    employerManageProfileFields.state && setIsSelect(true);
+  }, []);
+
+  useEffect(() => {
+    if (employerManageProfileFields.state) {
+      setInputValue(employerManageProfileFields.state);
+    }
+  }, [employerManageProfileFields.state]);
+
+  useEffect(() => {
+    const fetchCityData = async () => {
+      if (employerManageProfileFields?.city) {
+        const matchingState = manageProfilePreFillDataState.find(
+          (item) => item.name === employerManageProfileFields.state
+        );
+
+        if (matchingState?.id) {
+          try {
+            const cityData = await fetchCity(matchingState.id);
+            if (cityData?.data?.data) {
+              dispatch(setManageProfileCitiesData(cityData.data.data));
+            }
+            console.log("Fetched City Data:", cityData);
+          } catch (error) {
+            console.error("Error fetching city data:", error);
+          }
+        }
+      }
+    };
+
+    fetchCityData();
+  }, []);
+
   return (
     <div className="relative sm:w-[100%] w-[250px] col-span-2 sm:col-span-1">
       <label

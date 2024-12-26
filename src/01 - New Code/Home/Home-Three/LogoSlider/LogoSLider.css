@@ -1,0 +1,12 @@
+.logoHome {
+    width: 15%; /* Each logo takes 15% width */
+    aspect-ratio: 3/2; 
+    object-fit: contain; /* Ensure the image fits within its box */
+    margin: 0; /* Reset any default margin for precise alignment */
+  }
+  
+  .flex {
+    display: flex; /* Enables horizontal alignment */
+    gap: 2rem; /* Adds consistent spacing between logos */
+  }
+  

@@ -4,7 +4,7 @@ import employerMenuData from "../../data/employerMenuData";
 import HeaderNavContent from "./HeaderNavContent";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 import { useDispatch, useSelector } from "react-redux";
-import TallentoIcon from "../../../public/assets/Home-new/FPS and Tallento_OLD.png";
+import TallentoIcon from "../../../public/FPS and Tallento_OLD-d1a356fe.png.jpg";
 import { useLocation } from "react-router-dom";
 import DefaultAvatar from "../../../public/assets/icons/user.png";
 import LogoutButton from "../Reusable Components/Logout Button/LogoutButton";
@@ -15,6 +15,8 @@ const DashboardHeader = () => {
   const { profileImage } = useSelector(
     (state) => state.instituteProfileImageSlice
   );
+
+  console.log('profileImage',profileImage);
   const { imageUrl } = useSelector((state) => state.login);
   const { pathname } = useLocation();
   const [navbar, setNavbar] = useState(false);

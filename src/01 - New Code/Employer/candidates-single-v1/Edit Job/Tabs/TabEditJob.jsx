@@ -9,8 +9,9 @@ import { CandidatesApplied } from '../Candidates/Candidates';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { SuggestedProfile } from '../Candidates/SuggestedProfile';
+import Benefits from '../Benefits/Benefits';
 
-export default function TabsEditJob({ screenignQuestions, desc }) {
+export default function TabsEditJob({ screenignQuestions, desc,jobData }) {
 
     const [value, setValue] = useState('1');
 
@@ -33,6 +34,11 @@ export default function TabsEditJob({ screenignQuestions, desc }) {
                 label="Job Description"
                 value="2"
               />
+              <Tab
+                className="font-semibold"
+                label="Benefits"
+                value="3"
+              />
             
               {/* <Tab className='font-semibold' label="Screening Questions" value="2" /> */}
             </TabList>
@@ -42,6 +48,9 @@ export default function TabsEditJob({ screenignQuestions, desc }) {
           </TabPanel>
           <TabPanel value="1" className='w-full'>
             <CandidatesApplied />
+          </TabPanel>
+          <TabPanel value="3" className='w-full'>
+            <Benefits jobData = {jobData}/>
           </TabPanel>
           
           {/* <TabPanel value="2"><Questions screenignQuestions={screenignQuestions} /></TabPanel> */}

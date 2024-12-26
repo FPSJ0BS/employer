@@ -187,7 +187,7 @@ const CandidateSingleDynamicV1 = () => {
         <section className="candidate-detail-section  ">
           {modal && <CandidateProfileModal />}
 
-          <div className="upper-box h-[200px] flex flex-col justify-center items-center">
+          <div className="upper-box h-[150px] flex flex-col justify-center items-center">
             <div className="auto-container">
               <div className="candidate-block-five">
                 <div className="inner-box">
@@ -241,11 +241,11 @@ const CandidateSingleDynamicV1 = () => {
           </div>
           {/* ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
 
-          <div className="w-[100%] flex justify-between items-center mt-5 px-[50px] 2xl:px-[100px]">
+          <div className="w-[100%] h-[50px] flex justify-between items-center mt-5 px-[50px] 2xl:px-[100px]">
             <ul className="flex gap-3 justify-between items-center w-full">
 
 
-              <li className="flex flex-col items-center">
+              <li className="flex flex-col gap-0 items-center">
                 <div className="flex items-center gap-1">
                   <i className="icon ">
                     <BarChart className="text-[#458d76]" />
@@ -259,7 +259,7 @@ const CandidateSingleDynamicV1 = () => {
 
 
               {jobData?.no_of_requirement && (
-                <li className="flex flex-col items-center">
+                <li className="flex flex-col gap-0 items-center">
                   <div className="flex items-center gap-1">
 
                     <i className="icon ">
@@ -272,7 +272,7 @@ const CandidateSingleDynamicV1 = () => {
                 </li>
               )}
 
-              <li className="flex flex-col items-center">
+              <li className="flex flex-col gap-0 items-center">
                 <div className="flex items-center gap-1">
 
                   <i className="icon ">
@@ -286,13 +286,13 @@ const CandidateSingleDynamicV1 = () => {
                 </span>
               </li>
 
-              {/* <li className="flex flex-col items-center">
+              {/* <li className="flex flex-col gap-0 items-center">
                           <i className="icon icon-expiry"></i>
                           <h5>Landmark:</h5>
                           <span>{jobData?.area && jobData?.area.charAt(0).toUpperCase() + jobData?.area.slice(1)}</span>
                         </li> */}
               {jobData?.selection_process && (
-                <li className="flex flex-col items-center">
+                <li className="flex flex-col gap-0 items-center">
                   <div className="flex items-center gap-1">
 
                     <i className="icon ">
@@ -307,7 +307,7 @@ const CandidateSingleDynamicV1 = () => {
               )}
 
               {jobData?.job_type && (
-                <li className="flex flex-col items-center">
+                <li className="flex flex-col gap-0 items-center">
                   <div className="flex items-center gap-1">
 
                     <i className="icon ">
@@ -320,7 +320,7 @@ const CandidateSingleDynamicV1 = () => {
               )}
 
               {jobData?.job_level && (
-                <li className="flex flex-col items-center">
+                <li className="flex flex-col gap-0 items-center">
                   <div className="flex items-center gap-1">
 
                     <i className="icon ">
@@ -332,7 +332,7 @@ const CandidateSingleDynamicV1 = () => {
                 </li>
               )}
               {jobData?.state && (
-                <li className="flex flex-col items-center">
+                <li className="flex flex-col gap-0 items-center">
                   <div className="flex items-center gap-1">
 
                     <i className="icon ">
@@ -351,7 +351,7 @@ const CandidateSingleDynamicV1 = () => {
           </div>
           {/* <!-- Upper Box --> */}
 
-          <div className="candidate-detail-outer">
+          <div className="candidate-detail-outer pt-3 ">
             <div className="auto-container">
               <div className="w-full">
                 <div className="w-full ">
@@ -363,6 +363,7 @@ const CandidateSingleDynamicV1 = () => {
                     <TabsEditJob
                       screenignQuestions={screenignQuestions}
                       desc={ReactHtmlParser(jobData?.job_description)}
+                      jobData = {jobData}
                     />
 
                     {/* <!-- Questions Start --> */}

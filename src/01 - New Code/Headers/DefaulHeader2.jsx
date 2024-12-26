@@ -8,7 +8,7 @@ import employerMenuData from "../../data/employerMenuData";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import TallentoIcon from '../../../public/assets/Home-new/FPS and Tallento_OLD.png'
+import TallentoIcon from '../../../public/FPS and Tallento_OLD-d1a356fe.png.jpg'
 import DefaultAvatar from '../../../public/assets/icons/user.png'
 import LogoutButton from "../Reusable Components/Logout Button/LogoutButton";
 

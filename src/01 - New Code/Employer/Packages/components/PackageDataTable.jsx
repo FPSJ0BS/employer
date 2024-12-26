@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import checkPng from '../../../../../public/assets/icons/check.png';
 import Loader from "../../../../../public/assets/Loader";
 import { getPackagesList } from "@/api/apiAxios";
 import useCustomLoader from "@/hooks/useLoader";
-import { ModalPackage } from "./ModalPackage";
-import ReactHtmlParser from 'react-html-parser';
-import { updateSinglePlanData, openBuyPackageModal, editPackageFields } from "../../Redux/EmployerPackages";
+import { updateSinglePlanData, editPackageFields } from "../../Redux/EmployerPackages";
 import NODATAPIC from "../../../../../public/assets/storyset/Innovation-pana.png";
 import { JobsDropDown } from "./inputs/jobsDropDown.tsx";
 import { getProfile, getStateListAxios, postEnquiryForm } from "../../../../api/apiAxios.ts";
-import { Award, BarChart2, BrainCircuit, BriefcaseIcon, CalendarCheck2, CircleUserRound, Clock9, IndianRupee, Network, PackageCheck, SendToBack } from "lucide-react";
-import { CustomizedSnackbarTwo } from "../../../Reusable Components/Snackbar/snackbarNew.tsx";
+import { BarChart2, BrainCircuit, CircleCheck, CircleUserRound, IndianRupee, Network, SendToBack } from "lucide-react";
 import { toast } from "react-toastify";
 import { editEmployerManageProfileFields, setManageProfileStatesData } from "../../Redux/CompanyProfile.tsx";
 
@@ -22,7 +18,6 @@ const PackageDataTable = () => {
   const dispatch = useDispatch();
   const [planList, setPlanList] = useState([]);
   const [isLoading, setLoader] = useCustomLoader(false);
-  const [showMoreData, setShowMoreData] = useState(false);
   const [activePlan, setActivePlan] = useState(null);
   const [singlePlanData, setSinglePlanData] = useState([]);
   const [planSwitch, setPlanSwitch] = useState(false);
@@ -244,87 +239,49 @@ const PackageDataTable = () => {
                 planList?.nationalPlans?.map((plan) => (
                   <div
                     key={plan?.id}
-                    className="h-auto py-[20px] p-2 w-[250px] lg:w-[25vw] xl:w-[100%] border-[1.5px] border-[#dbdde5] border-solid rounded-xl flex flex-col justify-center items-center"
+                    className="h-auto py-[20px] p-2 w-[250px] gap-0 lg:w-[25vw] xl:w-[100%] border-[1.5px] border-[#dbdde5] border-solid rounded-xl flex flex-col justify-between items-center"
                   >
-                    <div className="text-center text-[20px] font-bold">
-                      <h1 className="font-bold capitalize">{plan?.name}</h1>
-                    </div>
-
-                    <div className="flex my-3">
-                      <IndianRupee />
-                      <h3 className="text-[45px] text-[#293756]">
-                        {getPriceForJob(
-                          plan,
-                          selectedJobs[plan?.id] ||
-                          plan?.national_package[0].jobs
-                        )}
-                      </h3>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-1 mt-[30px] gap-y-4 px-2 w-full">
-                      
-                      <div className="flex gap-2 w-full items-center justify-start">
-                        <div className="w-[10%] flex items-center">
-                          <PackageCheck />
-                        </div>
-                        <div className="w-[90%] flex items-center">
-                          <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em] capitalize"><span className="font-semibold">{plan?.emp_type}</span> Package.</p>
-
-                        </div>
+                    <div className="flex items-start flex-col gap-0">
+                      <div className="text-start text-[22px] font-bold mt-2">
+                        <h1 className="font-bold capitalize">{plan?.name}</h1>
                       </div>
-                      <div className="flex gap-2 w-full items-center justify-start">
-                        <div className="w-[10%] flex items-center">
-                          <CalendarCheck2 />
-                        </div>
-                        <div className="w-[90%] flex items-center">
-                          <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Valid upto <span className="font-bold">{plan.validfor} Days.</span></p>
 
-                        </div>
+                      <div className="flex gap-0 my-3">
+                        <IndianRupee />
+                        <h3 className="text-[45px] text-[#293756]">
+                          {getPriceForJob(
+                            plan,
+                            selectedJobs[plan?.id] ||
+                            plan?.national_package[0].jobs
+                          )}
+                        </h3>
+                        <p className=" font-semibold text-[14px]">Incl. GST</p>
                       </div>
-                      <div className="flex gap-2 w-full items-center justify-start">
-                    <div className="w-[10%] flex items-center">
-                      <SendToBack />
-                    </div>
-                    <div className="w-[90%] flex items-center">
-                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">End-to-End <span className="font-bold">Recruitment Services.</span></p>
+                      <div className=" grid grid-cols-1 sm:grid-cols-1 gap-y-2 px-2 ">
+                        {
+                          plan?.currentBenefits?.map((item, index) => {
+                            return (
+                              item?.allowed === 1 && (
+                                <div key={index} className="flex gap-2 w-full items-start justify-start cursor-default">
+                                  <div className="w-[6%] flex items-start">
+                                    <CircleCheck fill="#5cbe80" color="#fff" />
+                                  </div>
+                                  <div className="w-[94%] flex items-center pt-1">
+                                    <p className="text-[#19304a] font-medium text-[14px] leading-[1.2em] capitalize">
+                                      <span className="font-semibold">{item?.benefit}</span>
+                                    </p>
+                                  </div>
+                                </div>
+                              )
+                            );
+                          })
+                        }
 
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex gap-2 w-full items-center justify-start">
-                    <div className="w-[10%] flex items-center">
-                      <BrainCircuit />
-                    </div>
-                    <div className="w-[90%] flex items-center">
-                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]"><span className="font-bold">AI-Driven</span> Candidate Matching.</p>
-
-                    </div>
-                  </div>
-                  <div className="flex gap-2 w-full items-center justify-start">
-                    <div className="w-[10%] flex items-center">
-                      <CircleUserRound />
-                    </div>
-                    <div className="w-[90%] flex items-center">
-                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]"> <span className="font-bold">Dedicated</span> Account Manager.</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2 w-full items-center justify-start">
-                    <div className="w-[10%] flex items-center">
-                      <BarChart2 />
-                    </div>
-                    <div className="w-[90%] flex items-center">
-                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Enhanced<span className="font-bold"> Employer Branding.</span></p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2 w-full items-center justify-start">
-                    <div className="w-[10%] flex items-center">
-                      <Network />
-                    </div>
-                    <div className="w-[90%] flex items-center">
-                      <p className="text-[#19304a] font-medium text-[16px] leading-[1.2em]">Exclusive talent pool of<span className="font-bold"> 1 million+ professionals.</span></p>
-                    </div>
-                  </div>
-                      <div className="flex items-center justify-between my-4 h-[60px] border-t-[1.5px] border-b-[1.5px] border-l-0 border-r-0 border-dashed">
+                    <div className="flex flex-col gap-2 w-full items-center justify-center">
+                      <div className="flex items-center justify-between my-4 h-[60px] border-t-[1.5px] border-b-[1.5px] border-l-0 border-r-0 border-dashed w-full">
                         <JobsDropDown
                           packageOptions={plan?.national_package}
                           onJobSelect={(job) => handleJobSelect(plan?.id, job)}
@@ -343,39 +300,38 @@ const PackageDataTable = () => {
                           )}
                         </h3>
                       </div>
-                    </div>
-                    {/* <button disabled={activePlan} onClick={() => getSinglePlanData(plan, selectedJobs[plan?.id] || plan?.national_package[0].jobs)} className={`${activePlan === plan?.plan_id ? 'bg-green-900' : 'bg-mainBgColor'} px-[40px] py-[10px] text-white rounded-lg mt-[30px]`}>
-                    {activePlan === plan?.plan_id ? 'Plan Activated' : 'Buy'}
-                  </button> */}
-                    <button
+                      <button
 
-                      onClick={() =>
-                        getSinglePlanData(
-                          plan,
-                          selectedJobs[plan?.id]
-                            ? selectedJobs[plan?.id]
-                            : plan?.national_package[0].jobs,
-                          plan?.id || plan?.national_package[0].jobs
-                        )
-                      }
+                        onClick={() =>
+                          getSinglePlanData(
+                            plan,
+                            selectedJobs[plan?.id]
+                              ? selectedJobs[plan?.id]
+                              : plan?.national_package[0].jobs,
+                            plan?.id || plan?.national_package[0].jobs
+                          )
+                        }
 
-                      className={`cursor-pointer transition-all 
+                        className={`cursor-pointer transition-all 
                                      ${activePlan === plan?.plan_id
-                          ? "bg-mainBgColor"
-                          : "bg-[#2f5da7]"
-                        } text-white w-[90%] py-2 rounded-lg
+                            ? "bg-mainBgColor"
+                            : "bg-mainBgColor"
+                          } text-white w-[90%] py-2 rounded-lg
                                     border-green-400
                                       border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
                                       active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-mainBgColor shadow-mainBgColor active:shadow-none`}
-                    >
-                      {" Buy The Plan"}
-                    </button>
+                      >
+                        {" Buy The Plan"}
+                      </button>
+                    </div>
+
+
                   </div>
 
 
                 ))}
 
-              <div className=" py-[20px] h-fit w-[250px] lg:w-[25vw] xl:w-[20vw] border-[1.5px] border-[#dbdde5] border-solid rounded-xl flex flex-col justify-start items-start p-3">
+              <div className=" py-[20px] gap-0 h-fit w-[250px] lg:w-[25vw] xl:w-[20vw] border-[1.5px] border-[#dbdde5] border-solid rounded-xl flex flex-col justify-start items-start p-3">
 
                 <h2 className="text-[25px] text-[#19304a] font-semibold">Custom Solution</h2>
                 <p className="text-[#19304a]">Make your own personalised plan</p>
