@@ -41,7 +41,7 @@ const index = ({ footerStyle = "" }) => {
             {/* End footer left widget */}
 
             <div className="big-column col-xl-8 col-lg-9 col-md-12">
-              <div className="row flex justify-between">
+              <div className="flex justify-between">
                 <img className="w-[300px] mt-[-50px]" src={PhoneL} />
                 <div className=" h-[300px] w-[300px] flex flex-col justify-start items-center gap-4 mt-[50px]">
 

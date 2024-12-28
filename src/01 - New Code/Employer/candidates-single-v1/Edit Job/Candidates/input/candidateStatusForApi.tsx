@@ -6,23 +6,23 @@ import { postChangeCandidateStatus } from "../../../../../../api/apiAxios";
 export const CandidateStatusForApi = ({
   candidaiteId,
   getCandidateList,
+  status,
 }) => {
   const dispatch = useDispatch();
   const [statusInput, setStatusInput] = useState("");
 
-
+  useEffect(() => {
+    if (status) {
+      setStatusInput(status);
+    }
+  }, [status]);
 
   const { employerCandidateData, allStatusData } = useSelector(
     (state: any) => state.employerCandidate
   );
 
-
-
-
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-
- 
 
   const openDropdown = () => {
     setShowDropdown(true);
@@ -73,21 +73,19 @@ export const CandidateStatusForApi = ({
     // setLoaderSet(true);
 
     try {
-    
       const res = await postChangeCandidateStatus({
         applyID: candidaiteId,
         new_status: optionn,
       });
 
       if (res?.data.status) {
-        
         // setLoaderSet(false);
         getCandidateList();
-        setStatusInput('')
+        setStatusInput("");
       } else {
-        console.log('profile res', res);
+        console.log("profile res", res);
         // setLoaderSet(false);
-        setStatusInput('')
+        setStatusInput("");
       }
     } catch (error) {
       console.log(error);
@@ -95,7 +93,7 @@ export const CandidateStatusForApi = ({
   };
 
   return (
-    <div className=" relative  sm:w-[100%] w-[250px] ">
+    <div className=" relative  lg:w-[100%] w-[250px] z-50 ">
       <div className="relative w-[100%]">
         <input
           placeholder="Change Status..."
@@ -107,7 +105,7 @@ export const CandidateStatusForApi = ({
           value={statusInput}
           onChange={handleInputChange}
           onClick={openDropdown}
-          className="mt-1 p-2 border-blue-600 h-[35px] w-[100%] border-[1px] focus:border-[2px]  rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+          className="mt-1 p-2 border-blue-600 h-[35px] w-[100%] border-[1px] focus:border-[2px]  rounded-[30px] shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 bg-[#f9f9f9]"
         />
         {statusInput ? (
           <button
