@@ -4,7 +4,7 @@ const TestimonialsPackages = () => {
   return (
     <div className="flex flex-col gap-4 mt-6">
       <div className="flex flex-col gap-6">
-        <h3 className=" text-center text-[25px] font-semibold">
+        <h3 className=" text-center text-[28px] font-semibold">
           Trusted by Institute from all over India
         </h3>
         <h4 className="text-center text-[25px] text-[#707070]">
@@ -27,10 +27,63 @@ const TestimonialsPackages = () => {
         </div>
 
         <div className=" w-full grid grid-cols-2 gap-y-6 gap-x-[50px]">
-          <div className=" h-[350px] w-full bg-white rounded-2xl"></div>
-          <div className=" h-[350px] w-full bg-white rounded-2xl"></div>
-          <div className=" h-[350px] w-full bg-white rounded-2xl"></div>
-          <div className=" h-[350px] w-full bg-white rounded-2xl"></div>
+          <div className=" h-[300px] w-full flex flex-col items-start justify-center gap-4 bg-white rounded-2xl p-5 text-[18px]">
+            <h3 className=" text-[#3f3f3f] ">
+              Tallento has transformed our recruitment process. Finding the
+              right candidates is now faster, smoother, and incredibly
+              efficient. A true game-changer for our hiring needs!
+            </h3>
+            <div className="flex items-center">
+              <div className="h-[40px] w-[40px] rounded-full bg-black"></div>
+              <div>
+                <h5>Rohit Mehta</h5>
+                <p>HR Manager at Resonance</p>
+              </div>
+            </div>
+          </div>
+
+          <div className=" h-[300px] w-full flex flex-col items-start justify-center gap-4 bg-white rounded-2xl p-5 text-[18px]">
+            <h3 className=" text-[#3f3f3f] ">
+              Tallento has transformed our recruitment process. Finding the
+              right candidates is now faster, smoother, and incredibly
+              efficient. A true game-changer for our hiring needs!
+            </h3>
+            <div className="flex items-center">
+              <div className="h-[40px] w-[40px] rounded-full bg-black"></div>
+              <div>
+                <h5>Rohit Mehta</h5>
+                <p>HR Manager at Resonance</p>
+              </div>
+            </div>
+          </div>
+          <div className=" h-[300px] w-full flex flex-col items-start justify-center gap-4 bg-white rounded-2xl p-5 text-[18px]">
+            <h3 className=" text-[#3f3f3f] ">
+              Tallento has transformed our recruitment process. Finding the
+              right candidates is now faster, smoother, and incredibly
+              efficient. A true game-changer for our hiring needs!
+            </h3>
+            <div className="flex items-center">
+              <div className="h-[40px] w-[40px] rounded-full bg-black"></div>
+              <div>
+                <h5>Rohit Mehta</h5>
+                <p>HR Manager at Resonance</p>
+              </div>
+            </div>
+          </div>
+          <div className=" h-[300px] w-full flex flex-col items-start justify-center gap-4 bg-white rounded-2xl p-5 text-[18px]">
+            <h3 className=" text-[#3f3f3f] ">
+              Tallento has transformed our recruitment process. Finding the
+              right candidates is now faster, smoother, and incredibly
+              efficient. A true game-changer for our hiring needs!
+            </h3>
+            <div className="flex items-center">
+              <div className="h-[40px] w-[40px] rounded-full bg-black"></div>
+              <div>
+                <h5>Rohit Mehta</h5>
+                <p>HR Manager at Resonance</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
