@@ -8,7 +8,13 @@ import axios from "axios";
 import DOMPurify from "dompurify";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-export const JobDescriptionInput = ({ type }: { type: boolean }) => {
+export const JobDescriptionInput = ({
+  type,
+  chatGptKey,
+}: {
+  type: boolean;
+  chatGptKey: string;
+}) => {
   const [editorData, setEditorData] = useState("");
   const [debouncedData, setDebouncedData] = useState("");
   const [loading, setLoading] = useState(false);
@@ -46,7 +52,7 @@ export const JobDescriptionInput = ({ type }: { type: boolean }) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer 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`,
+        Authorization: `Bearer ${chatGptKey}`,
       },
     };
 
@@ -98,7 +104,8 @@ export const JobDescriptionInput = ({ type }: { type: boolean }) => {
       </style>
       <div className="py-2">
         <h2 className="font-semibold">
-          Describe the responsibilities of this job and other specific requirements here.
+          Describe the responsibilities of this job and other specific
+          requirements here.
         </h2>
       </div>
       <CKEditor

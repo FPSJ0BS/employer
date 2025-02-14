@@ -142,22 +142,22 @@ export const HomeTest = () => {
 
   // navigation ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-  const showAnim = gsap
-    .from("#nav-new", {
-      yPercent: -100,
-      paused: true,
-      duration: 0.8,
-    })
-    .progress(1);
+  // const showAnim = gsap
+  //   .from("#nav-new", {
+  //     yPercent: -100,
+  //     paused: true,
+  //     duration: 0.8,
+  //   })
+  //   .progress(1);
 
-  ScrollTrigger.create({
-    trigger: "#fullnewhomenew",
-    start: "top top",
-    end: "max",
-    onUpdate: (self) => {
-      self.direction === -1 ? showAnim.play() : showAnim.reverse();
-    },
-  });
+  // ScrollTrigger.create({
+  //   trigger: "#fullnewhomenew",
+  //   start: "top top",
+  //   end: "max",
+  //   onUpdate: (self) => {
+  //     self.direction === -1 ? showAnim.play() : showAnim.reverse();
+  //   },
+  // });
 
   // Mouse Movement ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 

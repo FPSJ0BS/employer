@@ -10,70 +10,10 @@ if (typeof window !== "undefined") {
   import("bootstrap");
 }
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages";
-import HomePage1 from "./pages/home/home-1";
-import HomePage2 from "./pages/home/home-2";
-import HomePage3 from "./pages/home/home-3";
-import HomePage4 from "./pages/home/home-4";
-import HomePage5 from "./pages/home/home-5";
-import HomePage6 from "./pages/home/home-6";
-import HomePage7 from "./pages/home/home-7";
-import HomePage8 from "./pages/home/home-8";
-import HomePage9 from "./pages/home/home-9";
-import HomePage10 from "./pages/home/home-10";
-import HomePage11 from "./pages/home/home-11";
-import HomePage12 from "./pages/home/home-12";
-import HomePage13 from "./pages/home/home-13";
-import HomePage14 from "./pages/home/home-14";
-import HomePage15 from "./pages/home/home-15";
-import HomePage16 from "./pages/home/home-16";
-import HomePage17 from "./pages/home/home-17";
-import JobListPage1 from "./pages/job-list/job-list-v1";
-import JobListPage2 from "./pages/job-list/job-list-v2";
 import JobListPage3 from "./pages/job-list/job-list-v3";
 import JobListPage4 from "./pages/job-list/job-list-v4";
-import JobListPage5 from "./pages/job-list/job-list-v5";
-import JobListPage6 from "./pages/job-list/job-list-v6";
-import JobListPage7 from "./pages/job-list/job-list-v7";
-import JobListPage8 from "./pages/job-list/job-list-v8";
-import JobListPage9 from "./pages/job-list/job-list-v9";
-import JobListPage10 from "./pages/job-list/job-list-v10";
-import JobListPage11 from "./pages/job-list/job-list-v11";
-import JobListPage12 from "./pages/job-list/job-list-v12";
-import JobListPage13 from "./pages/job-list/job-list-v13";
-import JobListPage14 from "./pages/job-list/job-list-v14";
-import JobSingleDynamicV1 from "./pages/job-single/job-single-v1";
-import JobSingleDynamicV2 from "./pages/job-single/job-single-v2";
-import JobSingleDynamicV3 from "./pages/job-single/job-single-v3";
-import JobSingleDynamicV4 from "./pages/job-single/job-single-v4";
-import JobSingleDynamicV5 from "./pages/job-single/job-single-v5";
 import ScrollTopBehaviour from "./components/common/ScrollTopBehaviour";
-import EmployerListPage1 from "./pages/employers-list/employers-list-v1";
-import EmployerListPage2 from "./pages/employers-list/employers-list-v2";
-import EmployerListPage3 from "./pages/employers-list/employers-list-v3";
-import EmployerListPage4 from "./pages/employers-list/employers-list-v4";
-import EmployersSingleV1 from "./pages/employers-single/employers-single-v1";
-import EmployersSingleV2 from "./pages/employers-single/employers-single-v2";
-import EmployersSingleV3 from "./pages/employers-single/employers-single-v3";
-import CandidateListPage1 from "./pages/candidates-list/candidates-list-v1";
-import CandidateListPage2 from "./pages/candidates-list/candidates-list-v2";
-import CandidateListPage3 from "./pages/candidates-list/candidates-list-v3";
-import CandidateListPage4 from "./pages/candidates-list/candidates-list-v4";
-import CandidateListPage5 from "./pages/candidates-list/candidates-list-v5";
 import CandidateSingleDynamicV1 from "./01 - New Code/Employer/candidates-single-v1";
-import CandidateSingleDynamicV2 from "./pages/candidates-single/candidates-single-v2";
-import CandidateSingleDynamicV3 from "./pages/candidates-single/candidates-single-v3";
-import BlogListpage1 from "./pages/blog/blog-list-v1";
-import BlogListpage2 from "./pages/blog/blog-list-v2";
-import BlogListpage3 from "./pages/blog/blog-list-v3";
-import BlogDetailsDynamic from "./pages/blog/blog-details";
-import AboutPage from "./pages/others/about";
-import PricingPage from "./pages/others/pricing";
-import FaqPage from "./pages/others/faq";
-import TermsPage from "./pages/others/terms";
-import InvoicePage from "./pages/others/invoice";
-import ContactPage from "./pages/others/contact";
-import NotFoundPage from "./pages/others/404";
 import DashboardEmploeeDBPage from "./pages/employers-dashboard/dashboard";
 import CompanyProfileEmploeeDBPage from "./pages/employers-dashboard/company-profile";
 import LetterEmploeeDBPage from "./pages/employers-dashboard/letter";
@@ -87,26 +27,9 @@ import PackageEmploeeDBPage from "./pages/employers-dashboard/packages";
 import MessageEmploeeDBPage from "./pages/employers-dashboard/messages";
 import ResumeAlertsEmploeeDBPage from "./pages/employers-dashboard/resume-alerts";
 import ChangePasswordEmploeeDBPage from "./pages/employers-dashboard/change-password";
-import DashboardPage from "./pages/candidates-dashboard/dashboard";
-import AppliedJobsPage from "./pages/candidates-dashboard/applied-jobs";
-import ChangePasswordPage from "./pages/candidates-dashboard/change-password";
-import CVMannagerPage from "./pages/candidates-dashboard/cv-manager";
-import JobAlertPage from "./pages/candidates-dashboard/job-alerts";
-import MessageesPage from "./pages/candidates-dashboard/messages";
-import MyProfilePage from "./pages/candidates-dashboard/my-profile";
-import MyResumePage from "./pages/candidates-dashboard/my-resume";
-import PackagePage from "./pages/candidates-dashboard/packages";
-import ShortListedJobsPage from "./pages/candidates-dashboard/short-listed-jobs";
-import RegisterPage from "./pages/others/register";
-import ShopListPage from "./pages/shop/shop-list";
-import ShopSingleDyanmic from "./pages/shop/shop-single";
-import CartPage from "./pages/shop/cart";
 import CheckoutPage from "./pages/shop/checkout";
-import OrderCompletedPage from "./pages/shop/order-completed";
-
 import { Login } from "./01 - New Code/Login/Login";
 import { LoginEmail } from "./01 - New Code/Login/LoginEmail";
-import { Register } from "./01 - New Code/Register/Register";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin } from "./redux/Login/loginSlice";
 import { ForgotPassword } from "./01 - New Code/Login/ForgotPassword";
@@ -117,17 +40,8 @@ import { PaymentPage } from "./01 - New Code/Employer/Packages/Payment/PaymentPa
 import { HomeTest } from "./01 - New Code/Home/Home-Test/HomeTest";
 import { setInstituteId } from "./redux/Login/loginSlice";
 
-import { HomeNew } from "./01 - New Code/Home/Home-New/Home-New";
-
-import Gsaptest from "./01 - New Code/gsap test/gsaptest";
-
 // Admin api - start
 
-import { AdminDashboard } from "./Admin/Admin-Employer/Dashboard/AdminDashboard";
-import { AdminEmployer } from "./Admin/Admin-Employer/Employer/AdminEmployer";
-import { EditEmployer } from "./Admin/Admin-Employer/Employer/Edit Employer/EditEmployer";
-
-import { AdminEditJob } from "./Admin/Admin-Employer/Employer/Add New Job/AdminEditJob";
 
 import { Page404 } from "./01 - New Code/404Page/404Page.tsx";
 
@@ -136,12 +50,11 @@ import { ManageProfileNew } from "./01 - New Code/Employer/Company Profile/Manag
 import { editEmployerManageProfileFields } from "./01 - New Code/Employer/Redux/CompanyProfile.tsx";
 
 import { SingleProfile } from "./01 - New Code/Employer/Company Profile/SingleProfile/SingleProfile.tsx";
-import { EMailModalTwo } from "./01 - New Code/UI/Modal/EMailModal2.tsx";
 import SuggestedCandidateEmploeeDBPage from "./pages/employers-dashboard/suggested-candidate/index.jsx";
 import WhatsAppButton from "./components/WhatsappIcon/WhatsappIcon.tsx";
-import { CustomizedSnackbarTwo } from "./01 - New Code/Reusable Components/Snackbar/snackbarNew.tsx";
 import Faq from "./01 - New Code/FAQ/Faq.tsx";
 import DashboardPopup from "./01 - New Code/Employer/Dashboard/components/DashboardPopup.tsx";
+import BuyPlanPopup from "./01 - New Code/Employer/Dashboard/components/BuyPlanPopup";
 
 function App() {
 
@@ -190,7 +103,6 @@ function App() {
           const state = await profileAllData?.userData?.state;
           const employerID = await profileAllData?.userData[0]?.employerID;
           dispatch(setInstituteId(profileAllData?.userData[0]?.employerID))
-          console.log('employerIDemployerID',profileAllData?.employerDetails[0]);
           const firstName = await profileAllData?.employerDetails[0]
             ?.contact_person_first_name;
           const lastName = await profileAllData?.employerDetails[0]
@@ -234,7 +146,7 @@ function App() {
     }
   }, [employerManageProfileFields.emailVerified, authRegister]);
 
-  const { dashboardPopup } = useSelector(
+  const { dashboardPopup, buyPlanPopup } = useSelector(
     (state) => state.employerSliceNew
   );
 
@@ -242,9 +154,8 @@ function App() {
     <>
       <WhatsAppButton />
       {dashboardPopup && <DashboardPopup  />}
+      {buyPlanPopup && <BuyPlanPopup  />}
       <div className="page-wrapper data-scroll-container">
-        {/* {employerManageProfileFields.emailVerified === 0 &&
-          JSON.parse(localStorage.getItem("isModal")) && <EMailModalTwo />} */}
         <BrowserRouter>
           <Routes>
             <Route path="/">
@@ -314,30 +225,6 @@ function App() {
                 </>
               )}
 
-              {/* Static Pages */}
-              {/* <Route path="about" element={<AboutPage />} />
-              <Route path="pricing" element={<PricingPage />} />
-              <Route path="faq" element={<FaqPage />} />
-              <Route path="terms" element={<TermsPage />} />
-              <Route path="invoice" element={<InvoicePage />} />
-              <Route path="contact" element={<ContactPage />} /> */}
-
-              {/* Shop Routes */}
-              {/* <Route path="shop">
-                <Route path="shop-list" element={<ShopListPage />} />
-                <Route path="shop-single/:id" element={<ShopSingleDyanmic />} />
-                <Route path="cart" element={<CartPage />} />
-                <Route path="checkout" element={<CheckoutPage />} />
-                <Route path="order-completed" element={<OrderCompletedPage />} />
-              </Route> */}
-
-              {/* Admin Routes */}
-              {/* <Route element={<AdminDashboard />}>
-                <Route path="/admin" element={<Navigate to="./employer" replace />} />
-                <Route path="/admin/employer" element={<AdminEmployer />} />
-                <Route path="/admin/employer/edit-employer" element={<EditEmployer />} />
-                <Route path="/admin/employer/edit-job" element={<AdminEditJob />} />
-              </Route> */}
             </Route>
           </Routes>
           <ScrollTopBehaviour />

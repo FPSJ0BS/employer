@@ -14,6 +14,12 @@ export const PostJobSubject = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const openDropdown = () => {
     setShowDropdown(true);
+    setInputValue("");
+    dispatch(
+      postEmployerPostJob({
+        functionID: null,
+      })
+    );
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -83,7 +83,7 @@ export const InstituteInsdustryTypeInputReg = () => {
           name="AuthRegisterationIndustry"
           value={inputValue}
           onChange={handleInputChange}
-          onClick={openDropdown}
+          onClick={clearInput}
           className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
         />
         {inputValue ? (
@@ -93,19 +93,7 @@ export const InstituteInsdustryTypeInputReg = () => {
             aria-label="Clear input"
             type="button"
           >
-            <svg
-              className="w-4 h-4 text-gray-500 hover:text-gray-700"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            
           </button>
         ) : (
           <button
@@ -114,20 +102,7 @@ export const InstituteInsdustryTypeInputReg = () => {
             type="button"
             onClick={() => openDropdown()}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-chevron-down"
-            >
-              <path d="m6 9 6 6 6-6" />
-            </svg>
+            
           </button>
         )}
       </div>
@@ -143,7 +118,7 @@ export const InstituteInsdustryTypeInputReg = () => {
                 .map((option: CategoryInterface, index: number) => (
                   <li
                     key={index}
-                    className="cursor-pointer hover:bg-gray-100 py-1 px-3"
+                    className="cursor-pointer hover:bg-gray-100 py-1 px-3 leading-[1.2em]"
                     onClick={() =>
                       handleOptionSelect(option.category, option.ID)
                     }
@@ -154,7 +129,7 @@ export const InstituteInsdustryTypeInputReg = () => {
             : categoryData.map((option: CategoryInterface, index: number) => (
                 <li
                   key={index}
-                  className="cursor-pointer hover:bg-gray-100 py-1 px-3"
+                  className="cursor-pointer hover:bg-gray-100 py-1 px-3 leading-[1.2em]"
                   onClick={() => handleOptionSelect(option.category, option.ID)}
                 >
                   {option.category}

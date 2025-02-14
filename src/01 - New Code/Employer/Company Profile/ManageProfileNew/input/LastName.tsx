@@ -40,7 +40,7 @@ export const LastName = () => {
          Contact Person Last Name *
       </label>
       <input
-        placeholder="Enter COntact Person Last namr..."
+        placeholder="Enter Contact Person Last namr..."
         autoComplete="off"
         required
         onChange={(e) => handleChange(e)}

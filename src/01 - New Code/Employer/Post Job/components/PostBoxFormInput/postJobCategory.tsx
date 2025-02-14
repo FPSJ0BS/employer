@@ -51,6 +51,13 @@ export const PostJobCategory = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const openDropdown = () => {
     setShowDropdown(true);
+    setInputValue("");
+    dispatch(
+      postEmployerPostJob({
+        catID: null,
+        functionID: null,
+      })
+    );
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,7 +146,7 @@ export const PostJobCategory = () => {
           name="EmployerPostJobCategory"
           value={inputValue}
           onChange={handleInputChange}
-          onClick={openDropdown}
+          onClick={clearInput}
           className="mt-1 p-2  w-[100%] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
         />
         {inputValue ? (

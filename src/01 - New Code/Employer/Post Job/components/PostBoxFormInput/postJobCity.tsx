@@ -95,7 +95,7 @@ export const PostJobCity = ({setProcessLoc}) => {
           name="EmployerPostJobCity"
           value={inputValue}
           onChange={handleInputChange}
-          onClick={openDropdown}
+          onClick={clearInput}
           className="mt-1 p-2  w-[100%] border-[1px] focus:border-[2px] border-gray-300 rounded-md shadow-sm focus:outline-none border-solid focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
         />
         {inputValue ? (

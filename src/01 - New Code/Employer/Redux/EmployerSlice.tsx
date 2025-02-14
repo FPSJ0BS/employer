@@ -125,6 +125,7 @@ interface EmployerPostJobType {
 
   subCategoryData: SubCategoryInterface[];
   dashboardPopup: boolean;
+  buyPlanPopup: boolean;
   dashboardPopupFields: DashboardPopupItems;
 }
 
@@ -175,6 +176,7 @@ const initialState: EmployerPostJobType = {
   },
 
   dashboardPopup: false,
+
   dashboardPopupFields: {
     heading: "",
     buttonTextOne: "",
@@ -186,7 +188,10 @@ const initialState: EmployerPostJobType = {
     btnTwoTextPl: "",
     btnTwoTextPr: "",
     hitApi: false,
+
   },
+
+  buyPlanPopup: false,
 };
 
 // Create the slice
@@ -285,6 +290,11 @@ export const employerSliceNew = createSlice({
         ...action.payload,
       };
     },
+
+
+    setToggleBuyPlanPopup: (state) => {
+      state.buyPlanPopup = !state.buyPlanPopup;
+    },
   },
 });
 
@@ -303,6 +313,7 @@ export const {
   setHeaderShow,
   setToggleDashboardPopup,
   setDashboardPopupFields,
+  setToggleBuyPlanPopup
 } = employerSliceNew.actions;
 
 export default employerSliceNew.reducer;

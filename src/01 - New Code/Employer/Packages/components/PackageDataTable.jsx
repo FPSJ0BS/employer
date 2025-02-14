@@ -180,6 +180,8 @@ const PackageDataTable = () => {
     fetchData();
   }, []);
 
+  console.log('employerManageProfileFields',employerManageProfileFields);
+
 
   const enquiryApiSubmit = async () => {
 
