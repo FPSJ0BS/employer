@@ -42,7 +42,7 @@ const CandidateUI = ({
   toggleInterviewDetailsPopup,
   interviewDetailsPopup,
   closeAllInterviewDetailsPopups,
-  formatDate
+  formatDate,
 }) => {
   return (
     <div className="flex flex-col gap-4  w-full mt-4 -ml-8 sm:ml-0">
@@ -170,15 +170,15 @@ const CandidateUI = ({
                   <div className=" w-full lg:w-[70%] h-full flex  items-center gap-2 ">
                     <div className=" lg:w-[10%] h-full flex justify-start items-center">
                       <img
-                      alt="profile-image"
+                        alt="profile-image"
                         className="w-[80px] h-[80px] rounded-[50%]"
                         src={application?.image || DefaultAvatar}
                       />
                     </div>
                     <div className=" lg:w-[90%] h-full flex flex-col justify-center items-start gap-2">
                       <div className="flex items-center">
-                        <h2 className=" font-semibold text-[20px]">
-                          Dharavi Mayur
+                        <h2 className=" font-semibold text-[20px] capitalize">
+                          {application?.name}
                         </h2>
                         <button
                           onClick={() =>
@@ -190,9 +190,11 @@ const CandidateUI = ({
                         </button>
                       </div>
                       <div className="flex w-fit gap-4 text-[#636363] text-[15px]">
-                        <div className="flex gap-0 items-center  text-[14px]">
-                          <Dot /> {application?.gender}
-                        </div>
+                        {application?.gender && (
+                          <div className="flex gap-0 items-center  text-[14px]">
+                            <Dot /> {application?.gender}
+                          </div>
+                        )}
                         <div className="flex gap-0 items-center  text-[14px]">
                           <Dot /> {application?.city}, {application?.state}
                         </div>
@@ -200,6 +202,7 @@ const CandidateUI = ({
                           <Dot /> {application?.salary} LPA
                         </div>
                       </div>
+                     
                     </div>
                   </div>
                   <div className=" w-full lg:w-[30%] h-full flex flex-col gap-2 items-start">
@@ -313,7 +316,7 @@ const CandidateUI = ({
                           </p>
 
                           <div className="flex gap-0 items-center text-[#464646] font-normal">
-                            <Dot className=" -mr-1"/> Joined in{" "}
+                            <Dot className=" -mr-1" /> Joined in{" "}
                             {application?.education_data[0]?.start_date}
                           </div>
                         </div>
@@ -396,7 +399,7 @@ const CandidateUI = ({
 
                 {/* Skills */}
 
-                <div className="px-3 flex flex-wrap gap-x-4 gap-y-4 min-h-[50px] -mt-5">
+                <div className="px-3 flex flex-wrap gap-x-4 gap-y-4 -mt-5">
                   {application?.skill_data?.map((item, index) => {
                     return (
                       <p
@@ -414,7 +417,11 @@ const CandidateUI = ({
                   <div className="lg:w-[70%] flex items-center gap-2">
                     <button
                       onClick={() => toggleSchedulePopup(index)}
-                      className={`text-white hover:text-white cursor-pointer ${application?.status === "Interview Scheduled" ? "w-[50%]" : "w-[30%]"}  px-4 border-1 border-solid border-[#432818] bg-[#432818]  h-[50px] rounded-[30px] flex justify-center items-center gap-2`}
+                      className={`text-white hover:text-white cursor-pointer ${
+                        application?.status === "Interview Scheduled"
+                          ? "w-[50%]"
+                          : "w-[30%]"
+                      }  px-4 border-1 border-solid border-[#432818] bg-[#432818]  h-[50px] rounded-[30px] flex justify-center items-center gap-2`}
                     >
                       <CalendarClock className="w-[18px] " />
                       <h3 className=" font-semibold ">
@@ -437,7 +444,6 @@ const CandidateUI = ({
                               <br /> Interview Details
                             </h3>
                           </div>
-                         
                         </div>
                       )}
                   </div>

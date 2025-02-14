@@ -24,7 +24,7 @@ import { PostJobProcessState } from "./PostBoxFormInput/postJobProcessState";
 import { PostJobProcessCity } from "./PostBoxFormInput/postJobProcessCity";
 import { PostJobRemarks } from "./PostBoxFormInput/postJobRemarks";
 import { PostJobDocsRequired } from "./PostBoxFormInput/postJobDocsRequired";
-import { postPostJobAxios } from "../../../../api/apiAxios";
+import { doGetChatGPTKey, postPostJobAxios } from "../../../../api/apiAxios";
 import { CustomizedSnackbarTwo } from "../../../Reusable Components/Snackbar/snackbarNew";
 import PostJobImage from "../../../../../public/assets/storyset/Blog post-pana.png";
 import { postEmployerPostJob } from "../../Redux/EmployerSlice";
@@ -68,11 +68,7 @@ const PostBoxForm = () => {
 
   const { instituteId } = useSelector((state) => state.login);
 
-
-
   const [isFormValid, setIsFormValid] = useState(false);
-
-
 
   const navigate = useNavigate();
 
@@ -81,22 +77,25 @@ const PostBoxForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [questions, setQuestions] = useState([]);
-  const [jobId, setJobId] = useState("");
+  const [loader, setLoader] = useState(false);
+  const [chatGptKey, setChatGptKey] = useState("");
+
+  useEffect(() => {
+    const fetchCGPT = async () => {
+      try {
+        const key = await doGetChatGPTKey();
+        setChatGptKey(key?.data?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCGPT();
+  }, []);
 
   const postJobFormSubmit = async (e: any) => {
     e.preventDefault();
-    setLoaderValid(true);
-    // const parse = JSON.parse(localStorage.getItem("walletData") || "");
-    // const _data: any = {
-    //   ...walletDetailsData,
-    //   currentBalance: Number(walletDetailsData?.currentBalance) - 10,
-    //   Status: "Debit",
-    //   dateTransaction: String(new Date()),
-    // };
-    // dispatch(setWalletData(_data));
-    // localStorage.setItem("wallet", JSON.stringify(_data));
-    // localStorage.setItem("walletData", JSON.stringify([...parse,_data]));
-    // navigate(-1)
+    setLoader(true);
     try {
       const res = await postPostJobAxios(
         employerPostJob?.job_title,
@@ -127,6 +126,8 @@ const PostBoxForm = () => {
       );
 
       if (res?.data?.status) {
+        setLoader(false);
+
         const jobId = await res?.data?.data[0]?.job_id;
         const onSuccessMessage = await res?.data?.message;
         await setSnackbarSuccessMessage(onSuccessMessage);
@@ -138,8 +139,8 @@ const PostBoxForm = () => {
         }, 2000);
         setLoaderValid(false);
       } else {
+        setLoader(false);
         const onErrorMessage = await res?.data?.message;
-     
         await setSnackbarErrorMessage(onErrorMessage);
         setSnackbarErrorOpen(true);
         setLoaderValid(false);
@@ -290,7 +291,7 @@ const PostBoxForm = () => {
             employerPostJob?.min_salary?.toString() &&
               employerPostJob?.max_salary?.toString()) ? (
               <div className="flex w-[100%]">
-                <JobDescriptionInput type={true} />
+                <JobDescriptionInput type={true} chatGptKey={chatGptKey} />
               </div>
             ) : (
               <Tooltip
@@ -299,7 +300,7 @@ const PostBoxForm = () => {
                 sx={{ background: "#353535", color: "#ffff" }}
               >
                 <div className="flex w-[100%]">
-                  <JobDescriptionInput type={false} />
+                  <JobDescriptionInput type={false} chatGptKey={chatGptKey} />
                 </div>
               </Tooltip>
             )}
@@ -339,9 +340,11 @@ const PostBoxForm = () => {
               disabled={isFormValid}
               className={` ${
                 isFormValid ? " bg-gray-600" : "bg-mainBgColor"
-              } p-[10px] text-white rounded-lg `}
+              } p-[10px] text-white rounded-lg  ${
+                loader ? `bg-gray-600` : `bg-mainBgColor`
+              }`}
             >
-              Post New Job
+              {loader ? `Posting Job ....` : `Post New Job`}
             </button>
           </div>
         </form>
