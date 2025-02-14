@@ -133,7 +133,6 @@ export const RegisterNew = () => {
         mobile_number: authRegister.mobile_number,
       });
       if (response?.data?.status) {
-        sendOtpFromPhone();
         setLoaderState(false);
         const hash = response?.data?.data[0];
         dispatch(
@@ -179,7 +178,9 @@ export const RegisterNew = () => {
         // email_id: employerManageProfileFields?.email,
       });
 
+      
       if (res?.data?.status) {
+        console.log("api called register otp");
         const onSuccessMessage = await res?.data?.message;
         await setSnackbarSuccessMessage(onSuccessMessage);
         await setSnackbarSuccessOpen(true);

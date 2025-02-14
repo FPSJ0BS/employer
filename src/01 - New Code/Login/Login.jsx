@@ -82,6 +82,7 @@ export const Login = () => {
       const response = await postPhoneOtpSendAxios(phoneNumber);
 
       if (!response.data.status) {
+
         const onErrorMessage = await response?.data?.message;
         await setSnackbarErrorMessage(onErrorMessage);
         setSnackbarErrorOpen(true);
@@ -91,6 +92,7 @@ export const Login = () => {
       }
 
       if (response?.data?.status) {
+ 
         const hash = await response?.data.data[0];
         await sethash(hash);
         const onSuccessMessage = await response?.data?.message;
@@ -292,7 +294,7 @@ export const Login = () => {
                     id="telnewVerify"
                     className="h-[70px] w-[300px] sm:w-[400px] bg-[#f0f5f7] rounded-lg p-3"
                     type="number"
-                    placeholder=""
+                    placeholder="Enter 6 digit otp."
                   />
                 </div>
                 {!isValidOtp && (

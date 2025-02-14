@@ -1611,6 +1611,8 @@ export const doGetJobTypes = async () => {
     throw error;
   }
 };
+
+
 export const doGetShareProfile = async (facID:string) => {
   const authorizationToken: any = localStorage.getItem("header");
   const storedDataObject = JSON.parse(authorizationToken);
@@ -1621,6 +1623,27 @@ export const doGetShareProfile = async (facID:string) => {
   }
   try {
     const response = await axios.get(`${BASE_URL_USER}/generateProfileLink?facultyID=${facID}`, {
+      headers: {
+        Authorization: `Bearer ${storedDataObject}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
+
+export const doGetChatGPTKey = async () => {
+  const authorizationToken: any = localStorage.getItem("header");
+  const storedDataObject = JSON.parse(authorizationToken);
+
+  if (!authorizationToken) {
+    console.error("Authorization token not available");
+    return;
+  }
+  try {
+    const response = await axios.get(`${BASE_URL_USER}/ChatGptKey`, {
       headers: {
         Authorization: `Bearer ${storedDataObject}`,
       },
